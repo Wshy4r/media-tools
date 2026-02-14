@@ -934,10 +934,6 @@ function showApp(app) {
     } else if (app === 'optimizer') {
         $('#optimizer-app').addClass('active');
         $('#back-btn').show();
-        // Auto-trigger file upload dialog
-        if ($('#optimizer-dropzone').is(':visible')) {
-            $('#optimizer-file-input').click();
-        }
     }
 }
 
