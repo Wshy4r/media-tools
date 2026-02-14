@@ -110,8 +110,8 @@
             border-color: #c00;
             background: #fff5f5;
         }
-        .optimizer-dropzone i { font-size: 48px; color: #aaa; display: block; margin-bottom: 15px; }
-        .optimizer-dropzone p { color: #888; font-size: 14px; margin: 0; }
+        .optimizer-dropzone i { font-size: 48px; color: #aaa; display: block; margin-bottom: 15px; pointer-events: none; }
+        .optimizer-dropzone p { color: #888; font-size: 14px; margin: 0; pointer-events: none; }
         .optimizer-dropzone input { display: none; }
         .optimizer-results {
             display: none;
@@ -1732,12 +1732,15 @@ function showApp(app) {
         document.addEventListener('dragover', (e) => e.preventDefault());
         document.addEventListener('drop', (e) => e.preventDefault());
 
+        var dragCounter = 0;
         dropzone.addEventListener('click', () => fileInput.click());
-        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); e.stopPropagation(); dropzone.classList.add('dragover'); });
-        dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+        dropzone.addEventListener('dragenter', (e) => { e.preventDefault(); dragCounter++; dropzone.classList.add('dragover'); });
+        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); e.stopPropagation(); });
+        dropzone.addEventListener('dragleave', () => { dragCounter--; if (dragCounter === 0) dropzone.classList.remove('dragover'); });
         dropzone.addEventListener('drop', (e) => {
             e.preventDefault();
             e.stopPropagation();
+            dragCounter = 0;
             dropzone.classList.remove('dragover');
             if (e.dataTransfer.files.length) processFile(e.dataTransfer.files[0]);
         });
