@@ -934,6 +934,9 @@ function showApp(app) {
     } else if (app === 'optimizer') {
         $('#optimizer-app').addClass('active');
         $('#back-btn').show();
+        if ($('#optimizer-dropzone').is(':visible')) {
+            $('#optimizer-file-input').click();
+        }
     }
 }
 
