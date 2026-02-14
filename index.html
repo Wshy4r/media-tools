@@ -1724,22 +1724,20 @@ function showApp(app) {
         const dropzone = document.getElementById('optimizer-dropzone');
         const fileInput = document.getElementById('optimizer-file-input');
 
-        // Prevent browser from opening dropped files
+        // Prevent browser from opening dropped files, but let optimizer dropzone handle its own
         document.addEventListener('dragover', (e) => e.preventDefault());
-        document.addEventListener('drop', (e) => e.preventDefault());
-
-        var dragCounter = 0;
-        dropzone.addEventListener('click', () => fileInput.click());
-        dropzone.addEventListener('dragenter', (e) => { e.preventDefault(); dragCounter++; dropzone.classList.add('dragover'); });
-        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); e.stopPropagation(); });
-        dropzone.addEventListener('dragleave', () => { dragCounter--; if (dragCounter === 0) dropzone.classList.remove('dragover'); });
-        dropzone.addEventListener('drop', (e) => {
+        document.addEventListener('drop', (e) => {
+            // If dropped on the optimizer dropzone area while it's visible, let it handle the file
+            if ($('#optimizer-app').hasClass('active') && $('#optimizer-dropzone').is(':visible')) {
+                e.preventDefault();
+                var files = e.dataTransfer && e.dataTransfer.files;
+                if (files && files.length) processFile(files[0]);
+                return;
+            }
             e.preventDefault();
-            e.stopPropagation();
-            dragCounter = 0;
-            dropzone.classList.remove('dragover');
-            if (e.dataTransfer.files.length) processFile(e.dataTransfer.files[0]);
         });
+
+        dropzone.addEventListener('click', () => fileInput.click());
         fileInput.addEventListener('change', () => {
             if (fileInput.files.length) processFile(fileInput.files[0]);
         });
