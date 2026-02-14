@@ -1,0 +1,1954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forbes Media Tools</title>
+    <link rel="icon" type="image/x-icon" href="images/faviconV3.png">
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
+    <style>
+        /* ===== LANDING PAGE ===== */
+        .landing-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            font-family: 'EuclidCircularB-Semibold', sans-serif;
+        }
+        .landing-container {
+            text-align: center;
+            width: 100%;
+            max-width: 100%;
+            padding: 60px 40px;
+            background: #fff;
+        }
+        .landing-logo {
+            width: 200px;
+            margin-bottom: 30px;
+        }
+        .landing-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+        .landing-subtitle {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 40px;
+        }
+        .tool-cards {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .tool-card {
+            flex: 1;
+            padding: 30px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            max-width: 250px;
+        }
+        .tool-card:hover {
+            border-color: #c00;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .tool-card-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .tool-card-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+        .tool-card-desc {
+            font-size: 12px;
+            color: #888;
+            line-height: 1.5;
+        }
+
+        /* ===== IMAGE OPTIMIZER STYLES ===== */
+        #optimizer-app {
+            padding: 60px 20px;
+            font-family: 'EuclidCircularB-Semibold', sans-serif;
+        }
+        .optimizer-container {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .optimizer-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #1a1a1a;
+        }
+        .optimizer-dropzone {
+            border: 3px dashed #ccc;
+            border-radius: 16px;
+            padding: 60px 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            margin-bottom: 30px;
+        }
+        .optimizer-dropzone:hover, .optimizer-dropzone.dragover {
+            border-color: #c00;
+            background: #fff5f5;
+        }
+        .optimizer-dropzone i { font-size: 48px; color: #aaa; display: block; margin-bottom: 15px; }
+        .optimizer-dropzone p { color: #888; font-size: 14px; margin: 0; }
+        .optimizer-dropzone input { display: none; }
+        .optimizer-results {
+            display: none;
+            text-align: left;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .optimizer-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            display: block;
+        }
+        .optimizer-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .optimizer-info-item {
+            background: #fff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+        .optimizer-info-label { font-size: 11px; color: #888; text-transform: uppercase; margin-bottom: 4px; }
+        .optimizer-info-value { font-size: 15px; font-weight: 700; color: #1a1a1a; }
+        .optimizer-info-value.green { color: #00a652; }
+        .optimizer-info-value.red { color: #e21f25; }
+        .optimizer-progress {
+            display: none;
+            margin: 20px 0;
+        }
+        .optimizer-progress-bar {
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .optimizer-progress-fill {
+            height: 100%;
+            background: #c00;
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .optimizer-progress-text { font-size: 12px; color: #888; margin-top: 8px; }
+        .optimizer-download-btn {
+            display: none;
+            margin-top: 15px;
+            padding: 12px 30px;
+            background: #00a652;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .optimizer-download-btn:hover { background: #008c45; }
+        .optimizer-crop-toggle {
+            display: none;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: none;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .optimizer-crop-toggle:hover { border-color: #c00; color: #c00; }
+        .optimizer-crop-toggle.active { border-color: #c00; color: #c00; }
+        .optimizer-crop-section {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        /* ===== CROP STYLES ===== */
+        .crop-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+        .crop-controls label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            margin-right: 4px;
+        }
+        .ratio-btn {
+            padding: 6px 14px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            transition: all 0.2s;
+        }
+        .ratio-btn:hover { border-color: #999; }
+        .ratio-btn.active { border-color: #c00; color: #c00; background: #fff5f5; }
+        .crop-stage {
+            position: relative;
+            display: inline-block;
+            margin: 0 auto;
+            user-select: none;
+            -webkit-user-select: none;
+            line-height: 0;
+        }
+        .crop-stage img {
+            display: block;
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .crop-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+        }
+        .crop-overlay-shadow {
+            position: absolute;
+            background: rgba(0,0,0,0.5);
+        }
+        .crop-box {
+            position: absolute;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.2);
+            cursor: move;
+            pointer-events: auto;
+        }
+        .crop-box-grid {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+        }
+        .crop-box-grid::before,
+        .crop-box-grid::after {
+            content: '';
+            position: absolute;
+            background: rgba(255,255,255,0.3);
+        }
+        .crop-box-grid::before {
+            top: 33.33%; left: 0; right: 0; height: 1px;
+            box-shadow: 0 0 0 0 transparent, 0 calc(33.33% * 1) 0 0 rgba(255,255,255,0.3);
+        }
+        .crop-box-grid::after {
+            left: 33.33%; top: 0; bottom: 0; width: 1px;
+            box-shadow: calc(33.33% * 1) 0 0 0 rgba(255,255,255,0.3);
+        }
+        .crop-handle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.3);
+            border-radius: 1px;
+            pointer-events: auto;
+        }
+        .crop-handle-nw { top: -5px; left: -5px; cursor: nw-resize; }
+        .crop-handle-ne { top: -5px; right: -5px; cursor: ne-resize; }
+        .crop-handle-sw { bottom: -5px; left: -5px; cursor: sw-resize; }
+        .crop-handle-se { bottom: -5px; right: -5px; cursor: se-resize; }
+        .crop-handle-n { top: -5px; left: 50%; margin-left: -5px; cursor: n-resize; }
+        .crop-handle-s { bottom: -5px; left: 50%; margin-left: -5px; cursor: s-resize; }
+        .crop-handle-w { left: -5px; top: 50%; margin-top: -5px; cursor: w-resize; }
+        .crop-handle-e { right: -5px; top: 50%; margin-top: -5px; cursor: e-resize; }
+        .crop-dim-label {
+            position: absolute;
+            bottom: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        /* ===== SHARED ===== */
+        .app-section { display: none; }
+        .app-section.active { display: block; }
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 9999;
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .back-button:hover { background: #c00; }
+
+        /* ===== STOCK STYLES ===== */
+        @font-face {
+            font-family: 'ArabicFont';
+            src: url('fonts/GE_SS_Two_Medium.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: "GE SS Two Medium";
+            src: url("fonts/GESSTwoMedium-Medium-Pro.ttf") format("truetype");
+            font-style: normal;
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: "Helvetica-Neue";
+            src: url("fonts/helvetica-neue-normal.ttf") format("truetype");
+            font-style: normal;
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: "EuclidCircularB-Semibold";
+            src: url("fonts/EuclidCircularB-Semibold.ttf") format("truetype");
+            font-style: normal;
+            font-weight: normal;
+        }
+
+        #stock-app #dynamic_columns_generator .column {
+            border: 1px solid;
+            padding: 10px;
+            margin: 10px;
+        }
+        #stock-app .has-custom-text { color: #333333; }
+        #stock-app .columns { margin-bottom: 20px !important; border-radius: 10px; }
+        #stock-app #preview_button_container { display: none; }
+        #stock-app #header_text_modal { font-weight: 700; font-size: 32px; }
+        #stock-app .header-preview, #stock-app .body-preview {
+            height: 100px;
+            border: 1px solid;
+        }
+        #stock-app .company_name, #stock-app .company_value, #stock-app .inc_dec, #stock-app .percentage {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1;
+        }
+        #stock-app .percentage { margin: 0 5px; }
+        #stock-app .arrow-down:after { content: '\25bc'; padding-left: 0.3em; }
+        #stock-app .arrow-up:after { content: '\25b2'; padding-left: 0.3em; }
+        #stock-app .modal-card-body { position: relative; }
+        #stock-app .zero-value-link {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white !important;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 15px;
+            text-decoration: none;
+            animation: gentle-pulse 2s infinite;
+            vertical-align: middle;
+        }
+        #stock-app .zero-value-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+        }
+        @keyframes gentle-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        #stock-app .zero-value-row {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 152, 0, 0.15) 100%) !important;
+            border-color: #ffb347 !important;
+        }
+        @media screen and (min-width: 769px), print {
+            #stock-app .modal-card, #stock-app .modal-content {
+                margin: 0 auto;
+                max-height: 100vh !important;
+                width: 1000px !important;
+            }
+        }
+
+        /* ===== TEMPLATE STYLES ===== */
+        #template-app #input-template .post-data-preview {
+            font-family: "EuclidCircularB-Semibold" !important;
+        }
+        #template-app #arabic-post-template-with-img .post-data-preview {
+            font-family: "GE SS Two Medium" !important;
+        }
+        #template-app .background-image {
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            height: 100%;
+            width: 100%;
+        }
+        #template-app #imagePost, #template-app #arabicPost {
+            position: relative;
+            overflow: hidden;
+        }
+        #template-app .download-btn {
+            margin-top: 10px;
+            padding: 12px 24px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        #template-app .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        #template-app .logo-container {
+            position: absolute;
+            top: 45px;
+            left: 38px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        #template-app .logo-image {
+            width: 126.85px;
+            height: 32px;
+            display: block;
+        }
+        #template-app #english-post-template-with-img .container-fluid,
+        #template-app #arabic-post-template-with-img .container-fluid {
+            padding-top: 0;
+        }
+        #template-app #english-post-template-with-img .row,
+        #template-app #arabic-post-template-with-img .row {
+            margin-top: 0;
+        }
+        #template-app #bloc1, #template-app #bloc2 {
+            margin-top: 0;
+            padding-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== LANDING PAGE ===== -->
+<div id="landing-page" class="landing-page app-section active">
+    <div class="landing-container">
+        <img src="images/LogoBlack.png" alt="Forbes" class="landing-logo">
+        <h1 class="landing-title">Media Tools</h1>
+        <p class="landing-subtitle">Choose a tool to get started</p>
+        <div class="tool-cards">
+            <div class="tool-card" onclick="showApp('template')">
+                <span class="tool-card-icon"><i class="bi bi-image"></i></span>
+                <div class="tool-card-title">Social Media Design</div>
+                <div class="tool-card-desc">Create social media posts with custom backgrounds, text and styling</div>
+            </div>
+            <div class="tool-card" onclick="showApp('stock')">
+                <span class="tool-card-icon"><i class="bi bi-graph-up-arrow"></i></span>
+                <div class="tool-card-title">Stock Market</div>
+                <div class="tool-card-desc">Generate stock market graphics with live data from global markets</div>
+            </div>
+            <div class="tool-card" onclick="showApp('optimizer')">
+                <span class="tool-card-icon"><i class="bi bi-file-earmark-arrow-down"></i></span>
+                <div class="tool-card-title">Image Optimizer</div>
+                <div class="tool-card-desc">Compress, resize and convert images to JPG under 200KB</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== BACK BUTTON ===== -->
+<button class="back-button" id="back-btn" style="display:none;" onclick="showApp('landing')">
+    <i class="bi bi-house-door"></i> Home
+</button>
+
+<!-- ===== SOCIAL MEDIA TEMPLATE APP ===== -->
+<div id="template-app" class="app-section">
+    <section id="input-template" style="margin-top: 80px;">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <form class="row g-3">
+                        <select class="form-select custom-select select-language">
+                            <option disabled>Select Language</option>
+                            <option value="English" selected>English</option>
+                            <option value="Arabic">Arabic</option>
+                        </select>
+                        <select class="form-select custom-select show_breaking">
+                            <option disabled>Show Breaking Image</option>
+                            <option value="true">Yes</option>
+                            <option value="false" selected>No</option>
+                        </select>
+                        <select class="form-select custom-select logo_color">
+                            <option disabled>Logo Color</option>
+                            <option value="blackLogo">Black</option>
+                            <option value="whiteLogo" selected>White</option>
+                        </select>
+                        <select class="form-select custom-select post-size">
+                            <option disabled>Post Size</option>
+                            <option value="square">Square (2100x2100)</option>
+                            <option value="portrait" selected>Portrait (1080x1350)</option>
+                        </select>
+                        <div class="col-mdd-6">
+                            <label for="post-img" class="form-label">Upload Background Image</label>
+                            <input type="file" class="form-control post-img-preview" id="post-img">
+                        </div>
+                        <div class="col-12">
+                            <label for="data" class="form-label">Add Text</label>
+                            <textarea name="date" class="form-control" id="data" placeholder="Write some text here" cols="30" rows="5"></textarea>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" id="template-submit" class="btn btn-primary mb-2">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <img class="post-img-preview d-none" id="img-src" src="" alt="preview img">
+    </section>
+
+    <section class="d-none" id="english-post-template-with-img" style="margin-top: 10px; margin-bottom: 30px;">
+        <div class="container-fluid">
+            <div class="row align-items-start">
+                <div class="col-md-4 col-lg-3" style="padding-top: 0;">
+                    <div id="bloc1" class="cool" style="margin-top: 0;">
+                        <form action="">
+                            <div class="col-mv-6">
+                                <label for="bottom-margin-eng" class="form-label">Set Bottom Margin</label>
+                                <input type="number" class="form-control targetEng mb-2" id="bottom-margin-eng" value="100">
+                            </div>
+                            <div class="col-mv-6">
+                                <label for="image-vertical-eng" class="form-label">Move Image Up (px)</label>
+                                <input type="number" class="form-control image-vertical-eng mb-2" id="image-vertical-eng" value="0">
+                            </div>
+                            <div class="col-mv-6">
+                                <label for="shadow-height-eng" class="form-label">Shadow Height (px)</label>
+                                <input type="number" class="form-control shadow-height mb-2" id="shadow-height-eng" step="10" value="300">
+                            </div>
+                            <div class="col-mv-6">
+                                <label for="shadow-opacity-eng" class="form-label">Shadow Opacity (%)</label>
+                                <input type="number" class="form-control shadow-opacity mb-2" id="shadow-opacity-eng" min="0" max="100" value="45">
+                            </div>
+                            <div class="col-mv-6">
+                                <label for="font-size-eng" class="form-label">Set Font Size</label>
+                                <input type="number" class="form-control font-size mb-2" id="font-size-eng" value="28">
+                            </div>
+                            <div class="col-mv-6">
+                                <label for="position-eng-img" class="form-label">Image Position X (%)</label>
+                                <input type="number" class="form-control positionEngImg mb-2" id="position-eng-img" value="50">
+                            </div>
+                            <div class="col-mv-6">
+                                <label for="image-zoom-eng" class="form-label">Image Zoom (%)</label>
+                                <input type="number" class="form-control image-zoom-eng mb-2" id="image-zoom-eng" min="50" max="200" step="5" value="145">
+                            </div>
+                            <div class="col-mdd-6">
+                                <label for="line-height-eng" class="form-label">Set Line Height</label>
+                                <input type="number" class="form-control line-height mb-2" id="line-height-eng" step="0.1" value="1.3">
+                            </div>
+                            <div class="col-mdd-6">
+                                <label for="text-max-width-eng" class="form-label">Text Max Width (px)</label>
+                                <input type="number" class="form-control text-max-width mb-2" id="text-max-width-eng" value="450">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-1 d-flex align-items-center justify-content-center">
+                    <button type="button" class="btn btn-success download-btn" style="padding: 15px 20px;">
+                        <i class="bi bi-download me-2"></i>Download
+                    </button>
+                </div>
+                <div class="col-md-7 col-lg-8">
+                    <div style="width: 540px; margin: 0 auto;">
+                        <div id="imagePost" style="width: 540px; height: 675px; position: relative;">
+                            <div class="logo-container" style="position: absolute; top: 45px; left: 38px; z-index: 10; cursor: pointer;">
+                                <img class="logo-image" style="width: 126.85px; height: 32px; display: block;" src="images/LogoW.png" alt="Forbes Logo">
+                            </div>
+                            <div class="bg-img my-0 mx-auto" style="height:100%; position: relative; background-color: #000;">
+                                <div class="image-shadow-group" style="position: absolute; top: 0; left: 0; right: 0; height: 100%; transition: transform 0.3s ease;">
+                                    <div class="background-image Position_Set" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+                                    <img class="shadow-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.1);" src="images/Shadow.png" alt="">
+                                </div>
+                                <div class="bottom-gradient" style="position: absolute; bottom: 0; left: 0; right: 0; height: 300px; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.765) 30%, rgba(0,0,0,0.425) 60%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 5;"></div>
+                            </div>
+                            <div class="text-div Margin_Set" style="position: absolute; bottom:100px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 450px; display: flex; flex-direction: column; align-items: center; z-index: 10;" dir="ltr">
+                                <img class="breaking_news_image" style="width: 85px; margin-bottom: 10px; display: block;" src="images/BN.png" alt="">
+                                <div class="english-border" style="border-top: 6.5px solid red; position: relative; width: 77.5px; margin-bottom: 15px;"></div>
+                                <p class="post-data-preview" style="font-size: 28px; font-family:EuclidCircularB-Semibold; color: #fff; margin: 0; text-align: center; line-height: 1.3; max-width: 450px; word-wrap: break-word;"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="d-none" id="arabic-post-template-with-img" style="margin-top: 10px; margin-bottom: 30px;">
+        <div class="container-fluid">
+            <div class="row align-items-start">
+                <div class="col-md-4 col-lg-3" style="padding-top: 0;">
+                    <div id="bloc2" class="cool" style="margin-top: 0;">
+                        <form action="">
+                            <div class="col-mv-6">
+                                <label for="bottom-margin-ar" class="form-label">Set Bottom Margin</label>
+                                <input type="number" class="form-control targetAr mb-2" id="bottom-margin-ar" value="100">
+                            </div>
+                            <div class="col-mv-6">
+                                <label for="image-vertical-ar" class="form-label">Move Image Up (px)</label>
+                                <input type="number" class="form-control image-vertical-ar mb-2" id="image-vertical-ar" value="0">
+                            </div>
+                            <div class="col-mv-6">
+                                <label for="shadow-height-ar" class="form-label">Shadow Height (px)</label>
+                                <input type="number" class="form-control shadow-height mb-2" id="shadow-height-ar" step="10" value="300">
+                            </div>
+                            <div class="col-mv-6">
+                                <label for="shadow-opacity-ar" class="form-label">Shadow Opacity (%)</label>
+                                <input type="number" class="form-control shadow-opacity mb-2" id="shadow-opacity-ar" min="0" max="100" value="45">
+                            </div>
+                            <div class="col-mv-6">
+                                <label for="font-size-ar" class="form-label">Set Font Size</label>
+                                <input type="number" class="form-control font-size mb-2" id="font-size-ar" value="28">
+                            </div>
+                            <div class="col-mv-6">
+                                <label for="position-ar-img" class="form-label">Image Position X (%)</label>
+                                <input type="number" class="form-control positionArImg mb-2" id="position-ar-img" value="50">
+                            </div>
+                            <div class="col-mv-6">
+                                <label for="image-zoom-ar" class="form-label">Image Zoom (%)</label>
+                                <input type="number" class="form-control image-zoom-ar mb-2" id="image-zoom-ar" min="50" max="200" step="5" value="145">
+                            </div>
+                            <div class="col-mdd-6">
+                                <label for="line-height-ar" class="form-label">Set Line Height</label>
+                                <input type="number" class="form-control line-height mb-2" id="line-height-ar" step="0.1" value="1.3">
+                            </div>
+                            <div class="col-mdd-6">
+                                <label for="text-max-width-ar" class="form-label">Text Max Width (px)</label>
+                                <input type="number" class="form-control text-max-width mb-2" id="text-max-width-ar" value="450">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-1 d-flex align-items-center justify-content-center">
+                    <button type="button" class="btn btn-success download-btn" style="padding: 15px 20px;">
+                        <i class="bi bi-download me-2"></i>Download
+                    </button>
+                </div>
+                <div class="col-md-7 col-lg-8">
+                    <div style="width: 540px; margin: 0 auto;">
+                        <div id="arabicPost" style="width: 540px; height: 675px; position: relative;">
+                            <div class="logo-container" style="position: absolute; top: 45px; left: 38px; z-index: 10; cursor: pointer;">
+                                <img class="logo-image" style="width: 126.85px; height: 32px; display: block;" src="images/LogoW.png" alt="Forbes Logo">
+                            </div>
+                            <div class="bg-img my-0 mx-auto" style="height:100%; position: relative; background-color: #000;">
+                                <div class="image-shadow-group" style="position: absolute; top: 0; left: 0; right: 0; height: 100%; transition: transform 0.3s ease;">
+                                    <div class="background-image Position_Set" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+                                    <img class="shadow-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.1);" src="images/Shadow.png" alt="">
+                                </div>
+                                <div class="bottom-gradient" style="position: absolute; bottom: 0; left: 0; right: 0; height: 300px; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.765) 30%, rgba(0,0,0,0.425) 60%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 5;"></div>
+                            </div>
+                            <div class="text-div Margin_Set" style="position: absolute; bottom:100px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 450px; display: flex; flex-direction: column; align-items: center; z-index: 10;" dir="rtl">
+                                <img class="breaking_news_image" style="width: 85px; margin-bottom: 10px; display: block;" src="images/ajil.png" alt="">
+                                <div class="arabic-border" style="border-top: 6.5px solid red; position: relative; direction: rtl; width: 77.5px; margin-bottom: 15px;"></div>
+                                <p class="post-data-preview" style="font-size: 28px; color: #fff; margin: 0; text-align: center; line-height: 1.3; max-width: 450px; word-wrap: break-word;"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ===== STOCK MARKET APP ===== -->
+<div id="stock-app" class="app-section">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <h1 class="title ml-6" style="margin-top: 60px;">Stock Market Template Generator</h1>
+        </div>
+    </nav>
+    <div class="container is-fluid mt-6">
+        <div class="columns">
+            <div class="column is-one-quarter"></div>
+            <div class="column is-one-quarter">
+                <div class="field">
+                    <label class="label">Header Text</label>
+                    <div class="control">
+                        <div class="select is-fullwidth mb-2">
+                            <select id="header_text_select">
+                                <option value="">-- Select Preset or Type Below --</option>
+                                <option value="افتتاح الأسواق الأميركية">افتتاح الأسواق الأميركية</option>
+                                <option value="إغلاق الأسواق الأميركية">إغلاق الأسواق الأميركية</option>
+                                <option value="إغلاق الأسواق الأوروبية">إغلاق الأسواق الأوروبية</option>
+                                <option value="إغلاق الأسواق الآسيوية">إغلاق الأسواق الآسيوية</option>
+                                <option value="إغلاق الأسواق العربية">إغلاق الأسواق العربية</option>
+                                <option value="أسعار النفط">أسعار النفط</option>
+                                <option value="أسعار المعادن">أسعار المعادن</option>
+                            </select>
+                        </div>
+                        <input class="input" type="text" id="header_text" placeholder="Or type custom header text">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Language</label>
+                    <div class="control">
+                        <div class="select">
+                            <select name="language" id="language">
+                                <option value="">Select language</option>
+                                <option value="en">English</option>
+                                <option value="ar">Arabic</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input class="input" type="hidden" value="#2A2826" id="header_background" placeholder="Header Background Color">
+                    </div>
+                </div>
+            </div>
+            <div class="column is-one-quarter" id="rows_data">
+                <div class="field">
+                    <label class="label">Stock Market Total Rows</label>
+                    <div class="control">
+                        <div class="select">
+                            <select name="rows_generator" id="rows_generator">
+                                <option>Select Number Of Rows</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input class="input" type="hidden" value="#2A2826" id="rows_bg" placeholder="Rows Background Color">
+                    </div>
+                </div>
+                <div class="control">
+                    <button id="add_rows" class="button is-link is-light">Add Rows</button>
+                    <button id="refresh_page" class="button is-link is-light">Refresh</button>
+                    <button id="fetch_live_data" class="button is-success is-light">Fetch Live Data</button>
+                </div>
+            </div>
+        </div>
+        <div class="column is-one-quarter"></div>
+        <!-- Note for Arab Markets -->
+        <div class="columns is-centered" id="arab_markets_note" style="display: none; margin-top: 15px;">
+            <div class="column is-11">
+                <div style="background: #fdf6e3; border: 1px solid #d4c4a8; border-radius: 8px; padding: 14px 20px;">
+                    <p style="color: #5c5141; font-size: 0.95rem; margin-bottom: 10px;">
+                        <strong>Note:</strong> To double check and any data issues, please take numbers from the official country stock website:
+                    </p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <a href="https://www.saudiexchange.sa/wps/portal/tadawul/home/" target="_blank" style="background: #e8dcc8; color: #5c5141; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: 500;">السوق السعودي</a>
+                        <a href="https://www.adx.ae/English/Pages/default.aspx" target="_blank" style="background: #e8dcc8; color: #5c5141; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: 500;">سوق أبوظبي</a>
+                        <a href="https://www.dfm.ae/" target="_blank" style="background: #e8dcc8; color: #5c5141; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: 500;">سوق دبي</a>
+                        <a href="https://www.boursakuwait.com.kw/en/" target="_blank" style="background: #e8dcc8; color: #5c5141; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: 500;">بورصة الكويت</a>
+                        <a href="https://www.qe.com.qa/" target="_blank" style="background: #e8dcc8; color: #5c5141; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: 500;">بورصة قطر</a>
+                        <a href="https://www.msx.om/" target="_blank" style="background: #e8dcc8; color: #5c5141; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: 500;">سوق مسقط</a>
+                        <a href="https://www.bahrainbourse.com/" target="_blank" style="background: #e8dcc8; color: #5c5141; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: 500;">بورصة البحرين</a>
+                        <a href="https://www.bloomberg.com/quote/EGX30:IND" target="_blank" style="background: #e8dcc8; color: #5c5141; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: 500;">بورصة مصر</a>
+                        <a href="https://www.ase.com.jo/en" target="_blank" style="background: #e8dcc8; color: #5c5141; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: 500;">بورصة الأردن</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Note for Other Markets (CNBC) -->
+        <div class="columns is-centered" id="other_markets_note" style="display: none; margin-top: 15px;">
+            <div class="column is-11">
+                <div style="background: #e8f4f8; border: 1px solid #b8d4e3; border-radius: 8px; padding: 14px 20px;">
+                    <p style="color: #3d5a6c; font-size: 0.95rem; margin: 0;">
+                        <strong>Note:</strong> To double check and any data issues, check the main source:
+                        <a href="https://www.cnbc.com/world/?region=world" target="_blank" style="background: #c9e2ed; color: #3d5a6c; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: 500; margin-left: 8px;">CNBC World Markets</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="columns is-multiline is-centered" id="dynamic_columns_generator"></div>
+        <div class="columns is-centered" id="preview_button_container">
+            <div class="control">
+                <button id="preview_modal" class="button is-primary modal-button" data-target="modal-ter" aria-haspopup="true">Preview</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modal_previewer">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Preview</p>
+                <button class="button is-success mr-4" id="download_image">Download Image</button>
+                <button class="delete" id="close_modal" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body" id="capture_area">
+                <div class="header-preview columns is-vcentered" id="modal_header">
+                    <div class="column is-one-third header-column">
+                        <img width="180px" style="margin-left:20px" id="forbes_logo" src="images/LogoWhite.png">
+                    </div>
+                    <div class="column has-text-white has-text-centered">
+                        <h1 id="header_text_modal"></h1>
+                    </div>
+                </div>
+                <div id="stock_data_container"></div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- ===== IMAGE OPTIMIZER APP ===== -->
+<div id="optimizer-app" class="app-section">
+    <div class="optimizer-container">
+        <h2 class="optimizer-title">Image Optimizer</h2>
+        <div class="optimizer-dropzone" id="optimizer-dropzone">
+            <i class="bi bi-cloud-arrow-up"></i>
+            <p>Drop an image here or click to upload</p>
+            <input type="file" id="optimizer-file-input" accept="image/*">
+        </div>
+        <div class="optimizer-progress" id="optimizer-progress">
+            <div class="optimizer-progress-bar"><div class="optimizer-progress-fill" id="optimizer-progress-fill"></div></div>
+            <div class="optimizer-progress-text" id="optimizer-progress-text">Processing...</div>
+        </div>
+        <div class="optimizer-results" id="optimizer-results">
+            <div style="text-align: center;">
+                <div class="crop-stage" id="opt-crop-stage" style="display: inline-block; margin-bottom: 15px;">
+                    <img class="optimizer-preview" id="optimizer-preview" src="" alt="Preview" style="display:block; margin:0;">
+                    <div class="crop-overlay" id="opt-crop-overlay" style="display:none;">
+                        <div class="crop-overlay-shadow" id="opt-crop-shadow-top"></div>
+                        <div class="crop-overlay-shadow" id="opt-crop-shadow-bottom"></div>
+                        <div class="crop-overlay-shadow" id="opt-crop-shadow-left"></div>
+                        <div class="crop-overlay-shadow" id="opt-crop-shadow-right"></div>
+                    </div>
+                    <div class="crop-box" id="opt-crop-box" style="display:none;">
+                        <div class="crop-box-grid"></div>
+                        <div class="crop-handle crop-handle-nw" data-handle="nw"></div>
+                        <div class="crop-handle crop-handle-ne" data-handle="ne"></div>
+                        <div class="crop-handle crop-handle-sw" data-handle="sw"></div>
+                        <div class="crop-handle crop-handle-se" data-handle="se"></div>
+                        <div class="crop-handle crop-handle-n" data-handle="n"></div>
+                        <div class="crop-handle crop-handle-s" data-handle="s"></div>
+                        <div class="crop-handle crop-handle-w" data-handle="w"></div>
+                        <div class="crop-handle crop-handle-e" data-handle="e"></div>
+                        <div class="crop-dim-label" id="opt-crop-dim-label">0 x 0</div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin: 15px 0;">
+                <button class="optimizer-crop-toggle" id="optimizer-crop-toggle">
+                    <i class="bi bi-aspect-ratio"></i> Change aspect ratio to 3:2
+                </button>
+            </div>
+            <div class="optimizer-info">
+                <div class="optimizer-info-item">
+                    <div class="optimizer-info-label">Original Size</div>
+                    <div class="optimizer-info-value" id="opt-original-size">-</div>
+                </div>
+                <div class="optimizer-info-item">
+                    <div class="optimizer-info-label">New Size</div>
+                    <div class="optimizer-info-value green" id="opt-new-size">-</div>
+                </div>
+                <div class="optimizer-info-item">
+                    <div class="optimizer-info-label">Original Dimensions</div>
+                    <div class="optimizer-info-value" id="opt-original-dims">-</div>
+                </div>
+                <div class="optimizer-info-item">
+                    <div class="optimizer-info-label">New Dimensions</div>
+                    <div class="optimizer-info-value green" id="opt-new-dims">-</div>
+                </div>
+                <div class="optimizer-info-item">
+                    <div class="optimizer-info-label">Reduction</div>
+                    <div class="optimizer-info-value green" id="opt-reduction">-</div>
+                </div>
+                <div class="optimizer-info-item">
+                    <div class="optimizer-info-label">Format</div>
+                    <div class="optimizer-info-value" id="opt-format">JPG</div>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button class="optimizer-download-btn" id="optimizer-download">
+                    <i class="bi bi-download"></i> Download Optimized Image
+                </button>
+                <br>
+                <button class="optimizer-download-btn" id="optimizer-reset" style="background: #333; margin-top: 10px;">
+                    <i class="bi bi-arrow-repeat"></i> Optimize Another Image
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+// ===== APP NAVIGATION =====
+function showApp(app) {
+    // Hide all sections
+    $('#landing-page, #template-app, #stock-app, #optimizer-app').removeClass('active');
+
+    if (app === 'landing') {
+        $('#landing-page').addClass('active');
+        $('#back-btn').hide();
+    } else if (app === 'template') {
+        $('#template-app').addClass('active');
+        $('#back-btn').show();
+        // Reset template to input view
+        $('#input-template').removeClass('d-none');
+        $('#english-post-template-with-img').addClass('d-none');
+        $('#arabic-post-template-with-img').addClass('d-none');
+    } else if (app === 'stock') {
+        $('#stock-app').addClass('active');
+        $('#back-btn').show();
+    } else if (app === 'optimizer') {
+        $('#optimizer-app').addClass('active');
+        $('#back-btn').show();
+        // Auto-trigger file upload dialog
+        if ($('#optimizer-dropzone').is(':visible')) {
+            $('#optimizer-file-input').click();
+        }
+    }
+}
+
+// ===== TEMPLATE APP JS =====
+(function() {
+    let currentLogoColor = "whiteLogo";
+
+    $(document).ready(function() {
+        // Toggle logo color when clicked
+        $('#template-app').on('click', '.logo-container', function() {
+            if (currentLogoColor === "whiteLogo") {
+                currentLogoColor = "blackLogo";
+                $('#template-app .logo-image').attr('src', 'images/LogoB.png');
+            } else {
+                currentLogoColor = "whiteLogo";
+                $('#template-app .logo-image').attr('src', 'images/LogoW.png');
+            }
+        });
+
+        // Margin Controls
+        $(".targetEng").change(function() {
+            $("#imagePost .Margin_Set").css("bottom", $(this).val() + "px");
+        });
+        $(".targetAr").change(function() {
+            $("#arabicPost .Margin_Set").css("bottom", $(this).val() + "px");
+        });
+
+        // Font Controls
+        $(".font-size").change(function() {
+            $(".post-data-preview").css("font-size", $(this).val() + "px");
+        });
+
+        // Bar Width Control
+        $(".bar-width").change(function() {
+            $(".english-border, .arabic-border").css("width", $(this).val() + "px");
+        });
+
+        // Bar Height Control
+        $(".bar-height").change(function() {
+            $(".english-border, .arabic-border").css("border-top-width", $(this).val() + "px");
+        });
+
+        // Text Max Width Control
+        $(".text-max-width").change(function() {
+            $(".post-data-preview").css("max-width", $(this).val() + "px");
+        });
+
+        // Image Vertical Position Control
+        $(".image-vertical-eng").change(function() {
+            $("#imagePost .image-shadow-group").css("transform", "translateY(-" + $(this).val() + "px)");
+        });
+        $(".image-vertical-ar").change(function() {
+            $("#arabicPost .image-shadow-group").css("transform", "translateY(-" + $(this).val() + "px)");
+        });
+
+        // Shadow Opacity Control
+        $(".shadow-opacity").change(function() {
+            let value = parseInt($(this).val());
+            if (value < 0) value = 0;
+            if (value > 100) value = 100;
+            $(this).val(value);
+            const opacity = value / 100;
+            const gradientStyle = `linear-gradient(to top, rgba(0,0,0,${opacity}) 0%, rgba(0,0,0,${opacity * 0.7}) 40%, rgba(0,0,0,${opacity * 0.3}) 70%, rgba(0,0,0,0) 100%)`;
+            $(".bottom-gradient").css("background", gradientStyle);
+        });
+
+        // Shadow Height Control
+        $(".shadow-height").change(function() {
+            $(".bottom-gradient").css("height", $(this).val() + "px");
+        });
+
+        // Image Position X
+        $(".positionEngImg").change(function() {
+            const yPos = $(".positionEngImgY").val() || 0;
+            $("#imagePost .background-image").css("background-position", $(this).val() + "% " + yPos + "%");
+        });
+        $(".positionArImg").change(function() {
+            const yPos = $(".positionArImgY").val() || 0;
+            $("#arabicPost .background-image").css("background-position", $(this).val() + "% " + yPos + "%");
+        });
+
+        // Image Position Y
+        $(".positionEngImgY").change(function() {
+            const xPos = $(".positionEngImg").val() || 50;
+            $("#imagePost .background-image").css("background-position", xPos + "% " + $(this).val() + "%");
+        });
+        $(".positionArImgY").change(function() {
+            const xPos = $(".positionArImg").val() || 50;
+            $("#arabicPost .background-image").css("background-position", xPos + "% " + $(this).val() + "%");
+        });
+
+        // Image Zoom Control
+        $(".image-zoom-eng").change(function() {
+            $("#imagePost .background-image").css("background-size", $(this).val() + "%");
+        });
+        $(".image-zoom-ar").change(function() {
+            $("#arabicPost .background-image").css("background-size", $(this).val() + "%");
+        });
+
+        // Line Height
+        $(".line-height").change(function() {
+            $(".post-data-preview").css("line-height", $(this).val());
+        });
+
+        // Post Size Toggle
+        $('.post-size').change(function() {
+            const postSize = $(this).val();
+            if (postSize === 'square') {
+                $("#imagePost, #arabicPost").css({ width: '1050px', height: '1050px' });
+                $("#template-app .logo-container").css({"top": "90px", "left": "76px"});
+                $("#template-app .logo-image").css({"width": "253.7px", "height": "64px"});
+                $(".font-size").val(56);
+                $(".post-data-preview").css("font-size", "56px");
+                $(".bar-width").val(155);
+                $(".bar-height").val(13);
+            } else {
+                $("#imagePost, #arabicPost").css({ width: '540px', height: '675px' });
+                $("#template-app .logo-container").css({"top": "45px", "left": "38px"});
+                $("#template-app .logo-image").css({"width": "126.85px", "height": "32px"});
+                $(".font-size").val(28);
+                $(".post-data-preview").css("font-size", "28px");
+                $(".bar-width").val(77.5);
+                $(".bar-height").val(6.5);
+            }
+        });
+
+        // Image Upload Handler
+        $('#post-img').change(function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    $('.background-image').css('background-image', 'url(' + e.target.result + ')');
+                    $('#img-src').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        // Download Handler
+        $('#template-app').on('click', '.download-btn', function() {
+            const postContent = $('#english-post-template-with-img').is(':visible') ?
+                document.querySelector('#imagePost') :
+                document.querySelector('#arabicPost');
+            const scale = 2;
+            html2canvas(postContent, {
+                scale: scale,
+                useCORS: true,
+                allowTaint: true,
+                logging: false
+            }).then(canvas => {
+                canvas.toBlob(blob => {
+                    saveAs(blob, 'forbes-post.png');
+                });
+            });
+        });
+
+        // Template Submit Handler
+        $('#template-submit').click(function() {
+            const textValue = $('#data').val().trim();
+            if (!textValue) {
+                alert('Please enter some text for the post.');
+                return;
+            }
+
+            const language = $('.select-language').val();
+            const showBreaking = $('.show_breaking').val() === 'true';
+            const logoColor = $('.logo_color').val();
+
+            if (logoColor === 'blackLogo') {
+                $('#template-app .logo-image').attr('src', 'images/LogoB.png');
+                currentLogoColor = "blackLogo";
+            } else {
+                $('#template-app .logo-image').attr('src', 'images/LogoW.png');
+                currentLogoColor = "whiteLogo";
+            }
+
+            $('.breaking_news_image').toggle(showBreaking);
+
+            const postSize = $('.post-size').val();
+            if (postSize === 'square') {
+                $("#imagePost, #arabicPost").css({ width: '1050px', height: '1050px' });
+                $("#template-app .logo-container").css({"top": "90px", "left": "76px"});
+                $("#template-app .logo-image").css({"width": "253.7px", "height": "64px"});
+                $(".font-size").val(56);
+                $(".post-data-preview").css("font-size", "56px");
+            } else {
+                $("#imagePost, #arabicPost").css({ width: '540px', height: '675px' });
+                $("#template-app .logo-container").css({"top": "45px", "left": "38px"});
+                $("#template-app .logo-image").css({"width": "126.85px", "height": "32px"});
+                $(".font-size").val(28);
+                $(".post-data-preview").css("font-size", "28px");
+            }
+
+            if (language === 'English') {
+                $('#english-post-template-with-img').removeClass('d-none');
+                $('#arabic-post-template-with-img').addClass('d-none');
+                $('#imagePost .post-data-preview').text($('#data').val());
+            } else {
+                $('#arabic-post-template-with-img').removeClass('d-none');
+                $('#english-post-template-with-img').addClass('d-none');
+                $('#arabicPost .post-data-preview').text($('#data').val());
+            }
+            $('#input-template').addClass('d-none');
+        });
+    });
+})();
+
+// ===== STOCK MARKET APP JS =====
+(function() {
+    $(document).ready(function() {
+        const presetConfig = {
+            'افتتاح الأسواق الأميركية': {
+                rows: 3, companies: ['DJIA', 'S&P 500', 'NASDAQ'],
+                symbols: ['.DJI', '.SPX', '.IXIC'], language: 'en'
+            },
+            'إغلاق الأسواق الأميركية': {
+                rows: 3, companies: ['DJIA', 'S&P 500', 'NASDAQ'],
+                symbols: ['.DJI', '.SPX', '.IXIC'], language: 'en'
+            },
+            'إغلاق الأسواق الأوروبية': {
+                rows: 5, companies: ['DAX', 'FTSE', 'CAC', 'FTSE MIB', 'STOXX 600'],
+                symbols: ['.GDAXI', '.FTSE', '.FCHI', '.FTMIB', '.STOXX'], language: 'en'
+            },
+            'إغلاق الأسواق الآسيوية': {
+                rows: 6, companies: ['Nikkei', 'Shanghai', 'HSI', 'ASX 200', 'KOSPI', 'NIFTY'],
+                symbols: ['.N225', '.SSEC', '.HSI', '.AXJO', '.KS11', '.NSEI'], language: 'en'
+            },
+            'إغلاق الأسواق العربية': {
+                rows: 9,
+                companies: ['السوق السعودي', 'سوق أبوظبي', 'سوق دبي', 'بورصة الكويت', 'بورصة قطر', 'سوق مسقط', 'بورصة البحرين', 'بورصة مصر', 'بورصة الأردن'],
+                symbols: [],
+                zagtraderIds: [10696, 1130, 1128, 10905, 11552],
+                msxIndex: 5, bahrainIndex: 6, egyptIndex: 7, jordanIndex: 8,
+                language: 'ar'
+            },
+            'أسعار النفط': {
+                rows: 3, companies: ['BRENT', 'WTI CRUDE', 'NAT GAS'],
+                symbols: ['@LCO.1', '@CL.1', '@NG.1'], language: 'en'
+            },
+            'أسعار المعادن': {
+                rows: 5, companies: ['GOLD', 'SILVER', 'COPPER', 'PLATINUM', 'PALLADIUM'],
+                symbols: ['@GC.1', '@SI.1', '@HG.1', '@PL.1', '@PA.1'], language: 'en'
+            }
+        };
+
+        const arabMarketLinks = {
+            'السوق السعودي': 'https://www.saudiexchange.sa/wps/portal/tadawul/home/',
+            'سوق أبوظبي': 'https://www.adx.ae/English/Pages/default.aspx',
+            'سوق دبي': 'https://www.dfm.ae/',
+            'بورصة الكويت': 'https://www.boursakuwait.com.kw/en/',
+            'بورصة قطر': 'https://www.qe.com.qa/',
+            'سوق مسقط': 'https://www.msx.om/',
+            'بورصة البحرين': 'https://www.bahrainbourse.com/',
+            'بورصة مصر': 'https://www.bloomberg.com/quote/EGX30:IND',
+            'بورصة الأردن': 'https://www.ase.com.jo/en'
+        };
+
+        function checkForZeroValues() {
+            const companyInputs = $("input[name='company_name[]']");
+            const valueInputs = $("input[name='value_number[]']");
+            const changeInputs = $("input[name='inc_dev_value[]']");
+            const percentInputs = $("input[name='percentage_value[]']");
+            $('.zero-value-link').remove();
+            $('.zero-value-row').removeClass('zero-value-row');
+            companyInputs.each(function(index) {
+                const companyName = $(this).val();
+                const value = $(valueInputs[index]).val();
+                const change = $(changeInputs[index]).val();
+                const percent = $(percentInputs[index]).val();
+                const numValue = parseFloat(value.replace(/,/g, '')) || 0;
+                const numChange = parseFloat(change.replace(/[,+\-]/g, '')) || 0;
+                const numPercent = parseFloat(percent.replace(/[%+\-]/g, '')) || 0;
+                const hasZero = (numValue === 0 || numChange === 0 || numPercent === 0 || value === '' || change === '' || percent === '');
+                if (hasZero && companyName && arabMarketLinks[companyName]) {
+                    const row = $(this).closest('.column');
+                    row.addClass('zero-value-row');
+                    const link = arabMarketLinks[companyName];
+                    const linkHtml = `<a href="${link}" target="_blank" class="zero-value-link">Get Data ➜</a>`;
+                    $(percentInputs[index]).closest('.field').after(linkHtml);
+                }
+            });
+        }
+
+        const CNBC_API_BASE = 'https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol';
+        const ZAGTRADER_API_BASE = 'https://zagtrader.prod.cnbcarabia.com/api/PriceQuoteAPI.php';
+        const MUBASHER_API_BASE = 'https://www.mubasher.info/api/1/markets';
+        const CORS_PROXIES = [
+            'https://api.allorigins.win/raw?url=',
+            'https://corsproxy.io/?',
+            'https://api.codetabs.com/v1/proxy?quest='
+        ];
+
+        async function fetchWithProxy(url) {
+            const promises = CORS_PROXIES.map(async (proxy) => {
+                const proxyUrl = proxy + encodeURIComponent(url);
+                const response = await fetch(proxyUrl);
+                if (!response.ok) throw new Error('Not ok');
+                return await response.json();
+            });
+            try {
+                return await Promise.any(promises);
+            } catch (error) {
+                console.error('All proxies failed for:', url);
+                return null;
+            }
+        }
+
+        async function fetchMSXData() {
+            try {
+                const data = await fetchWithProxy(MUBASHER_API_BASE + '/MSM');
+                if (data && data.priceBar) return data.priceBar;
+                return null;
+            } catch (error) { return null; }
+        }
+
+        async function fetchJordanData() {
+            try {
+                const data = await fetchWithProxy(MUBASHER_API_BASE + '/ASE');
+                if (data && data.priceBar) return data.priceBar;
+                return null;
+            } catch (error) { return null; }
+        }
+
+        async function fetchBahrainData() {
+            try {
+                const data = await fetchWithProxy(MUBASHER_API_BASE + '/BB');
+                if (data && data.priceBar) return data.priceBar;
+                return null;
+            } catch (error) { return null; }
+        }
+
+        async function fetchEgyptData() {
+            try {
+                const data = await fetchWithProxy(MUBASHER_API_BASE + '/EGX');
+                if (data && data.priceBar) return data.priceBar;
+                return null;
+            } catch (error) { return null; }
+        }
+
+        async function fetchCNBCData(symbols) {
+            const symbolsParam = symbols.join('|');
+            const url = `${CNBC_API_BASE}?symbols=${symbolsParam}&requestMethod=itv&noCache=${Date.now()}&fund=1&exthrs=1&output=json&events=1`;
+            try {
+                const response = await fetch(url);
+                return await response.json();
+            } catch (error) {
+                alert('Error fetching data from CNBC.');
+                return null;
+            }
+        }
+
+        async function fetchZagTraderData(tickerIds) {
+            const promises = tickerIds.map(async (tickerId) => {
+                try {
+                    const url = `${ZAGTRADER_API_BASE}?tickerId=${tickerId}&marketIndexOnly=0&outputType=json`;
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    if (data && data.code === "R200" && data.data && data.data.list && data.data.list.length > 0) {
+                        return data.data.list[0];
+                    }
+                    return null;
+                } catch (error) { return null; }
+            });
+            const results = await Promise.all(promises);
+            return results.filter(r => r !== null);
+        }
+
+        function fillFormWithZagTraderData(quotes, companies, msxIndex, msxData, bahrainIndex, bahrainData, egyptIndex, egyptData, jordanIndex, jordanData) {
+            const companyInputs = $("input[name='company_name[]']");
+            const valueInputs = $("input[name='value_number[]']");
+            const changeInputs = $("input[name='inc_dev_value[]']");
+            const percentInputs = $("input[name='percentage_value[]']");
+
+            quotes.forEach((quote, index) => {
+                if (index < companyInputs.length) {
+                    $(companyInputs[index]).val(companies[index]);
+                    let priceVal = parseFloat(quote.lastPrice).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    $(valueInputs[index]).val(priceVal);
+                    let changeNum = parseFloat(quote.lastDelta || '0');
+                    let changeVal = Math.abs(changeNum).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    changeVal = changeNum >= 0 ? '+' + changeVal : '-' + changeVal;
+                    $(changeInputs[index]).val(changeVal);
+                    let pctVal = String(quote.changePercent || '0').replace('%', '').replace('+', '').replace('-', '').trim();
+                    pctVal = Math.abs(parseFloat(pctVal)).toFixed(2) + '%';
+                    $(percentInputs[index]).val(pctVal);
+                }
+            });
+
+            // Fill Mubasher markets (Muscat, Bahrain, Egypt, Jordan)
+            [
+                { idx: msxIndex, data: msxData },
+                { idx: bahrainIndex, data: bahrainData },
+                { idx: egyptIndex, data: egyptData },
+                { idx: jordanIndex, data: jordanData }
+            ].forEach(({ idx, data }) => {
+                if (idx !== undefined && data) {
+                    $(companyInputs[idx]).val(companies[idx]);
+                    $(valueInputs[idx]).val(data.value || '');
+                    let changeVal = String(data.change || '0');
+                    if (!changeVal.startsWith('-') && !changeVal.startsWith('+')) {
+                        changeVal = parseFloat(changeVal.replace(/,/g, '')) >= 0 ? '+' + changeVal : changeVal;
+                    }
+                    $(changeInputs[idx]).val(changeVal);
+                    let pctVal = String(data.changePercentage || '0').replace('%', '').replace('+', '').replace('-', '').trim();
+                    pctVal = Math.abs(parseFloat(pctVal)).toFixed(2) + '%';
+                    $(percentInputs[idx]).val(pctVal);
+                }
+            });
+        }
+
+        const symbolDisplayNames = {
+            '.DJI': 'DJIA', '.SPX': 'S&P 500', '.IXIC': 'NASDAQ',
+            '.GDAXI': 'DAX', '.FTSE': 'FTSE', '.FCHI': 'CAC', '.FTMIB': 'FTSE MIB', '.STOXX': 'STOXX 600',
+            '.N225': 'Nikkei', '.SSEC': 'Shanghai', '.HSI': 'HSI', '.AXJO': 'ASX 200', '.KS11': 'KOSPI', '.NSEI': 'NIFTY',
+            '@LCO.1': 'BRENT', '@CL.1': 'WTI CRUDE', '@NG.1': 'NAT GAS',
+            '@GC.1': 'GOLD', '@SI.1': 'SILVER', '@HG.1': 'COPPER', '@PL.1': 'PLATINUM', '@PA.1': 'PALLADIUM'
+        };
+
+        function fillFormWithData(stockData) {
+            if (!stockData || !stockData.FormattedQuoteResult || !stockData.FormattedQuoteResult.FormattedQuote) {
+                alert('No data received from CNBC');
+                return;
+            }
+            const quotes = stockData.FormattedQuoteResult.FormattedQuote;
+            const companyInputs = $("input[name='company_name[]']");
+            const valueInputs = $("input[name='value_number[]']");
+            const changeInputs = $("input[name='inc_dev_value[]']");
+            const percentInputs = $("input[name='percentage_value[]']");
+            quotes.forEach((quote, index) => {
+                if (index < companyInputs.length) {
+                    let displayName = symbolDisplayNames[quote.symbol] || quote.shortName || quote.name;
+                    $(companyInputs[index]).val(displayName);
+                    $(valueInputs[index]).val(quote.last);
+                    let changeVal = quote.change;
+                    if (!changeVal.startsWith('-') && !changeVal.startsWith('+')) {
+                        changeVal = parseFloat(changeVal.replace(/,/g, '')) >= 0 ? '+' + changeVal : changeVal;
+                    }
+                    $(changeInputs[index]).val(changeVal);
+                    let pctVal = quote.change_pct || quote.changePct || '';
+                    pctVal = pctVal.replace('%', '').replace('+', '').replace('-', '').trim();
+                    pctVal = Math.abs(parseFloat(pctVal) || 0).toFixed(2) + '%';
+                    $(percentInputs[index]).val(pctVal);
+                }
+            });
+        }
+
+        // Fetch Live Data
+        $('#fetch_live_data').click(async function() {
+            const selectedPreset = $('#header_text_select').val();
+            if (!selectedPreset) { alert('Please select a market preset first.'); return; }
+            const config = presetConfig[selectedPreset];
+            if (!config) { alert('Invalid preset selected.'); return; }
+            $(this).addClass('is-loading');
+
+            if (config.zagtraderIds && config.zagtraderIds.length > 0) {
+                const [zagData, msxData, bahrainData, egyptData, jordanData] = await Promise.all([
+                    fetchZagTraderData(config.zagtraderIds),
+                    config.msxIndex !== undefined ? fetchMSXData() : Promise.resolve(null),
+                    config.bahrainIndex !== undefined ? fetchBahrainData() : Promise.resolve(null),
+                    config.egyptIndex !== undefined ? fetchEgyptData() : Promise.resolve(null),
+                    config.jordanIndex !== undefined ? fetchJordanData() : Promise.resolve(null)
+                ]);
+                $(this).removeClass('is-loading');
+                if (zagData && zagData.length > 0) {
+                    fillFormWithZagTraderData(zagData, config.companies, config.msxIndex, msxData, config.bahrainIndex, bahrainData, config.egyptIndex, egyptData, config.jordanIndex, jordanData);
+                    checkForZeroValues();
+                } else {
+                    alert('Error fetching Arab markets data. Please try again.');
+                }
+            } else if (config.symbols && config.symbols.length > 0) {
+                const data = await fetchCNBCData(config.symbols);
+                $(this).removeClass('is-loading');
+                if (data) fillFormWithData(data);
+            } else {
+                $(this).removeClass('is-loading');
+                alert('Live data is not available for this market. Please enter data manually.');
+            }
+        });
+
+        function generateRows(numRows, companies) {
+            companies = companies || [];
+            $('#dynamic_columns_generator').html('');
+            for (var i = 0; i < numRows; i++) {
+                let companyName = companies[i] || '';
+                let row = `<div class="column is-one-quarter">
+                    <div class="field"><label class="label">Company Name</label><div class="control"><input class="input" type="text" name="company_name[]" placeholder="Enter Company Name" value="${companyName}"></div></div>
+                    <div class="field"><label class="label">Value</label><div class="control"><input class="input" type="text" name="value_number[]" placeholder="Enter Value"></div></div>
+                    <div class="field"><label class="label">Increase or Decrease Value</label><div class="control"><input class="input" type="text" name="inc_dev_value[]" placeholder="Enter Value"></div></div>
+                    <div class="field"><label class="label">Enter Percentage</label><div class="control"><input class="input" type="text" name="percentage_value[]" placeholder="Enter Percentage"></div></div>
+                </div>`;
+                $('#dynamic_columns_generator').append(row);
+            }
+            $('#preview_button_container').css('display', 'flex');
+        }
+
+        // Header preset selection
+        $('#header_text_select').change(function() {
+            let selectedValue = $(this).val();
+            if (selectedValue !== "") {
+                $('#header_text').val(selectedValue);
+                $('.zero-value-link').remove();
+                $('.zero-value-row').removeClass('zero-value-row');
+                if (selectedValue === 'إغلاق الأسواق العربية') {
+                    $('#arab_markets_note').show();
+                    $('#other_markets_note').hide();
+                } else {
+                    $('#arab_markets_note').hide();
+                    $('#other_markets_note').show();
+                }
+                if (presetConfig[selectedValue]) {
+                    let config = presetConfig[selectedValue];
+                    $('#rows_generator').val(config.rows);
+                    generateRows(config.rows, config.companies);
+                    if (config.language) $('#language').val(config.language);
+                }
+            }
+        });
+
+        $('#header_text').on('input', function() { $('#header_text_select').val(''); });
+        $('#refresh_page').click(function() { showApp('stock'); });
+
+        // Add Rows
+        $('#add_rows').click(function() {
+            let rows_generator = $('#rows_generator').val();
+            if (rows_generator != null) {
+                for (var i = 1; i <= rows_generator; i++) {
+                    let row = `<div class="column is-one-quarter">
+                        <div class="field"><label class="label">Company Name</label><div class="control"><input class="input" type="text" name="company_name[]" placeholder="Enter Company Name"></div></div>
+                        <div class="field"><label class="label">Value</label><div class="control"><input class="input" type="text" name="value_number[]" placeholder="Enter Value"></div></div>
+                        <div class="field"><label class="label">Increase or Decrease Value</label><div class="control"><input class="input" type="text" name="inc_dev_value[]" placeholder="Enter Value"></div></div>
+                        <div class="field"><label class="label">Enter Percentage</label><div class="control"><input class="input" type="text" name="percentage_value[]" placeholder="Enter Percentage"></div></div>
+                    </div>`;
+                    $('#dynamic_columns_generator').append(row);
+                    $('#preview_button_container').css('display', 'flex');
+                }
+            }
+        });
+
+        // Preview Modal
+        $('#preview_modal').click(function() {
+            let companies = $("input[name='company_name[]']").map(function() { return $(this).val(); }).get();
+            let value_numbers = $("input[name='value_number[]']").map(function() { return $(this).val(); }).get();
+            let inc_dev_values = $("input[name='inc_dev_value[]']").map(function() { return $(this).val(); }).get();
+            let percentage_values = $("input[name='percentage_value[]']").map(function() { return $(this).val(); }).get();
+            $('#stock_data_container').html('');
+
+            for (var i = 0; i < companies.length; i++) {
+                let header_bg_color = "#3d3d3d";
+                $('#modal_header').css('background', header_bg_color);
+                let header_text = $('#header_text').val();
+                $('#header_text_modal').html(header_text);
+                let rows_bg_color = "background:#fff;";
+                let text_color = "";
+                let row_custom_color = "";
+                let icon = "";
+
+                if (inc_dev_values[i].includes("+")) {
+                    text_color = "color:#fff;";
+                    row_custom_color = "background: #00a652;";
+                    icon = "<span class='arrow-up'></span>";
+                } else if (inc_dev_values[i].includes("-")) {
+                    text_color = "color:#fff;";
+                    row_custom_color = "background: #e21f25;";
+                    icon = "<span class='arrow-down'></span>";
+                } else {
+                    text_color = "color:#fff;";
+                    row_custom_color = "background: #00a652;";
+                    icon = "<span class='arrow-up'></span>";
+                }
+
+                let data = `<div class="body-preview columns" style="${rows_bg_color} max-height:60px;">
+                    <div class="columns column is-three-fifths" style="padding:0; margin:0;">
+                        <div class="column is-half" style="margin:auto">
+                            <p style="padding-left:20px;" class="company_name has-custom-text"><b>${companies[i]}</b></p>
+                        </div>
+                        <div class="column is-half has-text-centered" style="margin:auto">
+                            <p class="company_value has-custom-text">${value_numbers[i]}</p>
+                        </div>
+                    </div>
+                    <div class="column" style="${row_custom_color} border-radius:9px; padding:0px">
+                        <div class="is-flex" style="height: 100%;">
+                            <div class="column is-half has-text-centered" style="padding-left: 20px; margin: auto; ${text_color}">
+                                <span class="inc_dec"><b>${inc_dev_values[i]}</b></span>
+                            </div>
+                            <div class="column has-text-right" style="margin:auto;">
+                                <span class="percentage" style="${text_color} float:right;"><b>${percentage_values[i]}</b>${icon}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+
+                if ($("#language").val() == "ar") {
+                    $('#stock_data_container').css('direction', 'rtl');
+                    $('#stock_data_container').addClass('arabic-template');
+                    $('#capture_area').addClass('arabic-template');
+                } else {
+                    $('#stock_data_container').css('direction', 'ltr');
+                }
+                $('#stock_data_container').append(data);
+            }
+            $('#modal_previewer').addClass('is-active');
+        });
+
+        $('#close_modal').click(function() { $('#modal_previewer').removeClass('is-active'); });
+
+        function convertImageToBase64(img) {
+            return new Promise((resolve) => {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                resolve(canvas.toDataURL('image/png'));
+            });
+        }
+
+        // Download image
+        $('#download_image').click(async function() {
+            const captureArea = document.getElementById('capture_area');
+            const headerText = $('#header_text').val() || 'stock-market';
+            const fileName = headerText.replace(/\s+/g, '-') + '-' + new Date().toISOString().slice(0, 10) + '.png';
+            $(this).addClass('is-loading');
+            const logoImg = document.getElementById('forbes_logo');
+            const originalSrc = logoImg.src;
+            try {
+                const base64Logo = await convertImageToBase64(logoImg);
+                logoImg.src = base64Logo;
+            } catch (e) {}
+
+            const modalBody = $('#capture_area');
+            const originalOverflow = modalBody.css('overflow');
+            const originalHeight = modalBody.css('height');
+            const originalMaxHeight = modalBody.css('max-height');
+            modalBody.css({ 'overflow': 'visible', 'height': 'auto', 'max-height': 'none' });
+
+            html2canvas(captureArea, {
+                backgroundColor: '#ffffff',
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                scrollX: 0, scrollY: 0,
+                windowWidth: captureArea.scrollWidth,
+                windowHeight: captureArea.scrollHeight
+            }).then(canvas => {
+                modalBody.css({ 'overflow': originalOverflow, 'height': originalHeight, 'max-height': originalMaxHeight });
+                logoImg.src = originalSrc;
+                const link = document.createElement('a');
+                link.download = fileName;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                $('#download_image').removeClass('is-loading');
+            }).catch(err => {
+                modalBody.css({ 'overflow': originalOverflow, 'height': originalHeight, 'max-height': originalMaxHeight });
+                logoImg.src = originalSrc;
+                alert('Error generating image. Please try again.');
+                $('#download_image').removeClass('is-loading');
+            });
+        });
+    });
+})();
+
+// ===== IMAGE OPTIMIZER APP JS =====
+(function() {
+    let optimizedBlob = null;
+    let preCropBlob = null;
+    let preCropDims = null;
+    let originalFileName = '';
+    let origSizeBytes = 0;
+    // Inline crop state
+    let optCropImg = null;
+    let optCropRatio = '3:2';
+    let optBox = { x: 0, y: 0, w: 0, h: 0 };
+    let optDispW = 0, optDispH = 0, optScale = 1;
+    let optDragging = null;
+    let optDragStart = { mx: 0, my: 0, bx: 0, by: 0, bw: 0, bh: 0 };
+    const optRatios = { 'free': null, '3:2': 3/2, '2:3': 2/3, '16:9': 16/9, '9:16': 9/16, '1:1': 1 };
+
+    function optClampBox() {
+        optBox.x = Math.max(0, Math.min(optBox.x, optDispW - optBox.w));
+        optBox.y = Math.max(0, Math.min(optBox.y, optDispH - optBox.h));
+        optBox.w = Math.min(optBox.w, optDispW - optBox.x);
+        optBox.h = Math.min(optBox.h, optDispH - optBox.y);
+        if (optBox.w < 20) optBox.w = 20;
+        if (optBox.h < 20) optBox.h = 20;
+    }
+
+    function optInitBox() {
+        const ratio = optRatios[optCropRatio];
+        if (ratio) {
+            if (optDispW / optDispH > ratio) {
+                optBox.h = optDispH * 0.85;
+                optBox.w = optBox.h * ratio;
+            } else {
+                optBox.w = optDispW * 0.85;
+                optBox.h = optBox.w / ratio;
+            }
+        } else {
+            optBox.w = optDispW * 0.85;
+            optBox.h = optDispH * 0.85;
+        }
+        optBox.x = (optDispW - optBox.w) / 2;
+        optBox.y = (optDispH - optBox.h) / 2;
+        optClampBox();
+    }
+
+    function optUpdateUI() {
+        var cb = document.getElementById('opt-crop-box');
+        cb.style.left = optBox.x + 'px';
+        cb.style.top = optBox.y + 'px';
+        cb.style.width = optBox.w + 'px';
+        cb.style.height = optBox.h + 'px';
+        document.getElementById('opt-crop-shadow-top').style.cssText = 'top:0;left:0;right:0;height:' + optBox.y + 'px;';
+        document.getElementById('opt-crop-shadow-bottom').style.cssText = 'bottom:0;left:0;right:0;height:' + (optDispH - optBox.y - optBox.h) + 'px;';
+        document.getElementById('opt-crop-shadow-left').style.cssText = 'top:' + optBox.y + 'px;left:0;width:' + optBox.x + 'px;height:' + optBox.h + 'px;';
+        document.getElementById('opt-crop-shadow-right').style.cssText = 'top:' + optBox.y + 'px;right:0;width:' + (optDispW - optBox.x - optBox.w) + 'px;height:' + optBox.h + 'px;';
+        var rw = Math.round(optBox.w / optScale), rh = Math.round(optBox.h / optScale);
+        document.getElementById('opt-crop-dim-label').textContent = rw + ' x ' + rh;
+    }
+
+    function optGetPos(e) {
+        var rect = document.getElementById('opt-crop-stage').getBoundingClientRect();
+        var touch = e.touches ? e.touches[0] : e;
+        return { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
+    }
+
+    function optOnDown(e) {
+        e.preventDefault();
+        var pos = optGetPos(e);
+        var target = e.target;
+        if (target.dataset && target.dataset.handle) optDragging = target.dataset.handle;
+        else if (target.id === 'opt-crop-box' || target.classList.contains('crop-box-grid')) optDragging = 'move';
+        else return;
+        optDragStart = { mx: pos.x, my: pos.y, bx: optBox.x, by: optBox.y, bw: optBox.w, bh: optBox.h };
+        document.addEventListener('mousemove', optOnMove);
+        document.addEventListener('mouseup', optOnUp);
+        document.addEventListener('touchmove', optOnMove, { passive: false });
+        document.addEventListener('touchend', optOnUp);
+    }
+
+    function optOnMove(e) {
+        if (!optDragging) return;
+        e.preventDefault();
+        var pos = optGetPos(e);
+        var dx = pos.x - optDragStart.mx, dy = pos.y - optDragStart.my;
+        var ratio = optRatios[optCropRatio], MIN = 30;
+        if (optDragging === 'move') {
+            optBox.x = optDragStart.bx + dx;
+            optBox.y = optDragStart.by + dy;
+            optBox.w = optDragStart.bw;
+            optBox.h = optDragStart.bh;
+            optClampBox();
+        } else {
+            var nX = optDragStart.bx, nY = optDragStart.by, nW = optDragStart.bw, nH = optDragStart.bh;
+            if (optDragging === 'se') { nW += dx; nH += dy; }
+            else if (optDragging === 'sw') { nW -= dx; nH += dy; nX += dx; }
+            else if (optDragging === 'ne') { nW += dx; nH -= dy; nY += dy; }
+            else if (optDragging === 'nw') { nW -= dx; nH -= dy; nX += dx; nY += dy; }
+            else if (optDragging === 'n') { nH -= dy; nY += dy; if (ratio) nW = nH * ratio; }
+            else if (optDragging === 's') { nH += dy; if (ratio) nW = nH * ratio; }
+            else if (optDragging === 'w') { nW -= dx; nX += dx; if (ratio) nH = nW / ratio; }
+            else if (optDragging === 'e') { nW += dx; if (ratio) nH = nW / ratio; }
+            if (ratio && 'se sw ne nw'.includes(optDragging)) {
+                if (Math.abs(dx) > Math.abs(dy)) nH = nW / ratio; else nW = nH * ratio;
+                if (optDragging === 'sw') nX = optDragStart.bx + optDragStart.bw - nW;
+                if (optDragging === 'ne') nY = optDragStart.by + optDragStart.bh - nH;
+                if (optDragging === 'nw') { nX = optDragStart.bx + optDragStart.bw - nW; nY = optDragStart.by + optDragStart.bh - nH; }
+            }
+            if (nW < MIN) { nW = MIN; if (ratio) nH = nW / ratio; }
+            if (nH < MIN) { nH = MIN; if (ratio) nW = nH * ratio; }
+            if (nX < 0) { nW += nX; nX = 0; if (ratio) nH = nW / ratio; }
+            if (nY < 0) { nH += nY; nY = 0; if (ratio) nW = nH * ratio; }
+            if (nX + nW > optDispW) { nW = optDispW - nX; if (ratio) nH = nW / ratio; }
+            if (nY + nH > optDispH) { nH = optDispH - nY; if (ratio) nW = nH * ratio; }
+            optBox.x = nX; optBox.y = nY; optBox.w = Math.max(MIN, nW); optBox.h = Math.max(MIN, nH);
+        }
+        optUpdateUI();
+    }
+
+    function optOnUp() {
+        optDragging = null;
+        document.removeEventListener('mousemove', optOnMove);
+        document.removeEventListener('mouseup', optOnUp);
+        document.removeEventListener('touchmove', optOnMove);
+        document.removeEventListener('touchend', optOnUp);
+    }
+
+    $(document).ready(function() {
+        const dropzone = document.getElementById('optimizer-dropzone');
+        const fileInput = document.getElementById('optimizer-file-input');
+
+        dropzone.addEventListener('click', () => fileInput.click());
+        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+        dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('dragover');
+            if (e.dataTransfer.files.length) processFile(e.dataTransfer.files[0]);
+        });
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length) processFile(fileInput.files[0]);
+        });
+
+        $('#optimizer-reset').click(function() {
+            optimizedBlob = null;
+            preCropBlob = null;
+            preCropDims = null;
+            optCropImg = null;
+            $('#optimizer-results').hide();
+            $('#optimizer-download, #optimizer-reset').hide();
+            $('#optimizer-crop-toggle').hide().removeClass('active').data('state', 'idle');
+            $('#optimizer-crop-toggle').html('<i class="bi bi-aspect-ratio"></i> Change aspect ratio to 3:2');
+            $('#opt-crop-overlay, #opt-crop-box').hide();
+            $('#optimizer-dropzone').show();
+            $('#optimizer-file-input').val('');
+        });
+
+        $('#optimizer-download').click(function() {
+            if (!optimizedBlob) return;
+            const baseName = originalFileName.replace(/\.[^.]+$/, '') || 'image';
+            saveAs(optimizedBlob, baseName + '-optimized.jpg');
+        });
+
+        // Crop toggle: 3 states — crop / confirm / undo
+        $('#optimizer-crop-toggle').click(function() {
+            var state = $(this).data('state') || 'idle';
+
+            if (state === 'idle') {
+                // Show crop overlay
+                $(this).data('state', 'cropping').addClass('active');
+                $(this).html('<i class="bi bi-check-lg"></i> Confirm Crop');
+                var previewImg = document.getElementById('optimizer-preview');
+                if (!optCropImg) {
+                    var img = new Image();
+                    img.onload = function() {
+                        optCropImg = img;
+                        setupCropOverlay(previewImg);
+                    };
+                    img.src = previewImg.src;
+                } else {
+                    setupCropOverlay(previewImg);
+                }
+            } else if (state === 'cropping') {
+                // Confirm crop
+                if (!optCropImg) return;
+                // Save pre-crop state for undo
+                preCropBlob = optimizedBlob;
+                preCropDims = $('#opt-new-dims').text();
+                var sx = Math.round(optBox.x / optScale);
+                var sy = Math.round(optBox.y / optScale);
+                var sw = Math.round(optBox.w / optScale);
+                var sh = Math.round(optBox.h / optScale);
+                var canvas = document.createElement('canvas');
+                canvas.width = sw; canvas.height = sh;
+                canvas.getContext('2d').drawImage(optCropImg, sx, sy, sw, sh, 0, 0, sw, sh);
+                canvas.toBlob(function(blob) {
+                    optimizedBlob = blob;
+                    optCropImg = null;
+                    $('#optimizer-preview').attr('src', URL.createObjectURL(blob));
+                    $('#opt-new-size').text(formatSize(blob.size));
+                    $('#opt-new-dims').text(sw + ' x ' + sh);
+                    var reduction = ((1 - blob.size / origSizeBytes) * 100).toFixed(1);
+                    $('#opt-reduction').text(reduction + '% smaller');
+                    $('#opt-crop-overlay, #opt-crop-box').hide();
+                    $('#optimizer-crop-toggle').data('state', 'cropped').removeClass('active');
+                    $('#optimizer-crop-toggle').html('<i class="bi bi-arrow-counterclockwise"></i> Undo Crop');
+                }, 'image/jpeg', 0.92);
+            } else if (state === 'cropped') {
+                // Undo crop — restore pre-crop state
+                if (!preCropBlob) return;
+                optimizedBlob = preCropBlob;
+                preCropBlob = null;
+                optCropImg = null;
+                $('#optimizer-preview').attr('src', URL.createObjectURL(optimizedBlob));
+                $('#opt-new-size').text(formatSize(optimizedBlob.size));
+                $('#opt-new-dims').text(preCropDims);
+                var reduction = ((1 - optimizedBlob.size / origSizeBytes) * 100).toFixed(1);
+                $('#opt-reduction').text(reduction + '% smaller');
+                $('#optimizer-crop-toggle').data('state', 'idle').removeClass('active');
+                $('#optimizer-crop-toggle').html('<i class="bi bi-aspect-ratio"></i> Change aspect ratio to 3:2');
+            }
+        });
+
+        function setupCropOverlay(previewImg) {
+            optDispW = previewImg.clientWidth;
+            optDispH = previewImg.clientHeight;
+            optScale = previewImg.clientWidth / optCropImg.width;
+            var overlay = document.getElementById('opt-crop-overlay');
+            overlay.style.width = optDispW + 'px';
+            overlay.style.height = optDispH + 'px';
+            optCropRatio = '3:2';
+            optInitBox();
+            optUpdateUI();
+            $('#opt-crop-overlay, #opt-crop-box').show();
+        }
+
+        // Pointer events on optimizer crop box
+        var optCropBox = document.getElementById('opt-crop-box');
+        optCropBox.addEventListener('mousedown', optOnDown);
+        optCropBox.addEventListener('touchstart', optOnDown, { passive: false });
+
+        function formatSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+        }
+
+        function processFile(file) {
+            if (!file.type.startsWith('image/')) { alert('Please upload an image file.'); return; }
+            originalFileName = file.name;
+            const originalSize = file.size;
+            const isJpg = file.type === 'image/jpeg';
+            const TARGET_SIZE = 200 * 1024;
+
+            if (isJpg && originalSize <= TARGET_SIZE) {
+                const img = new Image();
+                img.onload = function() {
+                    const minSide = Math.min(img.width, img.height);
+                    if (minSide <= 1000) {
+                        optimizedBlob = file;
+                        $('#optimizer-dropzone').hide();
+                        finishOptimization(img.width, img.height, img.width, img.height, originalSize, originalSize);
+                        return;
+                    }
+                    startProcessing(file, originalSize, img);
+                };
+                img.src = URL.createObjectURL(file);
+                return;
+            }
+            startProcessing(file, originalSize, null);
+        }
+
+        function startProcessing(file, originalSize, preloadedImg) {
+            const TARGET_SIZE = 200 * 1024;
+            $('#optimizer-dropzone').hide();
+            $('#optimizer-results').hide();
+            $('#optimizer-crop-toggle').hide().removeClass('active');
+
+            $('#opt-crop-overlay, #opt-crop-box').hide();
+            optCropImg = null;
+            $('#optimizer-progress').show();
+            $('#optimizer-progress-fill').css('width', '10%');
+            $('#optimizer-progress-text').text('Loading image...');
+
+            function doProcess(img) {
+                $('#optimizer-progress-fill').css('width', '30%');
+                $('#optimizer-progress-text').text('Resizing...');
+                const origW = img.width, origH = img.height;
+                let newW = origW, newH = origH;
+                const minSide = Math.min(origW, origH);
+                if (minSide > 1000) {
+                    const scale = 1000 / minSide;
+                    newW = Math.round(origW * scale);
+                    newH = Math.round(origH * scale);
+                }
+                const canvas = document.createElement('canvas');
+                canvas.width = newW; canvas.height = newH;
+                canvas.getContext('2d').drawImage(img, 0, 0, newW, newH);
+                $('#optimizer-progress-fill').css('width', '60%');
+                $('#optimizer-progress-text').text('Compressing to JPG...');
+                let quality = 0.85;
+                function tryCompress() {
+                    canvas.toBlob(function(result) {
+                        if (result.size <= TARGET_SIZE || quality <= 0.1) {
+                            optimizedBlob = result;
+                            finishOptimization(origW, origH, newW, newH, originalSize, result.size);
+                        } else {
+                            quality -= 0.05;
+                            $('#optimizer-progress-fill').css('width', (60 + (0.85 - quality) / 0.75 * 30) + '%');
+                            $('#optimizer-progress-text').text('Compressing... (quality: ' + Math.round(quality * 100) + '%)');
+                            tryCompress();
+                        }
+                    }, 'image/jpeg', quality);
+                }
+                tryCompress();
+            }
+
+            if (preloadedImg) { doProcess(preloadedImg); }
+            else {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() { doProcess(img); };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function finishOptimization(origW, origH, newW, newH, originalSize, newSize) {
+            origSizeBytes = originalSize;
+            $('#optimizer-progress-fill').css('width', '100%');
+            $('#optimizer-progress-text').text('Done!');
+            $('#optimizer-preview').attr('src', URL.createObjectURL(optimizedBlob));
+            $('#opt-original-size').text(formatSize(originalSize));
+            $('#opt-new-size').text(formatSize(newSize));
+            $('#opt-original-dims').text(origW + ' x ' + origH);
+            $('#opt-new-dims').text(newW + ' x ' + newH);
+            const reduction = ((1 - newSize / originalSize) * 100).toFixed(1);
+            $('#opt-reduction').text(reduction + '% smaller');
+            setTimeout(function() {
+                $('#optimizer-progress').hide();
+                $('#optimizer-results').show();
+                $('#optimizer-download').show();
+                $('#optimizer-reset').show();
+                $('#optimizer-crop-toggle').show();
+            }, 500);
+        }
+    });
+})();
+
+</script>
+
+</body>
+</html>
