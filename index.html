@@ -1605,6 +1605,7 @@ function showApp(app) {
     let preCropDims = null;
     let originalFileName = '';
     let origSizeBytes = 0;
+    let originalImageSrc = null; // stores original uploaded image data URL (before compression)
     // Inline crop state
     let optCropImg = null;
     let optCropRatio = '3:2';
@@ -1750,6 +1751,7 @@ function showApp(app) {
             preCropBlob = null;
             preCropDims = null;
             optCropImg = null;
+            originalImageSrc = null;
             $('#optimizer-results').hide();
             $('#optimizer-download, #optimizer-reset').hide();
             $('#optimizer-crop-toggle').hide().removeClass('active').data('state', 'idle');
@@ -1770,22 +1772,18 @@ function showApp(app) {
             var state = $(this).data('state') || 'idle';
 
             if (state === 'idle') {
-                // Show crop overlay
+                // Show crop overlay — load from ORIGINAL image (not compressed)
                 $(this).data('state', 'cropping').addClass('active');
                 $(this).html('<i class="bi bi-check-lg"></i> Confirm Crop');
                 var previewImg = document.getElementById('optimizer-preview');
-                if (!optCropImg) {
-                    var img = new Image();
-                    img.onload = function() {
-                        optCropImg = img;
-                        setupCropOverlay(previewImg);
-                    };
-                    img.src = previewImg.src;
-                } else {
+                var img = new Image();
+                img.onload = function() {
+                    optCropImg = img;
                     setupCropOverlay(previewImg);
-                }
+                };
+                img.src = originalImageSrc;
             } else if (state === 'cropping') {
-                // Confirm crop
+                // Confirm crop — crop from original, then re-compress like a new upload
                 if (!optCropImg) return;
                 // Save pre-crop state for undo
                 preCropBlob = optimizedBlob;
@@ -1794,21 +1792,48 @@ function showApp(app) {
                 var sy = Math.round(optBox.y / optScale);
                 var sw = Math.round(optBox.w / optScale);
                 var sh = Math.round(optBox.h / optScale);
-                var canvas = document.createElement('canvas');
-                canvas.width = sw; canvas.height = sh;
-                canvas.getContext('2d').drawImage(optCropImg, sx, sy, sw, sh, 0, 0, sw, sh);
-                canvas.toBlob(function(blob) {
-                    optimizedBlob = blob;
-                    optCropImg = null;
-                    $('#optimizer-preview').attr('src', URL.createObjectURL(blob));
-                    $('#opt-new-size').text(formatSize(blob.size));
-                    $('#opt-new-dims').text(sw + ' x ' + sh);
-                    var reduction = ((1 - blob.size / origSizeBytes) * 100).toFixed(1);
-                    $('#opt-reduction').text(reduction + '% smaller');
-                    $('#opt-crop-overlay, #opt-crop-box').hide();
-                    $('#optimizer-crop-toggle').data('state', 'cropped').removeClass('active');
-                    $('#optimizer-crop-toggle').html('<i class="bi bi-arrow-counterclockwise"></i> Undo Crop');
-                }, 'image/jpeg', 0.92);
+                // Crop from original image
+                var cropCanvas = document.createElement('canvas');
+                cropCanvas.width = sw; cropCanvas.height = sh;
+                cropCanvas.getContext('2d').drawImage(optCropImg, sx, sy, sw, sh, 0, 0, sw, sh);
+                // Now run full compression pipeline on the cropped image (resize + compress to <200KB)
+                var cropImg = new Image();
+                cropImg.onload = function() {
+                    var cW = cropImg.width, cH = cropImg.height;
+                    var nW = cW, nH = cH;
+                    var minSide = Math.min(cW, cH);
+                    if (minSide > 1000) {
+                        var s = 1000 / minSide;
+                        nW = Math.round(cW * s);
+                        nH = Math.round(cH * s);
+                    }
+                    var compCanvas = document.createElement('canvas');
+                    compCanvas.width = nW; compCanvas.height = nH;
+                    compCanvas.getContext('2d').drawImage(cropImg, 0, 0, nW, nH);
+                    var TARGET = 200 * 1024;
+                    var q = 0.85;
+                    function tryCropCompress() {
+                        compCanvas.toBlob(function(result) {
+                            if (result.size <= TARGET || q <= 0.1) {
+                                optimizedBlob = result;
+                                optCropImg = null;
+                                $('#optimizer-preview').attr('src', URL.createObjectURL(result));
+                                $('#opt-new-size').text(formatSize(result.size));
+                                $('#opt-new-dims').text(nW + ' x ' + nH);
+                                var reduction = ((1 - result.size / origSizeBytes) * 100).toFixed(1);
+                                $('#opt-reduction').text(reduction + '% smaller');
+                                $('#opt-crop-overlay, #opt-crop-box').hide();
+                                $('#optimizer-crop-toggle').data('state', 'cropped').removeClass('active');
+                                $('#optimizer-crop-toggle').html('<i class="bi bi-arrow-counterclockwise"></i> Undo Crop');
+                            } else {
+                                q -= 0.05;
+                                tryCropCompress();
+                            }
+                        }, 'image/jpeg', q);
+                    }
+                    tryCropCompress();
+                };
+                cropImg.src = cropCanvas.toDataURL();
             } else if (state === 'cropped') {
                 // Undo crop — restore pre-crop state
                 if (!preCropBlob) return;
@@ -1855,6 +1880,13 @@ function showApp(app) {
             const originalSize = file.size;
             const isJpg = file.type === 'image/jpeg';
             const TARGET_SIZE = 200 * 1024;
+
+            // Store original image for crop (before any compression)
+            var reader = new FileReader();
+            reader.onload = function(ev) {
+                originalImageSrc = ev.target.result;
+            };
+            reader.readAsDataURL(file);
 
             if (isJpg && originalSize <= TARGET_SIZE) {
                 const img = new Image();
