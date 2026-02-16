@@ -1628,15 +1628,15 @@ function showApp(app) {
         const ratio = optRatios[optCropRatio];
         if (ratio) {
             if (optDispW / optDispH > ratio) {
-                optBox.h = optDispH * 0.85;
+                optBox.h = optDispH;
                 optBox.w = optBox.h * ratio;
             } else {
-                optBox.w = optDispW * 0.85;
+                optBox.w = optDispW;
                 optBox.h = optBox.w / ratio;
             }
         } else {
-            optBox.w = optDispW * 0.85;
-            optBox.h = optDispH * 0.85;
+            optBox.w = optDispW;
+            optBox.h = optDispH;
         }
         optBox.x = (optDispW - optBox.w) / 2;
         optBox.y = (optDispH - optBox.h) / 2;
