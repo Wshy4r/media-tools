@@ -343,11 +343,6 @@
             font-weight: normal;
         }
 
-        /* Force stock app to always render at desktop width */
-        #stock-app {
-            min-width: 1100px;
-            overflow-x: auto;
-        }
         #stock-app #dynamic_columns_generator .column {
             border: 1px solid;
             padding: 10px;
@@ -355,7 +350,6 @@
         }
         #stock-app .has-custom-text { color: #333333; }
         #stock-app .columns { margin-bottom: 20px !important; border-radius: 10px; }
-        #stock-app .columns .column { flex: none; }
         #stock-app #preview_button_container { display: none; }
         #stock-app #header_text_modal { font-weight: 700; font-size: 32px; }
         #stock-app .header-preview, #stock-app .body-preview {
@@ -400,6 +394,17 @@
             margin: 0 auto;
             max-height: 100vh !important;
             width: 1000px !important;
+        }
+        @media screen and (max-width: 1024px) {
+            #stock-app .modal-card {
+                transform-origin: top center;
+                overflow: visible !important;
+            }
+            #stock-app .modal {
+                overflow: auto !important;
+                align-items: flex-start !important;
+                padding-top: 10px;
+            }
         }
 
         /* ===== TEMPLATE STYLES ===== */
@@ -1535,6 +1540,15 @@ function showApp(app) {
                 $('#stock_data_container').append(data);
             }
             $('#modal_previewer').addClass('is-active');
+            // Scale modal to fit on mobile
+            var modalCard = $('#modal_previewer .modal-card');
+            var vw = window.innerWidth;
+            if (vw < 1000) {
+                var s = (vw - 20) / 1000;
+                modalCard.css('transform', 'scale(' + s + ')');
+            } else {
+                modalCard.css('transform', 'none');
+            }
         });
 
         $('#close_modal').click(function() { $('#modal_previewer').removeClass('is-active'); });
