@@ -390,20 +390,11 @@
             background: linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 152, 0, 0.15) 100%) !important;
             border-color: #ffb347 !important;
         }
-        #stock-app .modal-card, #stock-app .modal-content {
-            margin: 0 auto;
-            max-height: 100vh !important;
-            width: 1000px !important;
-        }
-        @media screen and (max-width: 1024px) {
-            #stock-app .modal-card {
-                transform-origin: top center;
-                overflow: visible !important;
-            }
-            #stock-app .modal {
-                overflow: auto !important;
-                align-items: flex-start !important;
-                padding-top: 10px;
+        @media screen and (min-width: 769px), print {
+            #stock-app .modal-card, #stock-app .modal-content {
+                margin: 0 auto;
+                max-height: 100vh !important;
+                width: 1000px !important;
             }
         }
 
@@ -1540,15 +1531,6 @@ function showApp(app) {
                 $('#stock_data_container').append(data);
             }
             $('#modal_previewer').addClass('is-active');
-            // Scale modal to fit on mobile
-            var modalCard = $('#modal_previewer .modal-card');
-            var vw = window.innerWidth;
-            if (vw < 1000) {
-                var s = (vw - 20) / 1000;
-                modalCard.css('transform', 'scale(' + s + ')');
-            } else {
-                modalCard.css('transform', 'none');
-            }
         });
 
         $('#close_modal').click(function() { $('#modal_previewer').removeClass('is-active'); });
