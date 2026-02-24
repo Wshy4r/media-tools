@@ -399,32 +399,116 @@
         }
 
         /* ===== TEMPLATE STYLES ===== */
-        #template-app #input-template .post-data-preview {
+        #template-app {
+            padding: 20px;
+            font-family: 'EuclidCircularB-Semibold', sans-serif;
+        }
+        .template-3col {
+            display: flex;
+            gap: 24px;
+            max-width: 1200px;
+            margin: 40px auto 0;
+            align-items: flex-start;
+        }
+        .template-col-left,
+        .template-col-right {
+            width: 220px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .template-col-left label,
+        .template-col-right label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 2px;
+            display: block;
+        }
+        .template-col-left select,
+        .template-col-left input,
+        .template-col-left textarea,
+        .template-col-right select,
+        .template-col-right input {
+            width: 100%;
+            padding: 7px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 13px;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+        .template-col-left textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .template-col-left select:focus,
+        .template-col-left input:focus,
+        .template-col-left textarea:focus,
+        .template-col-right select:focus,
+        .template-col-right input:focus {
+            outline: none;
+            border-color: #333;
+        }
+        .template-col-center {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .template-upload-area {
+            width: 100%;
+            padding: 15px;
+            border: 2px dashed #ddd;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            color: #999;
+            font-size: 12px;
+            transition: border-color 0.2s;
+        }
+        .template-upload-area:hover {
+            border-color: #333;
+        }
+        .template-upload-area.has-image {
+            border-style: solid;
+            border-color: #333;
+            color: #333;
+        }
+        #template-app .post-data-preview {
             font-family: "EuclidCircularB-Semibold" !important;
         }
-        #template-app #arabic-post-template-with-img .post-data-preview {
+        #template-app .arabic-mode .post-data-preview {
             font-family: "GE SS Two Medium" !important;
         }
         #template-app .background-image {
-            background-size: cover;
-            background-position: center top;
+            background-size: 145%;
+            background-position: 50% 0%;
             background-repeat: no-repeat;
             height: 100%;
             width: 100%;
         }
-        #template-app #imagePost, #template-app #arabicPost {
+        #template-app #imagePost {
             position: relative;
             overflow: hidden;
         }
-        #template-app .download-btn {
-            margin-top: 10px;
-            padding: 12px 24px;
-            font-weight: bold;
-            transition: all 0.3s ease;
+        #template-app .template-download-btn {
+            margin-top: 12px;
+            padding: 10px 28px;
+            background: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
         }
-        #template-app .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        #template-app .template-download-btn:hover {
+            background: #111;
+            transform: translateY(-1px);
         }
         #template-app .logo-container {
             position: absolute;
@@ -438,17 +522,75 @@
             height: 32px;
             display: block;
         }
-        #template-app #english-post-template-with-img .container-fluid,
-        #template-app #arabic-post-template-with-img .container-fluid {
-            padding-top: 0;
+
+        /* ===== GOLD TEMPLATE STYLES ===== */
+        #gold-app {
+            padding: 20px;
+            font-family: 'EuclidCircularB-Semibold', sans-serif;
         }
-        #template-app #english-post-template-with-img .row,
-        #template-app #arabic-post-template-with-img .row {
-            margin-top: 0;
+        .gold-canvas-container {
+            width: 540px;
+            height: 675px;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+            border-radius: 4px;
         }
-        #template-app #bloc1, #template-app #bloc2 {
-            margin-top: 0;
-            padding-top: 0;
+        .gold-canvas-container .gold-logo {
+            position: absolute;
+            top: 40px;
+            left: 35px;
+            width: 127px;
+            z-index: 5;
+        }
+        .gold-canvas-container .gold-text-block {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 5;
+            width: 85%;
+        }
+        .gold-canvas-container .gold-title {
+            font-family: 'EuclidCircularB-Semibold', sans-serif;
+            font-size: 80px;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+            line-height: 1.1;
+        }
+        .gold-canvas-container .gold-subtitle {
+            font-family: 'EuclidCircularB-Semibold', sans-serif;
+            font-size: 50px;
+            color: #fff;
+            margin: 8px 0 0 0;
+            font-weight: 600;
+        }
+        .gold-canvas-container .gold-caption {
+            font-family: 'EuclidCircularB-Semibold', sans-serif;
+            font-size: 30px;
+            color: #fff;
+            margin: 0;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+        .gold-download-btn {
+            margin-top: 15px;
+            padding: 12px 30px;
+            background: #c9a84c;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .gold-download-btn:hover {
+            background: #b8963f;
+            transform: translateY(-1px);
         }
     </style>
 </head>
@@ -476,6 +618,11 @@
                 <div class="tool-card-title">Image Optimizer</div>
                 <div class="tool-card-desc">Compress, resize and convert images to JPG under 200KB</div>
             </div>
+            <div class="tool-card" onclick="showApp('gold')">
+                <span class="tool-card-icon"><i class="bi bi-gem"></i></span>
+                <div class="tool-card-title">Gold Template</div>
+                <div class="tool-card-desc">Generate gold price graphics with custom background and text</div>
+            </div>
         </div>
     </div>
 </div>
@@ -487,198 +634,108 @@
 
 <!-- ===== SOCIAL MEDIA TEMPLATE APP ===== -->
 <div id="template-app" class="app-section">
-    <section id="input-template" style="margin-top: 80px;">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <form class="row g-3">
-                        <select class="form-select custom-select select-language">
-                            <option disabled>Select Language</option>
-                            <option value="English" selected>English</option>
-                            <option value="Arabic">Arabic</option>
-                        </select>
-                        <select class="form-select custom-select show_breaking">
-                            <option disabled>Show Breaking Image</option>
-                            <option value="true">Yes</option>
-                            <option value="false" selected>No</option>
-                        </select>
-                        <select class="form-select custom-select logo_color">
-                            <option disabled>Logo Color</option>
-                            <option value="blackLogo">Black</option>
-                            <option value="whiteLogo" selected>White</option>
-                        </select>
-                        <select class="form-select custom-select post-size">
-                            <option disabled>Post Size</option>
-                            <option value="square">Square (2100x2100)</option>
-                            <option value="portrait" selected>Portrait (1080x1350)</option>
-                        </select>
-                        <div class="col-mdd-6">
-                            <label for="post-img" class="form-label">Upload Background Image</label>
-                            <input type="file" class="form-control post-img-preview" id="post-img">
-                        </div>
-                        <div class="col-12">
-                            <label for="data" class="form-label">Add Text</label>
-                            <textarea name="date" class="form-control" id="data" placeholder="Write some text here" cols="30" rows="5"></textarea>
-                        </div>
-                        <div class="col-6">
-                            <button type="button" id="template-submit" class="btn btn-primary mb-2">Submit</button>
-                        </div>
-                    </form>
-                </div>
+    <div class="template-3col">
+        <!-- LEFT: Content Controls -->
+        <div class="template-col-left">
+            <div>
+                <label>Language</label>
+                <select id="tpl-language">
+                    <option value="English" selected>English</option>
+                    <option value="Arabic">Arabic</option>
+                </select>
             </div>
+            <div>
+                <label>Breaking News</label>
+                <select id="tpl-breaking">
+                    <option value="false" selected>No</option>
+                    <option value="true">Yes</option>
+                </select>
+            </div>
+            <div>
+                <label>Logo Color</label>
+                <select id="tpl-logo-color">
+                    <option value="white" selected>White</option>
+                    <option value="black">Black</option>
+                </select>
+            </div>
+            <div>
+                <label>Background Image</label>
+                <div class="template-upload-area" id="tpl-upload-area">
+                    <i class="bi bi-cloud-arrow-up" style="font-size: 18px; display: block; margin-bottom: 4px;"></i>
+                    Click to upload
+                </div>
+                <input type="file" id="tpl-bg-input" accept="image/*" style="display: none;">
+            </div>
+            <div>
+                <label>Text</label>
+                <textarea id="tpl-text" placeholder="Write some text here"></textarea>
+            </div>
+            <button class="template-download-btn" id="tpl-download">
+                <i class="bi bi-download" style="margin-right: 8px;"></i>Download Image
+            </button>
         </div>
-        <img class="post-img-preview d-none" id="img-src" src="" alt="preview img">
-    </section>
 
-    <section class="d-none" id="english-post-template-with-img" style="margin-top: 10px; margin-bottom: 30px;">
-        <div class="container-fluid">
-            <div class="row align-items-start">
-                <div class="col-md-4 col-lg-3" style="padding-top: 0;">
-                    <div id="bloc1" class="cool" style="margin-top: 0;">
-                        <form action="">
-                            <div class="col-mv-6">
-                                <label for="bottom-margin-eng" class="form-label">Set Bottom Margin</label>
-                                <input type="number" class="form-control targetEng mb-2" id="bottom-margin-eng" value="100">
-                            </div>
-                            <div class="col-mv-6">
-                                <label for="image-vertical-eng" class="form-label">Move Image Up (px)</label>
-                                <input type="number" class="form-control image-vertical-eng mb-2" id="image-vertical-eng" value="0">
-                            </div>
-                            <div class="col-mv-6">
-                                <label for="shadow-height-eng" class="form-label">Shadow Height (px)</label>
-                                <input type="number" class="form-control shadow-height mb-2" id="shadow-height-eng" step="10" value="300">
-                            </div>
-                            <div class="col-mv-6">
-                                <label for="shadow-opacity-eng" class="form-label">Shadow Opacity (%)</label>
-                                <input type="number" class="form-control shadow-opacity mb-2" id="shadow-opacity-eng" min="0" max="100" value="45">
-                            </div>
-                            <div class="col-mv-6">
-                                <label for="font-size-eng" class="form-label">Set Font Size</label>
-                                <input type="number" class="form-control font-size mb-2" id="font-size-eng" value="28">
-                            </div>
-                            <div class="col-mv-6">
-                                <label for="position-eng-img" class="form-label">Image Position X (%)</label>
-                                <input type="number" class="form-control positionEngImg mb-2" id="position-eng-img" value="50">
-                            </div>
-                            <div class="col-mv-6">
-                                <label for="image-zoom-eng" class="form-label">Image Zoom (%)</label>
-                                <input type="number" class="form-control image-zoom-eng mb-2" id="image-zoom-eng" min="50" max="200" step="5" value="145">
-                            </div>
-                            <div class="col-mdd-6">
-                                <label for="line-height-eng" class="form-label">Set Line Height</label>
-                                <input type="number" class="form-control line-height mb-2" id="line-height-eng" step="0.1" value="1.3">
-                            </div>
-                            <div class="col-mdd-6">
-                                <label for="text-max-width-eng" class="form-label">Text Max Width (px)</label>
-                                <input type="number" class="form-control text-max-width mb-2" id="text-max-width-eng" value="450">
-                            </div>
-                        </form>
-                    </div>
+        <!-- CENTER: Preview -->
+        <div class="template-col-center">
+            <div id="imagePost" style="width: 540px; height: 675px; position: relative;">
+                <div class="logo-container" style="position: absolute; top: 45px; left: 38px; z-index: 10; cursor: pointer;">
+                    <img class="logo-image" style="width: 126.85px; height: 32px; display: block;" src="images/LogoW.png" alt="Forbes Logo">
                 </div>
-                <div class="col-md-1 d-flex align-items-center justify-content-center">
-                    <button type="button" class="btn btn-success download-btn" style="padding: 15px 20px;">
-                        <i class="bi bi-download me-2"></i>Download
-                    </button>
-                </div>
-                <div class="col-md-7 col-lg-8">
-                    <div style="width: 540px; margin: 0 auto;">
-                        <div id="imagePost" style="width: 540px; height: 675px; position: relative;">
-                            <div class="logo-container" style="position: absolute; top: 45px; left: 38px; z-index: 10; cursor: pointer;">
-                                <img class="logo-image" style="width: 126.85px; height: 32px; display: block;" src="images/LogoW.png" alt="Forbes Logo">
-                            </div>
-                            <div class="bg-img my-0 mx-auto" style="height:100%; position: relative; background-color: #000;">
-                                <div class="image-shadow-group" style="position: absolute; top: 0; left: 0; right: 0; height: 100%; transition: transform 0.3s ease;">
-                                    <div class="background-image Position_Set" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
-                                    <img class="shadow-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.1);" src="images/Shadow.png" alt="">
-                                </div>
-                                <div class="bottom-gradient" style="position: absolute; bottom: 0; left: 0; right: 0; height: 300px; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.765) 30%, rgba(0,0,0,0.425) 60%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 5;"></div>
-                            </div>
-                            <div class="text-div Margin_Set" style="position: absolute; bottom:100px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 450px; display: flex; flex-direction: column; align-items: center; z-index: 10;" dir="ltr">
-                                <img class="breaking_news_image" style="width: 85px; margin-bottom: 10px; display: block;" src="images/BN.png" alt="">
-                                <div class="english-border" style="border-top: 6.5px solid red; position: relative; width: 77.5px; margin-bottom: 15px;"></div>
-                                <p class="post-data-preview" style="font-size: 28px; font-family:EuclidCircularB-Semibold; color: #fff; margin: 0; text-align: center; line-height: 1.3; max-width: 450px; word-wrap: break-word;"></p>
-                            </div>
-                        </div>
+                <div class="bg-img" style="height:100%; position: relative; background-color: #000;">
+                    <div class="image-shadow-group" style="position: absolute; top: 0; left: 0; right: 0; height: 100%; transition: transform 0.3s ease;">
+                        <div class="background-image" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+                        <img class="shadow-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.1);" src="images/Shadow.png" alt="">
                     </div>
+                    <div class="bottom-gradient" style="position: absolute; bottom: 0; left: 0; right: 0; height: 300px; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.765) 30%, rgba(0,0,0,0.425) 60%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 5;"></div>
+                </div>
+                <div class="text-div Margin_Set" id="tpl-text-div" style="position: absolute; bottom:100px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 450px; display: flex; flex-direction: column; align-items: center; z-index: 10;" dir="ltr">
+                    <img class="breaking_news_image" style="width: 85px; margin-bottom: 10px; display: none;" src="images/BN.png" alt="">
+                    <div class="text-border" style="border-top: 6.5px solid red; position: relative; width: 77.5px; margin-bottom: 15px;"></div>
+                    <p class="post-data-preview" style="font-size: 28px; font-family:EuclidCircularB-Semibold; color: #fff; margin: 0; text-align: center; line-height: 1.3; max-width: 450px; word-wrap: break-word;"></p>
                 </div>
             </div>
         </div>
-    </section>
 
-    <section class="d-none" id="arabic-post-template-with-img" style="margin-top: 10px; margin-bottom: 30px;">
-        <div class="container-fluid">
-            <div class="row align-items-start">
-                <div class="col-md-4 col-lg-3" style="padding-top: 0;">
-                    <div id="bloc2" class="cool" style="margin-top: 0;">
-                        <form action="">
-                            <div class="col-mv-6">
-                                <label for="bottom-margin-ar" class="form-label">Set Bottom Margin</label>
-                                <input type="number" class="form-control targetAr mb-2" id="bottom-margin-ar" value="100">
-                            </div>
-                            <div class="col-mv-6">
-                                <label for="image-vertical-ar" class="form-label">Move Image Up (px)</label>
-                                <input type="number" class="form-control image-vertical-ar mb-2" id="image-vertical-ar" value="0">
-                            </div>
-                            <div class="col-mv-6">
-                                <label for="shadow-height-ar" class="form-label">Shadow Height (px)</label>
-                                <input type="number" class="form-control shadow-height mb-2" id="shadow-height-ar" step="10" value="300">
-                            </div>
-                            <div class="col-mv-6">
-                                <label for="shadow-opacity-ar" class="form-label">Shadow Opacity (%)</label>
-                                <input type="number" class="form-control shadow-opacity mb-2" id="shadow-opacity-ar" min="0" max="100" value="45">
-                            </div>
-                            <div class="col-mv-6">
-                                <label for="font-size-ar" class="form-label">Set Font Size</label>
-                                <input type="number" class="form-control font-size mb-2" id="font-size-ar" value="28">
-                            </div>
-                            <div class="col-mv-6">
-                                <label for="position-ar-img" class="form-label">Image Position X (%)</label>
-                                <input type="number" class="form-control positionArImg mb-2" id="position-ar-img" value="50">
-                            </div>
-                            <div class="col-mv-6">
-                                <label for="image-zoom-ar" class="form-label">Image Zoom (%)</label>
-                                <input type="number" class="form-control image-zoom-ar mb-2" id="image-zoom-ar" min="50" max="200" step="5" value="145">
-                            </div>
-                            <div class="col-mdd-6">
-                                <label for="line-height-ar" class="form-label">Set Line Height</label>
-                                <input type="number" class="form-control line-height mb-2" id="line-height-ar" step="0.1" value="1.3">
-                            </div>
-                            <div class="col-mdd-6">
-                                <label for="text-max-width-ar" class="form-label">Text Max Width (px)</label>
-                                <input type="number" class="form-control text-max-width mb-2" id="text-max-width-ar" value="450">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-md-1 d-flex align-items-center justify-content-center">
-                    <button type="button" class="btn btn-success download-btn" style="padding: 15px 20px;">
-                        <i class="bi bi-download me-2"></i>Download
-                    </button>
-                </div>
-                <div class="col-md-7 col-lg-8">
-                    <div style="width: 540px; margin: 0 auto;">
-                        <div id="arabicPost" style="width: 540px; height: 675px; position: relative;">
-                            <div class="logo-container" style="position: absolute; top: 45px; left: 38px; z-index: 10; cursor: pointer;">
-                                <img class="logo-image" style="width: 126.85px; height: 32px; display: block;" src="images/LogoW.png" alt="Forbes Logo">
-                            </div>
-                            <div class="bg-img my-0 mx-auto" style="height:100%; position: relative; background-color: #000;">
-                                <div class="image-shadow-group" style="position: absolute; top: 0; left: 0; right: 0; height: 100%; transition: transform 0.3s ease;">
-                                    <div class="background-image Position_Set" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
-                                    <img class="shadow-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.1);" src="images/Shadow.png" alt="">
-                                </div>
-                                <div class="bottom-gradient" style="position: absolute; bottom: 0; left: 0; right: 0; height: 300px; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.765) 30%, rgba(0,0,0,0.425) 60%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 5;"></div>
-                            </div>
-                            <div class="text-div Margin_Set" style="position: absolute; bottom:100px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 450px; display: flex; flex-direction: column; align-items: center; z-index: 10;" dir="rtl">
-                                <img class="breaking_news_image" style="width: 85px; margin-bottom: 10px; display: block;" src="images/ajil.png" alt="">
-                                <div class="arabic-border" style="border-top: 6.5px solid red; position: relative; direction: rtl; width: 77.5px; margin-bottom: 15px;"></div>
-                                <p class="post-data-preview" style="font-size: 28px; color: #fff; margin: 0; text-align: center; line-height: 1.3; max-width: 450px; word-wrap: break-word;"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- RIGHT: Style Controls -->
+        <div class="template-col-right">
+            <div>
+                <label>Bottom Margin (px)</label>
+                <input type="number" id="tpl-bottom-margin" value="100">
+            </div>
+            <div>
+                <label>Move Image Up (px)</label>
+                <input type="number" id="tpl-image-vertical" value="0">
+            </div>
+            <div>
+                <label>Shadow Height (px)</label>
+                <input type="number" id="tpl-shadow-height" step="10" value="300">
+            </div>
+            <div>
+                <label>Shadow Opacity (%)</label>
+                <input type="number" id="tpl-shadow-opacity" min="0" max="100" value="45">
+            </div>
+            <div>
+                <label>Font Size (px)</label>
+                <input type="number" id="tpl-font-size" value="28">
+            </div>
+            <div>
+                <label>Image Position X (%)</label>
+                <input type="number" id="tpl-pos-x" value="50">
+            </div>
+            <div>
+                <label>Image Zoom (%)</label>
+                <input type="number" id="tpl-zoom" min="50" max="300" step="5" value="145">
+            </div>
+            <div>
+                <label>Line Height</label>
+                <input type="number" id="tpl-line-height" step="0.1" value="1.3">
+            </div>
+            <div>
+                <label>Text Max Width (px)</label>
+                <input type="number" id="tpl-text-width" value="450">
             </div>
         </div>
-    </section>
+    </div>
 </div>
 
 <!-- ===== STOCK MARKET APP ===== -->
@@ -904,12 +961,117 @@
     </div>
 </div>
 
+<!-- ===== GOLD TEMPLATE APP ===== -->
+<div id="gold-app" class="app-section">
+    <div class="template-3col">
+        <!-- LEFT: Content Controls -->
+        <div class="template-col-left">
+            <div>
+                <label>Logo Color</label>
+                <select id="gold-logo-select">
+                    <option value="white" selected>White</option>
+                    <option value="black">Black</option>
+                </select>
+            </div>
+            <div>
+                <label>Background Image</label>
+                <div class="template-upload-area" id="gold-upload-area">
+                    <i class="bi bi-cloud-arrow-up" style="font-size: 18px; display: block; margin-bottom: 4px;"></i>
+                    Click to upload
+                </div>
+                <input type="file" id="gold-bg-input" accept="image/*" style="display: none;">
+            </div>
+            <div>
+                <label>Title</label>
+                <input type="text" id="gold-title-input" placeholder="e.g. $2,391.50" value="$2,391.50">
+            </div>
+            <div>
+                <label>Subtitle</label>
+                <input type="text" id="gold-subtitle-input" placeholder="e.g. per ounce" value="per ounce">
+            </div>
+            <div>
+                <label>Caption</label>
+                <textarea id="gold-caption-input" placeholder="e.g. Gold prices rise as investors..."></textarea>
+            </div>
+            <button class="gold-download-btn" id="gold-download">
+                <i class="bi bi-download" style="margin-right: 8px;"></i>Download Image
+            </button>
+        </div>
+
+        <!-- CENTER: Preview -->
+        <div class="template-col-center">
+            <div class="gold-canvas-container" id="gold-canvas">
+                <div class="gold-bg-div" id="gold-bg-div" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-size: 145%; background-position: 50% 0%; background-repeat: no-repeat;"></div>
+                <div class="gold-bottom-gradient" style="position: absolute; bottom: 0; left: 0; right: 0; height: 675px; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.54) 40%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 2;"></div>
+                <img class="gold-logo" id="gold-logo-img" src="images/LogoW.png">
+                <div class="gold-text-block" id="gold-text-block" style="bottom: 290px;">
+                    <p class="gold-title" id="gold-title-display">$2,391.50</p>
+                    <p class="gold-subtitle" id="gold-subtitle-display">per ounce</p>
+                </div>
+                <p class="gold-caption" id="gold-caption-display" style="position: absolute; bottom: 130px; left: 50%; transform: translateX(-50%); z-index: 5; text-align: center; width: 85%;"></p>
+            </div>
+        </div>
+
+        <!-- RIGHT: Style Controls -->
+        <div class="template-col-right">
+            <div>
+                <label>Image Zoom (%)</label>
+                <input type="number" id="gold-zoom" min="50" max="300" step="5" value="145">
+            </div>
+            <div>
+                <label>Image Position X (%)</label>
+                <input type="number" id="gold-pos-x" value="50">
+            </div>
+            <div>
+                <label>Move Image Up (px)</label>
+                <input type="number" id="gold-image-vertical" value="0">
+            </div>
+            <div>
+                <label>Shadow Height (px)</label>
+                <input type="number" id="gold-shadow-height" step="10" value="675">
+            </div>
+            <div>
+                <label>Shadow Opacity (%)</label>
+                <input type="number" id="gold-shadow-opacity" min="0" max="100" value="95">
+            </div>
+            <div>
+                <label>Title Size (px)</label>
+                <input type="number" id="gold-title-size" value="80" min="20" max="120">
+            </div>
+            <div>
+                <label>Title Position (px from bottom)</label>
+                <input type="number" id="gold-title-pos" value="0">
+            </div>
+            <div>
+                <label>Subtitle Size (px)</label>
+                <input type="number" id="gold-subtitle-size" value="50" min="10" max="60">
+            </div>
+            <div>
+                <label>Subtitle Position (px from title)</label>
+                <input type="number" id="gold-subtitle-pos" value="8">
+            </div>
+            <div>
+                <label>Caption Size (px)</label>
+                <input type="number" id="gold-caption-size" value="30" min="10" max="40">
+            </div>
+            <div>
+                <label>Caption Position (px from bottom)</label>
+                <input type="number" id="gold-caption-pos" value="130">
+            </div>
+            <div>
+                <label>Text Block Bottom (px)</label>
+                <input type="number" id="gold-bottom-margin" value="290">
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
 // ===== APP NAVIGATION =====
 function showApp(app) {
     // Hide all sections
-    $('#landing-page, #template-app, #stock-app, #optimizer-app').removeClass('active');
+    $('#landing-page, #template-app, #stock-app, #optimizer-app, #gold-app').removeClass('active');
 
     if (app === 'landing') {
         $('#landing-page').addClass('active');
@@ -917,10 +1079,6 @@ function showApp(app) {
     } else if (app === 'template') {
         $('#template-app').addClass('active');
         $('#back-btn').show();
-        // Reset template to input view
-        $('#input-template').removeClass('d-none');
-        $('#english-post-template-with-img').addClass('d-none');
-        $('#arabic-post-template-with-img').addClass('d-none');
     } else if (app === 'stock') {
         $('#stock-app').addClass('active');
         $('#back-btn').show();
@@ -930,209 +1088,113 @@ function showApp(app) {
         if ($('#optimizer-dropzone').is(':visible')) {
             $('#optimizer-file-input').click();
         }
+    } else if (app === 'gold') {
+        $('#gold-app').addClass('active');
+        $('#back-btn').show();
     }
 }
 
 // ===== TEMPLATE APP JS =====
 (function() {
-    let currentLogoColor = "whiteLogo";
-
     $(document).ready(function() {
         // Toggle logo color when clicked
         $('#template-app').on('click', '.logo-container', function() {
-            if (currentLogoColor === "whiteLogo") {
-                currentLogoColor = "blackLogo";
+            var current = $('#template-app .logo-image').attr('src');
+            if (current.includes('LogoW')) {
                 $('#template-app .logo-image').attr('src', 'images/LogoB.png');
+                $('#tpl-logo-color').val('black');
             } else {
-                currentLogoColor = "whiteLogo";
                 $('#template-app .logo-image').attr('src', 'images/LogoW.png');
+                $('#tpl-logo-color').val('white');
             }
         });
 
-        // Margin Controls
-        $(".targetEng").change(function() {
-            $("#imagePost .Margin_Set").css("bottom", $(this).val() + "px");
-        });
-        $(".targetAr").change(function() {
-            $("#arabicPost .Margin_Set").css("bottom", $(this).val() + "px");
+        // Live text update
+        $('#tpl-text').on('input', function() {
+            $('#imagePost .post-data-preview').text($(this).val());
         });
 
-        // Font Controls
-        $(".font-size").change(function() {
-            $(".post-data-preview").css("font-size", $(this).val() + "px");
-        });
-
-        // Bar Width Control
-        $(".bar-width").change(function() {
-            $(".english-border, .arabic-border").css("width", $(this).val() + "px");
-        });
-
-        // Bar Height Control
-        $(".bar-height").change(function() {
-            $(".english-border, .arabic-border").css("border-top-width", $(this).val() + "px");
-        });
-
-        // Text Max Width Control
-        $(".text-max-width").change(function() {
-            $(".post-data-preview").css("max-width", $(this).val() + "px");
-        });
-
-        // Image Vertical Position Control
-        $(".image-vertical-eng").change(function() {
-            $("#imagePost .image-shadow-group").css("transform", "translateY(-" + $(this).val() + "px)");
-        });
-        $(".image-vertical-ar").change(function() {
-            $("#arabicPost .image-shadow-group").css("transform", "translateY(-" + $(this).val() + "px)");
-        });
-
-        // Shadow Opacity Control
-        $(".shadow-opacity").change(function() {
-            let value = parseInt($(this).val());
-            if (value < 0) value = 0;
-            if (value > 100) value = 100;
-            $(this).val(value);
-            const opacity = value / 100;
-            const gradientStyle = `linear-gradient(to top, rgba(0,0,0,${opacity}) 0%, rgba(0,0,0,${opacity * 0.7}) 40%, rgba(0,0,0,${opacity * 0.3}) 70%, rgba(0,0,0,0) 100%)`;
-            $(".bottom-gradient").css("background", gradientStyle);
-        });
-
-        // Shadow Height Control
-        $(".shadow-height").change(function() {
-            $(".bottom-gradient").css("height", $(this).val() + "px");
-        });
-
-        // Image Position X
-        $(".positionEngImg").change(function() {
-            const yPos = $(".positionEngImgY").val() || 0;
-            $("#imagePost .background-image").css("background-position", $(this).val() + "% " + yPos + "%");
-        });
-        $(".positionArImg").change(function() {
-            const yPos = $(".positionArImgY").val() || 0;
-            $("#arabicPost .background-image").css("background-position", $(this).val() + "% " + yPos + "%");
-        });
-
-        // Image Position Y
-        $(".positionEngImgY").change(function() {
-            const xPos = $(".positionEngImg").val() || 50;
-            $("#imagePost .background-image").css("background-position", xPos + "% " + $(this).val() + "%");
-        });
-        $(".positionArImgY").change(function() {
-            const xPos = $(".positionArImg").val() || 50;
-            $("#arabicPost .background-image").css("background-position", xPos + "% " + $(this).val() + "%");
-        });
-
-        // Image Zoom Control
-        $(".image-zoom-eng").change(function() {
-            $("#imagePost .background-image").css("background-size", $(this).val() + "%");
-        });
-        $(".image-zoom-ar").change(function() {
-            $("#arabicPost .background-image").css("background-size", $(this).val() + "%");
-        });
-
-        // Line Height
-        $(".line-height").change(function() {
-            $(".post-data-preview").css("line-height", $(this).val());
-        });
-
-        // Post Size Toggle
-        $('.post-size').change(function() {
-            const postSize = $(this).val();
-            if (postSize === 'square') {
-                $("#imagePost, #arabicPost").css({ width: '1050px', height: '1050px' });
-                $("#template-app .logo-container").css({"top": "90px", "left": "76px"});
-                $("#template-app .logo-image").css({"width": "253.7px", "height": "64px"});
-                $(".font-size").val(56);
-                $(".post-data-preview").css("font-size", "56px");
-                $(".bar-width").val(155);
-                $(".bar-height").val(13);
+        // Language
+        $('#tpl-language').on('change', function() {
+            var lang = $(this).val();
+            var textDiv = $('#tpl-text-div');
+            if (lang === 'Arabic') {
+                textDiv.attr('dir', 'rtl');
+                $('#imagePost .post-data-preview').css('font-family', '"GE SS Two Medium"');
+                $('#imagePost .breaking_news_image').attr('src', 'images/ajil.png');
             } else {
-                $("#imagePost, #arabicPost").css({ width: '540px', height: '675px' });
-                $("#template-app .logo-container").css({"top": "45px", "left": "38px"});
-                $("#template-app .logo-image").css({"width": "126.85px", "height": "32px"});
-                $(".font-size").val(28);
-                $(".post-data-preview").css("font-size", "28px");
-                $(".bar-width").val(77.5);
-                $(".bar-height").val(6.5);
+                textDiv.attr('dir', 'ltr');
+                $('#imagePost .post-data-preview').css('font-family', '"EuclidCircularB-Semibold"');
+                $('#imagePost .breaking_news_image').attr('src', 'images/BN.png');
             }
         });
 
-        // Image Upload Handler
-        $('#post-img').change(function() {
+        // Breaking news
+        $('#tpl-breaking').on('change', function() {
+            $('#imagePost .breaking_news_image').toggle($(this).val() === 'true');
+        });
+
+        // Logo color
+        $('#tpl-logo-color').on('change', function() {
+            var src = $(this).val() === 'black' ? 'images/LogoB.png' : 'images/LogoW.png';
+            $('#template-app .logo-image').attr('src', src);
+        });
+
+        // Background image upload
+        $('#tpl-upload-area').on('click', function() { $('#tpl-bg-input').click(); });
+        $('#tpl-bg-input').on('change', function() {
             if (this.files && this.files[0]) {
-                const reader = new FileReader();
+                var reader = new FileReader();
                 reader.onload = function(e) {
-                    $('.background-image').css('background-image', 'url(' + e.target.result + ')');
-                    $('#img-src').attr('src', e.target.result);
+                    $('#imagePost .background-image').css('background-image', 'url(' + e.target.result + ')');
+                    $('#tpl-upload-area').addClass('has-image').html('<i class="bi bi-check-lg" style="font-size:18px; display:block; margin-bottom:4px;"></i>Image uploaded');
                 };
                 reader.readAsDataURL(this.files[0]);
             }
         });
 
-        // Download Handler
-        $('#template-app').on('click', '.download-btn', function() {
-            const postContent = $('#english-post-template-with-img').is(':visible') ?
-                document.querySelector('#imagePost') :
-                document.querySelector('#arabicPost');
-            const scale = 2;
-            html2canvas(postContent, {
-                scale: scale,
-                useCORS: true,
-                allowTaint: true,
-                logging: false
-            }).then(canvas => {
-                canvas.toBlob(blob => {
-                    saveAs(blob, 'forbes-post.png');
-                });
-            });
+        // Right side style controls — all live
+        $('#tpl-bottom-margin').on('input change', function() {
+            $('#imagePost .Margin_Set').css('bottom', $(this).val() + 'px');
+        });
+        $('#tpl-image-vertical').on('input change', function() {
+            $('#imagePost .image-shadow-group').css('transform', 'translateY(-' + $(this).val() + 'px)');
+        });
+        $('#tpl-shadow-height').on('input change', function() {
+            $('#imagePost .bottom-gradient').css('height', $(this).val() + 'px');
+        });
+        $('#tpl-shadow-opacity').on('input change', function() {
+            var v = Math.max(0, Math.min(100, parseInt($(this).val()) || 0));
+            var o = v / 100;
+            $('#imagePost .bottom-gradient').css('background', 'linear-gradient(to top, rgba(0,0,0,' + o + ') 0%, rgba(0,0,0,' + (o*0.7) + ') 40%, rgba(0,0,0,' + (o*0.3) + ') 70%, rgba(0,0,0,0) 100%)');
+        });
+        $('#tpl-font-size').on('input change', function() {
+            $('#imagePost .post-data-preview').css('font-size', $(this).val() + 'px');
+        });
+        $('#tpl-pos-x').on('input change', function() {
+            $('#imagePost .background-image').css('background-position', $(this).val() + '% 0%');
+        });
+        $('#tpl-zoom').on('input change', function() {
+            $('#imagePost .background-image').css('background-size', $(this).val() + '%');
+        });
+        $('#tpl-line-height').on('input change', function() {
+            $('#imagePost .post-data-preview').css('line-height', $(this).val());
+        });
+        $('#tpl-text-width').on('input change', function() {
+            $('#imagePost .post-data-preview').css('max-width', $(this).val() + 'px');
         });
 
-        // Template Submit Handler
-        $('#template-submit').click(function() {
-            const textValue = $('#data').val().trim();
-            if (!textValue) {
-                alert('Please enter some text for the post.');
-                return;
-            }
-
-            const language = $('.select-language').val();
-            const showBreaking = $('.show_breaking').val() === 'true';
-            const logoColor = $('.logo_color').val();
-
-            if (logoColor === 'blackLogo') {
-                $('#template-app .logo-image').attr('src', 'images/LogoB.png');
-                currentLogoColor = "blackLogo";
-            } else {
-                $('#template-app .logo-image').attr('src', 'images/LogoW.png');
-                currentLogoColor = "whiteLogo";
-            }
-
-            $('.breaking_news_image').toggle(showBreaking);
-
-            const postSize = $('.post-size').val();
-            if (postSize === 'square') {
-                $("#imagePost, #arabicPost").css({ width: '1050px', height: '1050px' });
-                $("#template-app .logo-container").css({"top": "90px", "left": "76px"});
-                $("#template-app .logo-image").css({"width": "253.7px", "height": "64px"});
-                $(".font-size").val(56);
-                $(".post-data-preview").css("font-size", "56px");
-            } else {
-                $("#imagePost, #arabicPost").css({ width: '540px', height: '675px' });
-                $("#template-app .logo-container").css({"top": "45px", "left": "38px"});
-                $("#template-app .logo-image").css({"width": "126.85px", "height": "32px"});
-                $(".font-size").val(28);
-                $(".post-data-preview").css("font-size", "28px");
-            }
-
-            if (language === 'English') {
-                $('#english-post-template-with-img').removeClass('d-none');
-                $('#arabic-post-template-with-img').addClass('d-none');
-                $('#imagePost .post-data-preview').text($('#data').val());
-            } else {
-                $('#arabic-post-template-with-img').removeClass('d-none');
-                $('#english-post-template-with-img').addClass('d-none');
-                $('#arabicPost .post-data-preview').text($('#data').val());
-            }
-            $('#input-template').addClass('d-none');
+        // Download
+        $('#tpl-download').on('click', function() {
+            var btn = $(this);
+            btn.prop('disabled', true).html('<i class="bi bi-hourglass-split" style="margin-right:8px;"></i>Generating...');
+            var el = document.getElementById('imagePost');
+            html2canvas(el, { scale: 2, useCORS: true, allowTaint: true, logging: false }).then(function(canvas) {
+                canvas.toBlob(function(blob) {
+                    saveAs(blob, 'forbes-post.png');
+                    btn.prop('disabled', false).html('<i class="bi bi-download" style="margin-right:8px;"></i>Download Image');
+                });
+            });
         });
     });
 })();
@@ -1975,6 +2037,93 @@ function showApp(app) {
                 $('#optimizer-crop-toggle').show();
             }, 500);
         }
+    });
+})();
+
+// ===== GOLD TEMPLATE APP JS =====
+(function() {
+    $(document).ready(function() {
+        // Upload background
+        $('#gold-upload-area').on('click', function() { $('#gold-bg-input').click(); });
+        $('#gold-bg-input').on('change', function() {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#gold-bg-div').css('background-image', 'url(' + e.target.result + ')');
+                    $('#gold-upload-area').addClass('has-image').html('<i class="bi bi-check-lg" style="font-size:18px; display:block; margin-bottom:4px;"></i>Image uploaded');
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        // Left side — live text updates
+        $('#gold-title-input').on('input', function() {
+            $('#gold-title-display').text($(this).val());
+        });
+        $('#gold-subtitle-input').on('input', function() {
+            $('#gold-subtitle-display').text($(this).val());
+        });
+        $('#gold-caption-input').on('input', function() {
+            $('#gold-caption-display').text($(this).val());
+        });
+        $('#gold-logo-select').on('change', function() {
+            var src = $(this).val() === 'black' ? 'images/LogoB.png' : 'images/LogoW.png';
+            $('#gold-logo-img').attr('src', src);
+        });
+
+        // Right side — style controls
+        $('#gold-bottom-margin').on('input change', function() {
+            $('#gold-text-block').css('bottom', $(this).val() + 'px');
+        });
+        $('#gold-image-vertical').on('input change', function() {
+            $('#gold-bg-div').css('transform', 'translateY(-' + $(this).val() + 'px)');
+        });
+        $('#gold-shadow-height').on('input change', function() {
+            $('#gold-canvas .gold-bottom-gradient').css('height', $(this).val() + 'px');
+        });
+        $('#gold-shadow-opacity').on('input change', function() {
+            var v = Math.max(0, Math.min(100, parseInt($(this).val()) || 0));
+            var o = v / 100;
+            $('#gold-canvas .gold-bottom-gradient').css('background', 'linear-gradient(to top, rgba(0,0,0,' + o + ') 0%, rgba(0,0,0,' + (o*0.57) + ') 40%, rgba(0,0,0,0) 100%)')
+
+        });
+        $('#gold-title-size').on('input change', function() {
+            $('#gold-title-display').css('font-size', $(this).val() + 'px');
+        });
+        $('#gold-pos-x').on('input change', function() {
+            $('#gold-bg-div').css('background-position', $(this).val() + '% 0%');
+        });
+        $('#gold-zoom').on('input change', function() {
+            $('#gold-bg-div').css('background-size', $(this).val() + '%');
+        });
+        $('#gold-title-pos').on('input change', function() {
+            $('#gold-title-display').css('margin-bottom', $(this).val() + 'px');
+        });
+        $('#gold-subtitle-size').on('input change', function() {
+            $('#gold-subtitle-display').css('font-size', $(this).val() + 'px');
+        });
+        $('#gold-subtitle-pos').on('input change', function() {
+            $('#gold-subtitle-display').css('margin-top', $(this).val() + 'px');
+        });
+        $('#gold-caption-size').on('input change', function() {
+            $('#gold-caption-display').css('font-size', $(this).val() + 'px');
+        });
+        $('#gold-caption-pos').on('input change', function() {
+            $('#gold-caption-display').css('bottom', $(this).val() + 'px');
+        });
+
+        // Download
+        $('#gold-download').on('click', function() {
+            var btn = $(this);
+            btn.prop('disabled', true).html('<i class="bi bi-hourglass-split" style="margin-right:8px;"></i>Generating...');
+            var el = document.getElementById('gold-canvas');
+            html2canvas(el, { scale: 2, useCORS: true, allowTaint: true, logging: false, backgroundColor: '#000', width: 540, height: 675 }).then(function(canvas) {
+                canvas.toBlob(function(blob) {
+                    saveAs(blob, 'gold-template-' + new Date().toISOString().slice(0,10) + '.png');
+                    btn.prop('disabled', false).html('<i class="bi bi-download" style="margin-right:8px;"></i>Download Image');
+                });
+            });
+        });
     });
 })();
 
