@@ -347,6 +347,34 @@
             border: 1px solid;
             padding: 10px;
             margin: 10px;
+            position: relative;
+        }
+        #stock-app .row-remove-btn {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #999;
+            cursor: pointer;
+            line-height: 1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            z-index: 2;
+        }
+        #stock-app .row-remove-btn:hover {
+            color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+        }
+        #stock-app .row-label {
+            font-size: 11px;
+            color: #888;
+            font-weight: 600;
+            margin-bottom: 6px;
+            padding-right: 24px;
+            min-height: 16px;
         }
         #stock-app .has-custom-text { color: #333333; }
         #stock-app .columns { margin-bottom: 20px !important; border-radius: 10px; }
@@ -1598,7 +1626,10 @@ function showApp(app) {
             $('#dynamic_columns_generator').html('');
             for (var i = 0; i < numRows; i++) {
                 let companyName = companies[i] || '';
+                let labelText = companyName || 'Row ' + (i + 1);
                 let row = `<div class="column is-one-quarter">
+                    <button type="button" class="row-remove-btn" title="Remove row">&times;</button>
+                    <div class="row-label">${labelText}</div>
                     <div class="field"><label class="label">Company Name</label><div class="control"><input class="input" type="text" name="company_name[]" placeholder="Enter Company Name" value="${companyName}"></div></div>
                     <div class="field"><label class="label">Value</label><div class="control"><input class="input" type="text" name="value_number[]" placeholder="Enter Value"></div></div>
                     <div class="field"><label class="label">Increase or Decrease Value</label><div class="control"><input class="input" type="text" name="inc_dev_value[]" placeholder="Enter Value"></div></div>
@@ -1639,8 +1670,12 @@ function showApp(app) {
         $('#add_rows').click(function() {
             let rows_generator = $('#rows_generator').val();
             if (rows_generator != null) {
+                let existingCount = $('#dynamic_columns_generator .column').length;
                 for (var i = 1; i <= rows_generator; i++) {
+                    let rowNum = existingCount + i;
                     let row = `<div class="column is-one-quarter">
+                        <button type="button" class="row-remove-btn" title="Remove row">&times;</button>
+                        <div class="row-label">Row ${rowNum}</div>
                         <div class="field"><label class="label">Company Name</label><div class="control"><input class="input" type="text" name="company_name[]" placeholder="Enter Company Name"></div></div>
                         <div class="field"><label class="label">Value</label><div class="control"><input class="input" type="text" name="value_number[]" placeholder="Enter Value"></div></div>
                         <div class="field"><label class="label">Increase or Decrease Value</label><div class="control"><input class="input" type="text" name="inc_dev_value[]" placeholder="Enter Value"></div></div>
@@ -1650,6 +1685,18 @@ function showApp(app) {
                     $('#preview_button_container').css('display', 'flex');
                 }
             }
+        });
+
+        // Remove row button
+        $('#dynamic_columns_generator').on('click', '.row-remove-btn', function() {
+            $(this).closest('.column').remove();
+        });
+
+        // Update row label when company name changes
+        $('#dynamic_columns_generator').on('input', "input[name='company_name[]']", function() {
+            var label = $(this).closest('.column').find('.row-label');
+            var val = $(this).val().trim();
+            label.text(val || 'Unnamed');
         });
 
         // Preview Modal
