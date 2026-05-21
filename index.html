@@ -2441,6 +2441,7 @@ function showApp(app) {
     function applyDarkMode(isDark) {
         document.body.classList.toggle('dark-mode', isDark);
         icon.className = isDark ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
+        document.querySelector('.landing-logo').src = isDark ? 'images/LogoWhite.png' : 'images/LogoBlack.png';
     }
 
     if (localStorage.getItem('dark-mode') === 'true') applyDarkMode(true);
