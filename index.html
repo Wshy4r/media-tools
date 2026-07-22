@@ -72,6 +72,9 @@
             flex: 0 0 810px;
             height: 0;
         }
+        .reel-maker-hidden {
+            display: none !important;
+        }
         .tool-card:hover {
             border-color: #c00;
             transform: translateY(-4px);
@@ -928,9 +931,9 @@
                 <div class="tool-card-title">Thumbnail Design</div>
                 <div class="tool-card-desc">Create thumbnail designs with the Social Media Design layout</div>
             </div>
-            <div class="tool-row-break"></div>
-            <div class="tool-row-offset"></div>
-            <div class="tool-card reel-card" onclick="showApp('reel')">
+            <div class="tool-row-break reel-maker-hidden"></div>
+            <div class="tool-row-offset reel-maker-hidden"></div>
+            <div class="tool-card reel-card reel-maker-hidden" onclick="showApp('reel')" style="display: none;">
                 <span class="tool-card-icon"><i class="bi bi-camera-reels"></i></span>
                 <div class="tool-card-title">Reel Maker</div>
                 <div class="tool-card-desc">Create short-form video layouts and reel assets</div>
