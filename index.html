@@ -45,6 +45,7 @@
         }
         .tool-cards {
             display: flex;
+            flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
         }
@@ -58,6 +59,18 @@
             text-decoration: none;
             color: inherit;
             max-width: 250px;
+        }
+        .tool-card.reel-card {
+            flex: 1;
+            max-width: 250px;
+        }
+        .tool-row-break {
+            flex: 0 0 100%;
+            height: 0;
+        }
+        .tool-row-offset {
+            flex: 0 0 810px;
+            height: 0;
         }
         .tool-card:hover {
             border-color: #c00;
@@ -79,6 +92,239 @@
             font-size: 12px;
             color: #888;
             line-height: 1.5;
+        }
+
+        /* ===== REEL MAKER STYLES ===== */
+        #reel-app {
+            padding: 80px 24px 32px;
+            font-family: 'EuclidCircularB-Semibold', sans-serif;
+        }
+        .reel-workspace {
+            display: grid;
+            grid-template-columns: minmax(280px, 360px) minmax(320px, 1fr);
+            gap: 24px;
+            align-items: start;
+            max-width: 1040px;
+            margin: 0 auto;
+        }
+        .reel-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .reel-panel label {
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+        .reel-dropzone {
+            border: 2px dashed #cfcfcf;
+            border-radius: 8px;
+            padding: 28px 18px;
+            text-align: center;
+            cursor: pointer;
+            background: #fafafa;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .reel-dropzone:hover,
+        .reel-dropzone.dragover {
+            border-color: #c00;
+            background: #fff5f5;
+        }
+        .reel-dropzone i {
+            display: block;
+            font-size: 36px;
+            color: #888;
+            margin-bottom: 8px;
+            pointer-events: none;
+        }
+        .reel-link-row {
+            display: flex;
+            gap: 8px;
+        }
+        .reel-link-row input {
+            flex: 1;
+        }
+        .reel-status {
+            min-height: 22px;
+            font-size: 13px;
+            color: #666;
+        }
+        .reel-render-progress {
+            display: none;
+            height: 8px;
+            overflow: hidden;
+            border-radius: 999px;
+            background: #e5e5e5;
+        }
+        .reel-render-progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #198754;
+            transition: width 0.25s ease;
+        }
+        .reel-preview-wrap {
+            width: min(360px, 100%);
+            aspect-ratio: 9 / 16;
+            background: #111;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .reel-preview-wrap video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            background: transparent;
+        }
+        #reel-bg-video {
+            position: absolute;
+            inset: 0;
+            filter: blur(22px);
+            transform: scale(1.12);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #reel-preview-video {
+            position: relative;
+            z-index: 2;
+        }
+        .reel-logo {
+            position: absolute;
+            top: 13%;
+            left: 8.1%;
+            width: 25.38%;
+            height: 3.56%;
+            object-fit: contain;
+            z-index: 4;
+            display: none;
+            pointer-events: none;
+        }
+        .reel-preview-wrap.fit-contain #reel-bg-video {
+            opacity: 1;
+            display: block;
+        }
+        .reel-preview-wrap.fit-contain #reel-preview-video {
+            background: transparent;
+        }
+        .reel-playback-controls {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            width: min(360px, 100%);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .reel-playback-controls .btn {
+            flex: 0 0 auto;
+        }
+        .reel-playback-controls .reel-seek {
+            flex: 1 1 auto;
+            min-width: 90px;
+        }
+        .reel-time {
+            flex: 0 0 auto;
+            min-width: 74px;
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+        }
+        .reel-volume {
+            width: 64px;
+        }
+        .reel-clip-list {
+            display: none;
+            gap: 8px;
+            flex-direction: column;
+        }
+        .reel-clip-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: #fff;
+        }
+        .reel-clip-item.active {
+            border-color: #111;
+            background: #f5f5f5;
+        }
+        .reel-clip-name {
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 13px;
+            text-align: left;
+            border: 0;
+            background: transparent;
+            padding: 0;
+            color: inherit;
+        }
+        .reel-clip-name:hover {
+            text-decoration: underline;
+        }
+        .reel-clip-actions {
+            display: flex;
+            gap: 4px;
+            flex: 0 0 auto;
+        }
+        .reel-cut-toggle {
+            display: none;
+        }
+        .reel-thumbnail-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .reel-thumbnail-input {
+            display: none;
+        }
+        .reel-trim-controls {
+            display: none;
+            gap: 10px;
+            flex-direction: column;
+        }
+        .reel-trim-row {
+            display: grid;
+            grid-template-columns: 1fr 82px;
+            align-items: center;
+            gap: 8px;
+        }
+        .reel-trim-row label {
+            margin: 0;
+            font-size: 13px;
+        }
+        .reel-transform-controls {
+            display: none;
+            gap: 10px;
+            flex-direction: column;
+        }
+        .reel-transform-controls label {
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+        .reel-preview-empty {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 14px;
+            text-align: center;
+            padding: 24px;
+        }
+        @media (max-width: 800px) {
+            .reel-workspace {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* ===== IMAGE OPTIMIZER STYLES ===== */
@@ -300,11 +546,16 @@
         /* ===== SHARED ===== */
         .app-section { display: none; }
         .app-section.active { display: block; }
-        .back-button {
+        .top-actions {
             position: fixed;
             top: 20px;
-            left: 20px;
+            right: 20px;
             z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .back-button {
             background: #333;
             color: #fff;
             border: none;
@@ -419,135 +670,61 @@
         }
 
         /* ===== TEMPLATE STYLES ===== */
-        #template-app #input-template .post-data-preview {
+        .design-app .design-input-template .post-data-preview {
             font-family: "EuclidCircularB-Semibold" !important;
         }
-        #template-app #arabic-post-template-with-img .post-data-preview {
+        .design-app .design-arabic-post-template .post-data-preview {
             font-family: "GE SS Two Medium" !important;
         }
-        #template-app .background-image {
+        .design-app .background-image {
             background-size: cover;
             background-position: center top;
             background-repeat: no-repeat;
             height: 100%;
             width: 100%;
         }
-        #template-app #imagePost,
-        #template-app #arabicPost {
+        .design-app .image-post,
+        .design-app .arabic-post {
             position: relative;
             overflow: hidden;
         }
-        #template-app .download-btn {
+        .design-app .download-btn {
             margin-top: 10px;
             padding: 12px 24px;
             font-weight: bold;
             transition: all 0.3s ease;
         }
-        #template-app .download-btn:hover {
+        .design-app .download-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
-        #template-app .logo-container {
+        .design-app .logo-container {
             position: absolute;
             top: 45px;
             left: 38px;
             cursor: pointer;
             z-index: 10;
         }
-        #template-app .logo-image {
+        .design-app .logo-image {
             width: 126.85px;
             height: 32px;
             display: block;
         }
-        #template-app #english-post-template-with-img .container-fluid,
-        #template-app #arabic-post-template-with-img .container-fluid {
+        .design-app .design-english-post-template .container-fluid,
+        .design-app .design-arabic-post-template .container-fluid {
             padding-top: 0;
         }
-        #template-app #english-post-template-with-img .row,
-        #template-app #arabic-post-template-with-img .row {
+        .design-app .design-english-post-template .row,
+        .design-app .design-arabic-post-template .row {
             margin-top: 0;
         }
-        #template-app #bloc1, #template-app #bloc2 {
+        .design-app .design-controls {
             margin-top: 0;
             padding-top: 0;
-        }
-
-        /* ===== GOLD TEMPLATE STYLES ===== */
-        #gold-app {
-            padding: 20px;
-            font-family: 'EuclidCircularB-Semibold', sans-serif;
-        }
-        .gold-canvas-container {
-            width: 540px;
-            height: 675px;
-            position: relative;
-            overflow: hidden;
-            background: #000;
-            border-radius: 4px;
-        }
-        .gold-canvas-container .gold-logo {
-            position: absolute;
-            top: 40px;
-            left: 35px;
-            width: 127px;
-            z-index: 5;
-        }
-        .gold-canvas-container .gold-text-block {
-            position: absolute;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            z-index: 5;
-            width: 85%;
-        }
-        .gold-canvas-container .gold-title {
-            font-family: 'EuclidCircularB-Semibold', sans-serif;
-            font-size: 80px;
-            font-weight: 700;
-            color: #fff;
-            margin: 0;
-            line-height: 1.1;
-        }
-        .gold-canvas-container .gold-subtitle {
-            font-family: 'EuclidCircularB-Semibold', sans-serif;
-            font-size: 50px;
-            color: #fff;
-            margin: 8px 0 0 0;
-            font-weight: 600;
-        }
-        .gold-canvas-container .gold-caption {
-            font-family: 'EuclidCircularB-Semibold', sans-serif;
-            font-size: 30px;
-            color: #fff;
-            margin: 0;
-            font-weight: 700;
-            line-height: 1.4;
-        }
-        .gold-download-btn {
-            margin-top: 15px;
-            padding: 12px 30px;
-            background: #c9a84c;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.2s;
-        }
-        .gold-download-btn:hover {
-            background: #b8963f;
-            transform: translateY(-1px);
         }
 
         /* ===== DARK MODE TOGGLE BUTTON ===== */
         .dark-mode-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
             background: #333;
             color: #fff;
             border: none;
@@ -650,11 +827,10 @@
         body.dark-mode #modal_previewer .select select { background-color: #fff !important; color: #363636 !important; border-color: #dbdbdb !important; }
 
         /* Template app (forms only, NOT the preview canvases #imagePost #arabicPost) */
-        body.dark-mode #template-app #input-template,
-        body.dark-mode #template-app #bloc1,
-        body.dark-mode #template-app #bloc2 { background: #1a1a1a; }
-        body.dark-mode #template-app .btn-primary { background: #1a3a6e; border-color: #1a3a6e; }
-        body.dark-mode #template-app .btn-success { background: #1a4030; border-color: #1a4030; }
+        body.dark-mode .design-app .design-input-template,
+        body.dark-mode .design-app .design-controls { background: #1a1a1a; }
+        body.dark-mode .design-app .btn-primary { background: #1a3a6e; border-color: #1a3a6e; }
+        body.dark-mode .design-app .btn-success { background: #1a4030; border-color: #1a4030; }
 
         /* Optimizer app (NOT the preview image itself) */
         body.dark-mode #optimizer-app { background: #1a1a1a; }
@@ -677,17 +853,45 @@
         body.dark-mode .ratio-btn:hover { border-color: #999; }
         body.dark-mode .ratio-btn.active { border-color: #c00; color: #c00; background: #2e1515; }
         body.dark-mode .crop-controls label { color: #aaa; }
-
-        /* Gold app controls (NOT the canvas #gold-canvas) */
-        body.dark-mode #gold-app { background: #1a1a1a; }
-        body.dark-mode #gold-app input[type="text"],
-        body.dark-mode #gold-app input[type="number"],
-        body.dark-mode #gold-app select,
-        body.dark-mode #gold-app textarea {
-            background: #2e2e2e;
+        body.dark-mode .reel-panel label { color: #ccc; }
+        body.dark-mode .reel-dropzone { background: #252525; border-color: #555; color: #ccc; }
+        body.dark-mode .reel-dropzone:hover,
+        body.dark-mode .reel-dropzone.dragover { background: #2e1515; border-color: #c00; }
+        body.dark-mode .reel-link-row input { background: #2e2e2e; color: #e0e0e0; border-color: #555; }
+        body.dark-mode .reel-status { color: #aaa; }
+        body.dark-mode .reel-render-progress { background: #333; }
+        body.dark-mode .reel-clip-item {
+            background: #252525;
+            border-color: #555;
             color: #e0e0e0;
-            border-color: #444;
         }
+        body.dark-mode .reel-clip-item.active {
+            background: #303030;
+            border-color: #888;
+        }
+        body.dark-mode .reel-clip-name { color: #e0e0e0; }
+        body.dark-mode .reel-cut-toggle,
+        body.dark-mode #reel-thumbnail-toggle,
+        body.dark-mode .reel-clip-actions .btn-outline-dark,
+        body.dark-mode #reel-playback-controls .btn-outline-dark {
+            border-color: #777;
+            color: #e0e0e0;
+            background: #252525;
+        }
+        body.dark-mode .reel-cut-toggle:hover,
+        body.dark-mode #reel-thumbnail-toggle:hover,
+        body.dark-mode .reel-clip-actions .btn-outline-dark:hover,
+        body.dark-mode #reel-playback-controls .btn-outline-dark:hover {
+            border-color: #aaa;
+            background: #333;
+            color: #fff;
+        }
+        body.dark-mode .reel-cut-toggle.btn-dark {
+            background: #444;
+            border-color: #888;
+            color: #fff;
+        }
+
         body.dark-mode .template-upload-area {
             background: #252525;
             border-color: #555;
@@ -719,28 +923,35 @@
                 <div class="tool-card-title">Image Optimizer</div>
                 <div class="tool-card-desc">Compress, resize and convert images to JPG under 200KB</div>
             </div>
-            <div class="tool-card" onclick="showApp('gold')">
-                <span class="tool-card-icon"><i class="bi bi-gem"></i></span>
-                <div class="tool-card-title">Gold Template</div>
-                <div class="tool-card-desc">Generate gold price graphics with custom background and text</div>
+            <div class="tool-card" onclick="showApp('thumbnail')">
+                <span class="tool-card-icon"><i class="bi bi-badge-hd"></i></span>
+                <div class="tool-card-title">Thumbnail Design</div>
+                <div class="tool-card-desc">Create thumbnail designs with the Social Media Design layout</div>
+            </div>
+            <div class="tool-row-break"></div>
+            <div class="tool-row-offset"></div>
+            <div class="tool-card reel-card" onclick="showApp('reel')">
+                <span class="tool-card-icon"><i class="bi bi-camera-reels"></i></span>
+                <div class="tool-card-title">Reel Maker</div>
+                <div class="tool-card-desc">Create short-form video layouts and reel assets</div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- ===== BACK BUTTON ===== -->
-<button class="back-button" id="back-btn" style="display:none;" onclick="showApp('landing')">
-    <i class="bi bi-house-door"></i> Home
-</button>
-
-<!-- ===== DARK MODE TOGGLE ===== -->
-<button class="dark-mode-toggle" id="dark-mode-toggle" title="Toggle dark mode">
-    <i class="bi bi-moon-stars-fill" id="dark-mode-icon"></i>
-</button>
+<!-- ===== TOP ACTIONS ===== -->
+<div class="top-actions">
+    <button class="back-button" id="back-btn" style="display:none;" onclick="showApp('landing')">
+        <i class="bi bi-house-door"></i> Home
+    </button>
+    <button class="dark-mode-toggle" id="dark-mode-toggle" title="Toggle dark mode">
+        <i class="bi bi-moon-stars-fill" id="dark-mode-icon"></i>
+    </button>
+</div>
 
 <!-- ===== SOCIAL MEDIA TEMPLATE APP ===== -->
-<div id="template-app" class="app-section">
-    <section id="input-template" style="margin-top: 80px;">
+<div id="template-app" class="app-section design-app">
+    <section class="design-input-template" id="input-template" style="margin-top: 80px;">
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -760,21 +971,16 @@
                             <option value="blackLogo">Black</option>
                             <option value="whiteLogo" selected>White</option>
                         </select>
-                        <select class="form-select custom-select post-size">
-                            <option disabled>Post Size</option>
-                            <option value="square">Square (2100x2100)</option>
-                            <option value="portrait" selected>Portrait (1080x1350)</option>
-                        </select>
                         <div class="col-mdd-6">
                             <label for="bg-img" class="form-label">Upload Background Image</label>
-                            <input type="file" class="form-control post-img-preview" name="" onchange="readURL(this);" id="post-img">
+                            <input type="file" class="form-control post-img-preview" name="" onchange="readURL(this);" id="post-img" autocomplete="off">
                         </div>
                         <div class="col-12">
                             <label for="data" class="form-label">Add Text</label>
-                            <textarea name="date" class="form-control" id="data" placeholder="Write some text here" cols="30" rows="5"></textarea>
+                            <textarea name="date" class="form-control" id="data" placeholder="Write some text here" cols="30" rows="5" autocomplete="off" spellcheck="false"></textarea>
                         </div>
                         <div class="col-6">
-                            <button type="button" id="hello" class="btn btn-primary mb-2">Submit</button>
+                            <button type="button" id="hello" class="btn btn-primary mb-2 design-submit-btn">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -783,11 +989,11 @@
         <img class="post-img-preview d-none" id="img-src" src="" alt="preview img">
     </section>
 
-    <section class="d-none" id="english-post-template-with-img" style="margin-top: 10px; margin-bottom: 30px;">
+    <section class="d-none design-english-post-template" id="english-post-template-with-img" style="margin-top: 10px; margin-bottom: 30px;">
         <div class="container-fluid">
             <div class="row align-items-start">
                 <div class="col-md-4 col-lg-3" style="padding-top: 0;">
-                    <div id="bloc1" class="cool" style="margin-top: 0;">
+                    <div id="bloc1" class="cool design-controls" style="margin-top: 0;">
                         <form action="">
                             <div class="col-mv-6">
                                 <label for="bottom-margin-eng" class="form-label">Set Bottom Margin</label>
@@ -803,7 +1009,7 @@
                             </div>
                             <div class="col-mv-6">
                                 <label for="shadow-opacity-eng" class="form-label">Shadow Opacity (%)</label>
-                                <input type="number" class="form-control shadow-opacity mb-2" id="shadow-opacity-eng" min="0" max="100" value="45">
+                                <input type="number" class="form-control shadow-opacity mb-2" id="shadow-opacity-eng" min="0" max="100" value="50">
                             </div>
                             <div class="col-mv-6">
                                 <label for="font-size-eng" class="form-label">Set Font Size</label>
@@ -835,19 +1041,19 @@
                 </div>
                 <div class="col-md-7 col-lg-8">
                     <div style="width: 540px; margin: 0 auto;">
-                        <div id="imagePost" style="width: 540px; height: 675px; position: relative;">
+                        <div id="imagePost" class="image-post" style="width: 540px; height: 675px; position: relative;">
                             <div class="logo-container" style="position: absolute; top: 45px; left: 38px; z-index: 10; cursor: pointer;">
                                 <img class="logo-image" style="width: 126.85px; height: 32px; display: block;" src="images/LogoW.png" alt="Forbes Logo">
                             </div>
                             <div class="bg-img my-0 mx-auto" style="height:100%; position: relative; background-color: #000;">
                                 <div class="image-shadow-group" style="position: absolute; top: 0; left: 0; right: 0; height: 100%; transition: transform 0.3s ease;">
-                                    <div class="background-image Position_Set" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+                                    <div class="background-image Position_Set" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-size: 145%; background-position: 50% 0%;"></div>
                                     <img class="shadow-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.1);" src="images/Shadow.png" alt="">
                                 </div>
-                                <div class="bottom-gradient" style="position: absolute; bottom: 0; left: 0; right: 0; height: 300px; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.765) 30%, rgba(0,0,0,0.425) 60%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 5;"></div>
+                                <div class="bottom-gradient" style="position: absolute; bottom: 0; left: 0; right: 0; height: 300px; background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.15) 70%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 5;"></div>
                             </div>
                             <div class="text-div Margin_Set" style="position: absolute; bottom:100px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 450px; display: flex; flex-direction: column; align-items: center; z-index: 10;" dir="ltr">
-                                <img class="breaking_news_image" style="width: 85px; margin-bottom: 10px; display: block;" src="images/BN.png" alt="">
+                                <img class="breaking_news_image" style="width: 130px; margin-bottom: 10px; display: block;" src="images/BN.png" alt="">
                                 <div class="english-border" style="border-top: 6.5px solid red; position: relative; width: 77.5px; margin-bottom: 15px;"></div>
                                 <p class="post-data-preview" style="font-size: 28px; font-family:EuclidCircularB-Semibold; color: #fff; margin: 0; text-align: center; line-height: 1.3; max-width: 450px; word-wrap: break-word;"></p>
                             </div>
@@ -858,11 +1064,11 @@
         </div>
     </section>
 
-    <section class="d-none" id="arabic-post-template-with-img" style="margin-top: 10px; margin-bottom: 30px;">
+    <section class="d-none design-arabic-post-template" id="arabic-post-template-with-img" style="margin-top: 10px; margin-bottom: 30px;">
         <div class="container-fluid">
             <div class="row align-items-start">
                 <div class="col-md-4 col-lg-3" style="padding-top: 0;">
-                    <div id="bloc2" class="cool" style="margin-top: 0;">
+                    <div id="bloc2" class="cool design-controls" style="margin-top: 0;">
                         <form action="">
                             <div class="col-mv-6">
                                 <label for="bottom-margin-ar" class="form-label">Set Bottom Margin</label>
@@ -878,7 +1084,7 @@
                             </div>
                             <div class="col-mv-6">
                                 <label for="shadow-opacity-ar" class="form-label">Shadow Opacity (%)</label>
-                                <input type="number" class="form-control shadow-opacity mb-2" id="shadow-opacity-ar" min="0" max="100" value="45">
+                                <input type="number" class="form-control shadow-opacity mb-2" id="shadow-opacity-ar" min="0" max="100" value="50">
                             </div>
                             <div class="col-mv-6">
                                 <label for="font-size-ar" class="form-label">Set Font Size</label>
@@ -910,19 +1116,19 @@
                 </div>
                 <div class="col-md-7 col-lg-8">
                     <div style="width: 540px; margin: 0 auto;">
-                        <div id="arabicPost" style="width: 540px; height: 675px; position: relative;">
+                        <div id="arabicPost" class="arabic-post" style="width: 540px; height: 675px; position: relative;">
                             <div class="logo-container" style="position: absolute; top: 45px; left: 38px; z-index: 10; cursor: pointer;">
                                 <img class="logo-image" style="width: 126.85px; height: 32px; display: block;" src="images/LogoW.png" alt="Forbes Logo">
                             </div>
                             <div class="bg-img my-0 mx-auto" style="height:100%; position: relative; background-color: #000;">
                                 <div class="image-shadow-group" style="position: absolute; top: 0; left: 0; right: 0; height: 100%; transition: transform 0.3s ease;">
-                                    <div class="background-image Position_Set" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+                                    <div class="background-image Position_Set" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-size: 145%; background-position: 50% 0%;"></div>
                                     <img class="shadow-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.1);" src="images/Shadow.png" alt="">
                                 </div>
-                                <div class="bottom-gradient" style="position: absolute; bottom: 0; left: 0; right: 0; height: 300px; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.765) 30%, rgba(0,0,0,0.425) 60%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 5;"></div>
+                                <div class="bottom-gradient" style="position: absolute; bottom: 0; left: 0; right: 0; height: 300px; background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.15) 70%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 5;"></div>
                             </div>
                             <div class="text-div Margin_Set" style="position: absolute; bottom:100px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 450px; display: flex; flex-direction: column; align-items: center; z-index: 10;" dir="rtl">
-                                <img class="breaking_news_image" style="width: 85px; margin-bottom: 10px; display: block;" src="images/ajil.png" alt="">
+                                <img class="breaking_news_image" style="width: 130px; margin-bottom: 10px; display: block;" src="images/ajil.png" alt="">
                                 <div class="arabic-border" style="border-top: 6.5px solid red; position: relative; direction: rtl; width: 77.5px; margin-bottom: 15px;"></div>
                                 <p class="post-data-preview" style="font-size: 28px; color: #fff; margin: 0; text-align: center; line-height: 1.3; max-width: 450px; word-wrap: break-word;"></p>
                             </div>
@@ -932,6 +1138,101 @@
             </div>
         </div>
     </section>
+</div>
+
+<!-- ===== THUMBNAIL DESIGN APP ===== -->
+<div id="thumbnail-app" class="app-section design-app"></div>
+
+<!-- ===== REEL MAKER APP ===== -->
+<div id="reel-app" class="app-section">
+    <div class="reel-workspace">
+        <div class="reel-panel">
+            <div>
+                <label for="reel-video-input">Upload Video</label>
+                <div class="reel-dropzone" id="reel-dropzone">
+                    <i class="bi bi-cloud-arrow-up"></i>
+                    <span id="reel-upload-label">Choose video</span>
+                </div>
+                <input type="file" id="reel-video-input" accept="video/*" multiple style="display: none;">
+            </div>
+            <div class="reel-clip-list" id="reel-clip-list"></div>
+            <div>
+                <label for="reel-link-input">Video Link</label>
+                <div class="reel-link-row">
+                    <input type="url" class="form-control" id="reel-link-input" placeholder="Facebook, YouTube, Instagram, X" autocomplete="off" autocapitalize="off" spellcheck="false">
+                    <button type="button" class="btn btn-dark" id="reel-link-import">Import</button>
+                </div>
+            </div>
+            <div class="reel-thumbnail-row">
+                <label for="reel-thumbnail-input">Reel Thumbnail</label>
+                <button type="button" class="btn btn-outline-dark btn-sm" id="reel-thumbnail-toggle">
+                    <i class="bi bi-image"></i>
+                    Upload Thumbnail
+                </button>
+                <input type="file" id="reel-thumbnail-input" class="reel-thumbnail-input" accept="image/*">
+            </div>
+            <div class="reel-status" id="reel-status"></div>
+            <div class="reel-render-progress" id="reel-render-progress">
+                <div class="reel-render-progress-bar" id="reel-render-progress-bar"></div>
+            </div>
+            <button type="button" class="btn btn-outline-dark btn-sm reel-cut-toggle" id="reel-cut-toggle">
+                <i class="bi bi-scissors"></i>
+                Add Cut
+            </button>
+            <div class="reel-trim-controls" id="reel-trim-controls">
+                <div class="reel-trim-row">
+                    <label for="reel-trim-start">Cut Start</label>
+                    <input type="text" class="form-control form-control-sm" id="reel-trim-start" value="0:00.0">
+                </div>
+                <input type="range" class="form-range" id="reel-trim-start-range" min="0" max="100" value="0" step="0.1">
+                <div class="reel-trim-row">
+                    <label for="reel-trim-end">Cut End</label>
+                    <input type="text" class="form-control form-control-sm" id="reel-trim-end" value="0:00.0">
+                </div>
+                <input type="range" class="form-range" id="reel-trim-end-range" min="0" max="100" value="0" step="0.1">
+            </div>
+            <div class="reel-transform-controls" id="reel-transform-controls">
+                <div>
+                    <label for="reel-foreground-zoom">Video Size (%)</label>
+                    <input type="range" class="form-range" id="reel-foreground-zoom" min="100" max="500" value="100">
+                </div>
+                <div>
+                    <label for="reel-foreground-x">Move X</label>
+                    <input type="range" class="form-range" id="reel-foreground-x" min="-100" max="100" value="0">
+                </div>
+                <div>
+                    <label for="reel-foreground-y">Move Y</label>
+                    <input type="range" class="form-range" id="reel-foreground-y" min="-100" max="100" value="0">
+                </div>
+            </div>
+            <button type="button" class="btn btn-success btn-sm" id="reel-download-render" style="display: none;">
+                <i class="bi bi-download"></i>
+                Download Video
+            </button>
+        </div>
+        <div>
+            <div class="reel-preview-wrap">
+                <video id="reel-bg-video" muted playsinline aria-hidden="true"></video>
+                <video id="reel-preview-video" playsinline></video>
+                <img src="images/LogoW.png" alt="Forbes" class="reel-logo">
+                <div class="reel-preview-empty" id="reel-preview-empty">Preview</div>
+            </div>
+            <div class="reel-playback-controls" id="reel-playback-controls">
+                <button type="button" class="btn btn-dark btn-sm" id="reel-play-toggle" aria-label="Play">
+                    <i class="bi bi-play-fill"></i>
+                </button>
+                <input type="range" class="form-range reel-seek" id="reel-seek" min="0" max="100" value="0" step="0.1" aria-label="Seek">
+                <span class="reel-time" id="reel-time">0:00 / 0:00</span>
+                <button type="button" class="btn btn-outline-dark btn-sm" id="reel-mute-toggle" aria-label="Mute">
+                    <i class="bi bi-volume-up-fill"></i>
+                </button>
+                <input type="range" class="form-range reel-volume" id="reel-volume" min="0" max="1" value="1" step="0.05" aria-label="Volume">
+                <button type="button" class="btn btn-outline-dark btn-sm" id="reel-fullscreen" aria-label="Fullscreen">
+                    <i class="bi bi-fullscreen"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- ===== STOCK MARKET APP ===== -->
@@ -1157,117 +1458,336 @@
     </div>
 </div>
 
-<!-- ===== GOLD TEMPLATE APP ===== -->
-<div id="gold-app" class="app-section">
-    <div class="template-3col">
-        <!-- LEFT: Content Controls -->
-        <div class="template-col-left">
-            <div>
-                <label>Logo Color</label>
-                <select id="gold-logo-select">
-                    <option value="white" selected>White</option>
-                    <option value="black">Black</option>
-                </select>
-            </div>
-            <div>
-                <label>Background Image</label>
-                <div class="template-upload-area" id="gold-upload-area">
-                    <i class="bi bi-cloud-arrow-up" style="font-size: 18px; display: block; margin-bottom: 4px;"></i>
-                    Click to upload
-                </div>
-                <input type="file" id="gold-bg-input" accept="image/*" style="display: none;">
-            </div>
-            <div>
-                <label>Title</label>
-                <input type="text" id="gold-title-input" placeholder="e.g. $2,391.50" value="$2,391.50">
-            </div>
-            <div>
-                <label>Subtitle</label>
-                <input type="text" id="gold-subtitle-input" placeholder="e.g. per ounce" value="per ounce">
-            </div>
-            <div>
-                <label>Caption</label>
-                <textarea id="gold-caption-input" placeholder="e.g. Gold prices rise as investors..."></textarea>
-            </div>
-            <button class="gold-download-btn" id="gold-download">
-                <i class="bi bi-download" style="margin-right: 8px;"></i>Download Image
-            </button>
-        </div>
-
-        <!-- CENTER: Preview -->
-        <div class="template-col-center">
-            <div class="gold-canvas-container" id="gold-canvas">
-                <div class="gold-bg-div" id="gold-bg-div" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-size: 145%; background-position: 50% 0%; background-repeat: no-repeat;"></div>
-                <div class="gold-bottom-gradient" style="position: absolute; bottom: 0; left: 0; right: 0; height: 675px; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.54) 40%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 2;"></div>
-                <img class="gold-logo" id="gold-logo-img" src="images/LogoW.png">
-                <div class="gold-text-block" id="gold-text-block" style="bottom: 290px;">
-                    <p class="gold-title" id="gold-title-display">$2,391.50</p>
-                    <p class="gold-subtitle" id="gold-subtitle-display">per ounce</p>
-                </div>
-                <p class="gold-caption" id="gold-caption-display" style="position: absolute; bottom: 130px; left: 50%; transform: translateX(-50%); z-index: 5; text-align: center; width: 85%;"></p>
-            </div>
-        </div>
-
-        <!-- RIGHT: Style Controls -->
-        <div class="template-col-right">
-            <div>
-                <label>Image Zoom (%)</label>
-                <input type="number" id="gold-zoom" min="50" max="300" step="5" value="145">
-            </div>
-            <div>
-                <label>Image Position X (%)</label>
-                <input type="number" id="gold-pos-x" value="50">
-            </div>
-            <div>
-                <label>Move Image Up (px)</label>
-                <input type="number" id="gold-image-vertical" value="0">
-            </div>
-            <div>
-                <label>Shadow Height (px)</label>
-                <input type="number" id="gold-shadow-height" step="10" value="675">
-            </div>
-            <div>
-                <label>Shadow Opacity (%)</label>
-                <input type="number" id="gold-shadow-opacity" min="0" max="100" value="95">
-            </div>
-            <div>
-                <label>Title Size (px)</label>
-                <input type="number" id="gold-title-size" value="80" min="20" max="120">
-            </div>
-            <div>
-                <label>Title Position (px from bottom)</label>
-                <input type="number" id="gold-title-pos" value="0">
-            </div>
-            <div>
-                <label>Subtitle Size (px)</label>
-                <input type="number" id="gold-subtitle-size" value="50" min="10" max="60">
-            </div>
-            <div>
-                <label>Subtitle Position (px from title)</label>
-                <input type="number" id="gold-subtitle-pos" value="8">
-            </div>
-            <div>
-                <label>Caption Size (px)</label>
-                <input type="number" id="gold-caption-size" value="30" min="10" max="40">
-            </div>
-            <div>
-                <label>Caption Position (px from bottom)</label>
-                <input type="number" id="gold-caption-pos" value="130">
-            </div>
-            <div>
-                <label>Text Block Bottom (px)</label>
-                <input type="number" id="gold-bottom-margin" value="290">
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <script>
 // ===== APP NAVIGATION =====
+function ensureThumbnailApp() {
+    const $thumbnailApp = $('#thumbnail-app');
+    if ($thumbnailApp.children().length) return;
+
+    $thumbnailApp.html($('#template-app').html());
+    $thumbnailApp.find('[id]').each(function() {
+        this.id = 'thumbnail-' + this.id;
+    });
+    $thumbnailApp.find('label[for]').each(function() {
+        $(this).attr('for', 'thumbnail-' + $(this).attr('for'));
+    });
+    $thumbnailApp.find('.design-input-template').removeClass('d-none');
+    $thumbnailApp.find('.design-english-post-template, .design-arabic-post-template').addClass('d-none');
+    applyThumbnailLayout($thumbnailApp);
+}
+
+function resetDesignApp($app) {
+    $app.find('.design-input-template').removeClass('d-none');
+    $app.find('.design-english-post-template, .design-arabic-post-template').addClass('d-none');
+    $app.find('textarea').val('');
+    $app.find('input[type="file"].post-img-preview').val('');
+    $app.find('.post-img-preview.d-none').removeAttr('src');
+    $app.find('.background-image').css('background-image', '');
+    $app.find('.post-data-preview').empty().removeData('thumbnailText');
+    $app.removeData('thumbnailRawText thumbnailManualTextLayout');
+    applyDesignLanguagePreference($app);
+    if (isThumbnailApp($app)) {
+        resetThumbnailLineOverrides($app, '', parseFloat(getThumbnailControl($app, '.font-size').val()) || 68);
+        applyThumbnailLayout($app);
+    } else {
+        applySocialDesignDefaults($app);
+    }
+}
+
+function applySocialDesignDefaults($app) {
+    $app.find('.targetEng, .targetAr').val(100);
+    $app.find('.text-div').css('bottom', '100px');
+    $app.find('.image-vertical-eng, .image-vertical-ar').val(0);
+    $app.find('.image-shadow-group').css('transform', 'translateY(0px)');
+    $app.find('.shadow-height').val(300);
+    $app.find('.bottom-gradient').css({
+        height: '300px',
+        background: getShadowGradient(50)
+    });
+    $app.find('.shadow-opacity').val(50);
+    $app.find('.font-size').val(28);
+    $app.find('.post-data-preview').css('font-size', '28px');
+    $app.find('.positionEngImg, .positionArImg').val(50);
+    $app.find('.image-zoom-eng, .image-zoom-ar').val(145);
+    $app.find('.background-image').css({
+        backgroundPosition: '50% 0%',
+        backgroundSize: '145%'
+    });
+    $app.find('.line-height').val(1.3);
+    $app.find('.post-data-preview').css('line-height', 1.3);
+    $app.find('.text-max-width').val(450);
+    $app.find('.post-data-preview').css('max-width', '450px');
+}
+
+function getShadowGradient(value) {
+    const opacity = Math.max(0, Math.min(100, parseInt(value, 10) || 0)) / 100;
+    return `linear-gradient(to top, rgba(0,0,0,${opacity}) 0%, rgba(0,0,0,${opacity * 0.7}) 40%, rgba(0,0,0,${opacity * 0.3}) 70%, rgba(0,0,0,0) 100%)`;
+}
+
+function getDesignPreferenceKey($app) {
+    return isThumbnailApp($app) ? 'thumbnail-design-language' : 'social-media-design-language';
+}
+
+function applyDesignLanguagePreference($app) {
+    const savedLanguage = localStorage.getItem(getDesignPreferenceKey($app));
+    if (savedLanguage) {
+        $app.find('.select-language').val(savedLanguage);
+    }
+}
+
+function saveDesignLanguagePreference($app) {
+    const language = $app.find('.select-language').val() || 'English';
+    localStorage.setItem(getDesignPreferenceKey($app), language);
+}
+
+function isThumbnailApp($app) {
+    return $app.attr('id') === 'thumbnail-app';
+}
+
+function isThumbnailArabic($app) {
+    return $app.find('.design-arabic-post-template').not('.d-none').length > 0 ||
+        $app.find('.select-language').val() === 'Arabic';
+}
+
+function getThumbnailPreviewTextElements($app) {
+    return isThumbnailArabic($app) ?
+        $app.find('.arabic-post .post-data-preview') :
+        $app.find('.image-post .post-data-preview');
+}
+
+function getThumbnailVisiblePreviewTextElements($app) {
+    const $visibleText = $app.find('.text-div:visible .post-data-preview');
+    return $visibleText.length ? $visibleText : getThumbnailPreviewTextElements($app);
+}
+
+function getThumbnailControl($app, selector) {
+    const $visibleControl = $app.find('.design-controls:visible').find(selector).first();
+    return $visibleControl.length ? $visibleControl : $app.find(selector).first();
+}
+
+function applyThumbnailLayout($app) {
+    const previewScale = 0.42;
+    $app.find('.show_breaking, .logo_color, .post-size').remove();
+    $app.find('.targetEng, .targetAr, .line-height, .text-max-width').closest('div').remove();
+    ensureThumbnailLineSpacingControl($app);
+    ensureThumbnailLineOverrideControls($app);
+
+    $app.find('.image-post, .arabic-post').each(function() {
+        const $post = $(this);
+        $post.css({
+            width: '914px',
+            height: '1600px',
+            transform: `scale(${previewScale})`,
+            transformOrigin: 'top left'
+        });
+        $post.parent().css({
+            width: `${914 * previewScale}px`,
+            height: `${1600 * previewScale}px`,
+            overflow: 'hidden',
+            margin: '0 auto'
+        });
+
+        if (!$post.find('.thumbnail-rectangles').length) {
+            $post.append(`
+                <div class="thumbnail-rectangles" style="position: absolute; inset: 0; pointer-events: none; z-index: 9;">
+                    <div class="thumbnail-rectangle thumbnail-rectangle-blue" style="position: absolute; top: 1178.6px; left: 61.4px; width: 792.2px; height: 114.4px; background: #00d7fe;"></div>
+                    <div class="thumbnail-rectangle thumbnail-rectangle-white" style="position: absolute; top: 1293px; left: 61.4px; width: 792.2px; height: 114.4px; background: #ffffff;"></div>
+                </div>
+            `);
+        }
+    });
+
+    $app.find('.logo-container').css({ top: '1027px', left: '228.5px' });
+    $app.find('.logo-container').css({ cursor: 'default' });
+    $app.find('.logo-image').css({ width: '457px', height: '115px', objectFit: 'contain' });
+    $app.find('.font-size').attr('step', '1');
+    if (!$app.data('thumbnailFontInitialized')) {
+        $app.find('.font-size').val(68);
+        $app.data('thumbnailFontInitialized', true);
+    }
+    $app.find('.english-border, .arabic-border, .breaking_news_image').hide();
+    applyThumbnailTextBox($app);
+}
+
+function ensureThumbnailLineSpacingControl($app) {
+    $app.find('.design-controls form').each(function() {
+        const $form = $(this);
+        if ($form.find('.thumbnail-line-spacing').length) return;
+        $form.append(`
+            <div class="thumbnail-line-spacing-control" style="margin-top: 14px;">
+                <label class="form-label">Line Spacing</label>
+                <input type="number" class="form-control thumbnail-line-spacing mb-2" min="0.8" max="2" step="0.01" value="1.7">
+            </div>
+        `);
+    });
+}
+
+function ensureThumbnailLineOverrideControls($app) {
+    $app.find('.design-controls form').each(function() {
+        const $form = $(this);
+        if ($form.find('.thumbnail-line-overrides').length) return;
+        $form.append(`
+            <div class="thumbnail-line-overrides" style="margin-top: 14px;">
+                <div class="d-flex gap-2 mb-2">
+                    <div style="flex: 0 0 240px;">
+                        <label class="form-label">Line 1 Text</label>
+                        <input type="text" class="form-control thumbnail-line-1-text">
+                    </div>
+                    <div style="flex: 0 0 96px; min-width: 96px;">
+                        <label class="form-label">Size</label>
+                        <input type="number" class="form-control thumbnail-line-1-size" style="width: 96px; min-width: 96px; padding-left: 6px; padding-right: 4px;" min="10" step="1" value="68">
+                    </div>
+                </div>
+                <div class="d-flex gap-2 mb-2">
+                    <div style="flex: 0 0 240px;">
+                        <label class="form-label">Line 2 Text</label>
+                        <input type="text" class="form-control thumbnail-line-2-text">
+                    </div>
+                    <div style="flex: 0 0 96px; min-width: 96px;">
+                        <label class="form-label">Size</label>
+                        <input type="number" class="form-control thumbnail-line-2-size" style="width: 96px; min-width: 96px; padding-left: 6px; padding-right: 4px;" min="10" step="1" value="68">
+                    </div>
+                </div>
+            </div>
+        `);
+    });
+}
+
+function applyThumbnailTextBox($app) {
+    const x = 148.7;
+    const y = 1216.4;
+    const width = 616.3;
+    const fontSize = parseFloat(getThumbnailControl($app, '.font-size').val()) || 68;
+    const lineSpacing = parseFloat(getThumbnailControl($app, '.thumbnail-line-spacing').val()) || 1.7;
+    const lineGap = Math.max(0, (lineSpacing - 1) * fontSize);
+    const height = Math.max(146, (fontSize * 2) + lineGap);
+    const adjustedY = y - ((height - 146) / 2);
+
+    $app.find('.text-div').css({
+        top: adjustedY + 'px',
+        left: x + 'px',
+        bottom: 'auto',
+        transform: 'none',
+        width: width + 'px',
+        height: height + 'px',
+        maxWidth: width + 'px',
+        justifyContent: 'center',
+        overflow: 'visible'
+    });
+
+    $app.find('.post-data-preview').css({
+        color: '#000',
+        fontSize: fontSize + 'px',
+        maxWidth: width + 'px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: lineGap + 'px',
+        height: '100%',
+        lineHeight: '1',
+        textAlign: 'center',
+        overflow: 'visible',
+        textOverflow: 'clip'
+    });
+    $app.find('.image-post .post-data-preview').css('direction', 'ltr');
+    $app.find('.arabic-post .post-data-preview').css('direction', 'rtl');
+
+    splitThumbnailTextLines($app);
+    if (!$app.data('thumbnailManualTextLayout')) {
+        fitThumbnailText($app);
+    }
+}
+
+function fitThumbnailText($app) {
+    const baseFontSize = parseFloat(getThumbnailControl($app, '.font-size').val()) || 68;
+    const minFontSize = 30;
+    let fittedSize = baseFontSize;
+
+    getThumbnailVisiblePreviewTextElements($app).each(function() {
+        const text = this;
+        const box = text.closest('.text-div');
+        let size = baseFontSize;
+
+        getThumbnailControl($app, '.thumbnail-line-1-size').val(size);
+        getThumbnailControl($app, '.thumbnail-line-2-size').val(size);
+        splitThumbnailTextLines($app);
+        while ((text.scrollHeight > box.clientHeight || text.scrollWidth > box.clientWidth) && size > minFontSize) {
+            size -= 1;
+            getThumbnailControl($app, '.thumbnail-line-1-size').val(size);
+            getThumbnailControl($app, '.thumbnail-line-2-size').val(size);
+            splitThumbnailTextLines($app);
+        }
+        fittedSize = Math.min(fittedSize, size);
+    });
+
+    if (fittedSize < baseFontSize) {
+        getThumbnailControl($app, '.font-size').val(fittedSize);
+        getThumbnailControl($app, '.thumbnail-line-1-size').val(fittedSize);
+        getThumbnailControl($app, '.thumbnail-line-2-size').val(fittedSize);
+    }
+}
+
+function deriveThumbnailLines(rawText) {
+    const words = rawText.trim().split(/\s+/).filter(Boolean);
+    if (words.length <= 1) {
+        return { line1: rawText.trim(), line2: '' };
+    }
+
+    let line1 = words[0];
+    let line2 = words.slice(1).join(' ');
+    let bestBalance = Infinity;
+
+    for (let i = 1; i < words.length; i++) {
+        const candidateFirst = words.slice(0, i).join(' ');
+        const candidateSecond = words.slice(i).join(' ');
+        const balance = Math.abs(candidateFirst.length - candidateSecond.length);
+        if (balance < bestBalance) {
+            line1 = candidateFirst;
+            line2 = candidateSecond;
+            bestBalance = balance;
+        }
+    }
+
+    return { line1, line2 };
+}
+
+function resetThumbnailLineOverrides($app, rawText, size) {
+    const lines = deriveThumbnailLines(rawText);
+    const lineSize = size || parseFloat(getThumbnailControl($app, '.font-size').val()) || 68;
+
+    $app.find('.thumbnail-line-1-text').val(lines.line1);
+    $app.find('.thumbnail-line-2-text').val(lines.line2);
+    $app.find('.thumbnail-line-1-size, .thumbnail-line-2-size').val(lineSize);
+}
+
+function splitThumbnailTextLines($app) {
+    const line1 = getThumbnailControl($app, '.thumbnail-line-1-text').val() || '';
+    const line2 = getThumbnailControl($app, '.thumbnail-line-2-text').val() || '';
+    const activeFontSize = parseFloat(getThumbnailControl($app, '.font-size').val()) || 68;
+    const line1Size = parseFloat(getThumbnailControl($app, '.thumbnail-line-1-size').val()) || activeFontSize;
+    const line2Size = parseFloat(getThumbnailControl($app, '.thumbnail-line-2-size').val()) || activeFontSize;
+
+    getThumbnailPreviewTextElements($app).each(function() {
+        $(this).html(
+            `<span style="display:block;width:max-content;text-align:center;color:#fff;white-space:nowrap;font-size:${line1Size}px;">${escapeHtml(line1)}</span>` +
+            (line2 ? `<span style="display:block;width:max-content;text-align:center;color:#000;white-space:nowrap;font-size:${line2Size}px;">${escapeHtml(line2)}</span>` : '')
+        );
+    });
+}
+
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
 function showApp(app) {
     // Hide all sections
-    $('#landing-page, #template-app, #stock-app, #optimizer-app, #gold-app').removeClass('active');
+    $('#landing-page, #template-app, #thumbnail-app, #reel-app, #stock-app, #optimizer-app').removeClass('active');
 
     if (app === 'landing') {
         $('#landing-page').addClass('active');
@@ -1275,10 +1795,15 @@ function showApp(app) {
     } else if (app === 'template') {
         $('#template-app').addClass('active');
         $('#back-btn').show();
-        // Reset to form view
-        $('#input-template').removeClass('d-none');
-        $('#english-post-template-with-img').addClass('d-none');
-        $('#arabic-post-template-with-img').addClass('d-none');
+        resetDesignApp($('#template-app'));
+    } else if (app === 'thumbnail') {
+        ensureThumbnailApp();
+        $('#thumbnail-app').addClass('active');
+        $('#back-btn').show();
+        resetDesignApp($('#thumbnail-app'));
+    } else if (app === 'reel') {
+        $('#reel-app').addClass('active');
+        $('#back-btn').show();
     } else if (app === 'stock') {
         $('#stock-app').addClass('active');
         $('#back-btn').show();
@@ -1288,143 +1813,54 @@ function showApp(app) {
         if ($('#optimizer-dropzone').is(':visible')) {
             $('#optimizer-file-input').click();
         }
-    } else if (app === 'gold') {
-        $('#gold-app').addClass('active');
-        $('#back-btn').show();
     }
 }
 
-// ===== TEMPLATE APP JS =====
+// ===== DESIGN APP JS =====
 (function() {
-    let currentLogoColor = "whiteLogo";
+    function getDesignApp(el) {
+        return $(el).closest('.design-app');
+    }
 
-    $(document).ready(function() {
-        // Toggle logo color when clicked
-        $('#template-app').on('click', '.logo-container', function() {
-            if (currentLogoColor === "whiteLogo") {
-                currentLogoColor = "blackLogo";
-                $('#template-app .logo-image').attr('src', 'images/LogoB.png');
-            } else {
-                currentLogoColor = "whiteLogo";
-                $('#template-app .logo-image').attr('src', 'images/LogoW.png');
-            }
-        });
+    function setDesignPostSize($app, postSize) {
+        if (isThumbnailApp($app)) {
+            applyThumbnailLayout($app);
+            return;
+        }
 
-        // Margin Controls
-        $(".targetEng").change(function() {
-            $("#imagePost .Margin_Set").css("bottom", $(this).val() + "px");
-        });
-        $(".targetAr").change(function() {
-            $("#arabicPost .Margin_Set").css("bottom", $(this).val() + "px");
-        });
+        if (postSize === 'square') {
+            $app.find('.image-post, .arabic-post').css({ width: '1050px', height: '1050px' });
+            $app.find('.logo-container').css({ top: '90px', left: '76px' });
+            $app.find('.logo-image').css({ width: '253.7px', height: '64px' });
+            $app.find('.font-size').val(56);
+            $app.find('.post-data-preview').css('font-size', '56px');
+            $app.find('.bar-width').val(155);
+            $app.find('.bar-height').val(13);
+        } else {
+            $app.find('.image-post, .arabic-post').css({ width: '540px', height: '675px' });
+            $app.find('.logo-container').css({ top: '45px', left: '38px' });
+            $app.find('.logo-image').css({ width: '126.85px', height: '32px' });
+            $app.find('.font-size').val(28);
+            $app.find('.post-data-preview').css('font-size', '28px');
+            $app.find('.bar-width').val(77.5);
+            $app.find('.bar-height').val(6.5);
+        }
+    }
 
-        // Font Controls
-        $(".font-size").change(function() {
-            $(".post-data-preview").css("font-size", $(this).val() + "px");
-        });
-
-        // Red Bar Width Control
-        $(".bar-width").change(function() {
-            $(".english-border, .arabic-border").css("width", $(this).val() + "px");
-        });
-
-        // Red Bar Height Control
-        $(".bar-height").change(function() {
-            $(".english-border, .arabic-border").css("border-top-width", $(this).val() + "px");
-        });
-
-        // Text Max Width Control
-        $(".text-max-width").change(function() {
-            $(".post-data-preview").css("max-width", $(this).val() + "px");
-        });
-
-        // Image Vertical Position Control
-        $(".image-vertical-eng").change(function() {
-            $("#imagePost .image-shadow-group").css("transform", "translateY(-" + $(this).val() + "px)");
-        });
-        $(".image-vertical-ar").change(function() {
-            $("#arabicPost .image-shadow-group").css("transform", "translateY(-" + $(this).val() + "px)");
-        });
-
-        // Bottom Shadow Opacity Control
-        $(".shadow-opacity").change(function() {
-            let value = parseInt($(this).val());
-            if (value < 0) value = 0;
-            if (value > 100) value = 100;
-            $(this).val(value);
-            const opacity = value / 100;
-            const gradientStyle = `linear-gradient(to top, rgba(0,0,0,${opacity}) 0%, rgba(0,0,0,${opacity * 0.7}) 40%, rgba(0,0,0,${opacity * 0.3}) 70%, rgba(0,0,0,0) 100%)`;
-            $(".bottom-gradient").css("background", gradientStyle);
-        });
-
-        // Bottom Shadow Height Control
-        $(".shadow-height").change(function() {
-            $(".bottom-gradient").css("height", $(this).val() + "px");
-        });
-
-        // Image Positioning X
-        $(".positionEngImg").change(function() {
-            const yPos = $(".positionEngImgY").val() || 0;
-            $("#imagePost .background-image").css("background-position", $(this).val() + "% " + yPos + "%");
-        });
-        $(".positionArImg").change(function() {
-            const yPos = $(".positionArImgY").val() || 0;
-            $("#arabicPost .background-image").css("background-position", $(this).val() + "% " + yPos + "%");
-        });
-
-        // Image Positioning Y
-        $(".positionEngImgY").change(function() {
-            const xPos = $(".positionEngImg").val() || 50;
-            $("#imagePost .background-image").css("background-position", xPos + "% " + $(this).val() + "%");
-        });
-        $(".positionArImgY").change(function() {
-            const xPos = $(".positionArImg").val() || 50;
-            $("#arabicPost .background-image").css("background-position", xPos + "% " + $(this).val() + "%");
-        });
-
-        // Image Zoom Control
-        $(".image-zoom-eng").change(function() {
-            $("#imagePost .background-image").css("background-size", $(this).val() + "%");
-        });
-        $(".image-zoom-ar").change(function() {
-            $("#arabicPost .background-image").css("background-size", $(this).val() + "%");
-        });
-
-        // Line Height
-        $(".line-height").change(function() {
-            $(".post-data-preview").css("line-height", $(this).val());
-        });
-
-        // Post Size Toggle
-        $('.post-size').change(function() {
-            const postSize = $(this).val();
-            if (postSize === 'square') {
-                $("#imagePost, #arabicPost").css({ width: '1050px', height: '1050px' });
-                $(".logo-container").css({"top": "90px", "left": "76px"});
-                $(".logo-image").css({"width": "253.7px", "height": "64px"});
-                $(".font-size").val(56);
-                $(".post-data-preview").css("font-size", "56px");
-                $(".bar-width").val(155);
-                $(".bar-height").val(13);
-            } else {
-                $("#imagePost, #arabicPost").css({ width: '540px', height: '675px' });
-                $(".logo-container").css({"top": "45px", "left": "38px"});
-                $(".logo-image").css({"width": "126.85px", "height": "32px"});
-                $(".font-size").val(28);
-                $(".post-data-preview").css("font-size", "28px");
-                $(".bar-width").val(77.5);
-                $(".bar-height").val(6.5);
-            }
-        });
-    });
+    function getVisiblePost($app) {
+        return $app.find('.design-english-post-template').is(':visible') ?
+            $app.find('.image-post')[0] :
+            $app.find('.arabic-post')[0];
+    }
 
     // Image Upload Handler
     window.readURL = function(input) {
         if (input.files && input.files[0]) {
+            const $app = getDesignApp(input);
             const reader = new FileReader();
             reader.onload = function(e) {
-                $('#template-app .background-image').css('background-image', 'url(' + e.target.result + ')');
-                $('#img-src').attr('src', e.target.result);
+                $app.find('.background-image').css('background-image', 'url(' + e.target.result + ')');
+                $app.find('.post-img-preview.d-none').attr('src', e.target.result);
             };
             reader.readAsDataURL(input.files[0]);
         }
@@ -1484,12 +1920,151 @@ function showApp(app) {
         return canvas;
     }
 
-    // Download Handler
-    $('#template-app').on('click', '.download-btn', function() {
-        const postContent = $('#english-post-template-with-img').is(':visible') ?
-            document.querySelector('#imagePost') :
-            document.querySelector('#arabicPost');
-        const scale = 2;
+    $(document).on('click', '.design-app .logo-container', function() {
+        const $app = getDesignApp(this);
+        if (isThumbnailApp($app)) return;
+
+        const currentSrc = $app.find('.logo-image').first().attr('src') || '';
+        const nextSrc = currentSrc.includes('LogoW') ? 'images/LogoB.png' : 'images/LogoW.png';
+        $app.find('.logo-image').attr('src', nextSrc);
+    });
+
+    $(document).on('change', '.design-app .targetEng', function() {
+        getDesignApp(this).find('.image-post .Margin_Set').css('bottom', $(this).val() + 'px');
+    });
+
+    $(document).on('change', '.design-app .targetAr', function() {
+        getDesignApp(this).find('.arabic-post .Margin_Set').css('bottom', $(this).val() + 'px');
+    });
+
+    $(document).on('input change', '.design-app .font-size', function() {
+        const $app = getDesignApp(this);
+        if (isThumbnailApp($app)) {
+            $app.data('thumbnailManualTextLayout', true);
+            const rawText = $app.data('thumbnailRawText') || getThumbnailPreviewTextElements($app).data('thumbnailText') || '';
+            resetThumbnailLineOverrides($app, rawText, parseFloat($(this).val()) || 68);
+        }
+        $app.find('.post-data-preview').css('font-size', $(this).val() + 'px');
+        if (isThumbnailApp($app)) {
+            applyThumbnailTextBox($app);
+        }
+    });
+
+    $(document).on('change', '.design-app .bar-width', function() {
+        getDesignApp(this).find('.english-border, .arabic-border').css('width', $(this).val() + 'px');
+    });
+
+    $(document).on('change', '.design-app .bar-height', function() {
+        getDesignApp(this).find('.english-border, .arabic-border').css('border-top-width', $(this).val() + 'px');
+    });
+
+    $(document).on('change', '.design-app .text-max-width', function() {
+        getDesignApp(this).find('.post-data-preview').css('max-width', $(this).val() + 'px');
+    });
+
+    $(document).on('change', '.design-app .image-vertical-eng', function() {
+        getDesignApp(this).find('.image-post .image-shadow-group').css('transform', 'translateY(-' + $(this).val() + 'px)');
+    });
+
+    $(document).on('change', '.design-app .image-vertical-ar', function() {
+        getDesignApp(this).find('.arabic-post .image-shadow-group').css('transform', 'translateY(-' + $(this).val() + 'px)');
+    });
+
+    $(document).on('change', '.design-app .shadow-opacity', function() {
+        const $app = getDesignApp(this);
+        let value = parseInt($(this).val());
+        if (value < 0) value = 0;
+        if (value > 100) value = 100;
+        $(this).val(value);
+        $app.find('.bottom-gradient').css('background', getShadowGradient(value));
+    });
+
+    $(document).on('change', '.design-app .shadow-height', function() {
+        getDesignApp(this).find('.bottom-gradient').css('height', $(this).val() + 'px');
+    });
+
+    $(document).on('change', '.design-app .positionEngImg', function() {
+        const $app = getDesignApp(this);
+        const yPos = $app.find('.positionEngImgY').val() || 0;
+        $app.find('.image-post .background-image').css('background-position', $(this).val() + '% ' + yPos + '%');
+    });
+
+    $(document).on('change', '.design-app .positionArImg', function() {
+        const $app = getDesignApp(this);
+        const yPos = $app.find('.positionArImgY').val() || 0;
+        $app.find('.arabic-post .background-image').css('background-position', $(this).val() + '% ' + yPos + '%');
+    });
+
+    $(document).on('change', '.design-app .positionEngImgY', function() {
+        const $app = getDesignApp(this);
+        const xPos = $app.find('.positionEngImg').val() || 50;
+        $app.find('.image-post .background-image').css('background-position', xPos + '% ' + $(this).val() + '%');
+    });
+
+    $(document).on('change', '.design-app .positionArImgY', function() {
+        const $app = getDesignApp(this);
+        const xPos = $app.find('.positionArImg').val() || 50;
+        $app.find('.arabic-post .background-image').css('background-position', xPos + '% ' + $(this).val() + '%');
+    });
+
+    $(document).on('change', '.design-app .image-zoom-eng', function() {
+        getDesignApp(this).find('.image-post .background-image').css('background-size', $(this).val() + '%');
+    });
+
+    $(document).on('change', '.design-app .image-zoom-ar', function() {
+        getDesignApp(this).find('.arabic-post .background-image').css('background-size', $(this).val() + '%');
+    });
+
+    $(document).on('change', '.design-app .line-height', function() {
+        getDesignApp(this).find('.post-data-preview').css('line-height', $(this).val());
+    });
+
+    $(document).on('input change', '.design-app .thumbnail-line-spacing', function() {
+        const $app = getDesignApp(this);
+        if (isThumbnailApp($app)) {
+            $app.data('thumbnailManualTextLayout', true);
+            applyThumbnailTextBox($app);
+        }
+    });
+
+    $(document).on('input change', '.design-app .thumbnail-line-1-text, .design-app .thumbnail-line-2-text, .design-app .thumbnail-line-1-size, .design-app .thumbnail-line-2-size', function() {
+        const $app = getDesignApp(this);
+        if (isThumbnailApp($app)) {
+            $app.data('thumbnailManualTextLayout', true);
+            applyThumbnailTextBox($app);
+        }
+    });
+
+    $(document).on('input change', '#thumbnail-app textarea, #thumbnail-app .select-language', function() {
+        const $app = $('#thumbnail-app');
+        const rawText = $app.find('textarea').val().trim();
+        $app.data('thumbnailRawText', rawText);
+        $app.data('thumbnailManualTextLayout', false);
+        resetThumbnailLineOverrides($app, rawText, parseFloat(getThumbnailControl($app, '.font-size').val()) || 68);
+        if (!$app.find('.design-input-template').is(':visible')) {
+            getThumbnailPreviewTextElements($app).data('thumbnailText', rawText);
+            applyThumbnailTextBox($app);
+        }
+    });
+
+    $(document).on('change', '.design-app .post-size', function() {
+        setDesignPostSize(getDesignApp(this), $(this).val());
+    });
+
+    $(document).on('change', '.design-app .select-language', function() {
+        saveDesignLanguagePreference(getDesignApp(this));
+    });
+
+    $(document).on('click', '.design-app .download-btn', function() {
+        const $app = getDesignApp(this);
+        const postContent = getVisiblePost($app);
+        const scale = isThumbnailApp($app) ? 1 : 2;
+        const originalTransform = postContent.style.transform;
+
+        if (isThumbnailApp($app)) {
+            postContent.style.transform = 'none';
+        }
+
         html2canvas(postContent, {
             scale: scale,
             useCORS: true,
@@ -1503,58 +2078,58 @@ function showApp(app) {
             windowWidth: Math.round(postContent.offsetWidth),
             windowHeight: Math.round(postContent.offsetHeight)
         }).then(canvas => {
+            postContent.style.transform = originalTransform;
             removeHorizontalRenderSeams(canvas).toBlob(blob => {
                 saveAs(blob, 'forbes-post.png');
             });
+        }).catch(err => {
+            postContent.style.transform = originalTransform;
+            alert('Error generating image. Please try again.');
         });
     });
 
-    // Template Visibility Handler
-    $('#hello').click(function() {
-        const textValue = $('#data').val().trim();
+    $(document).on('click', '.design-app .design-submit-btn', function() {
+        const $app = getDesignApp(this);
+        const textValue = $app.find('textarea').val().trim();
         if (!textValue) {
             alert('Please enter some text for the post.');
             return;
         }
-        const language = $('.select-language').val();
-        const showBreaking = $('.show_breaking').val() === 'true';
-        const logoColor = $('.logo_color').val();
+        const language = $app.find('.select-language').val();
+        const showBreaking = $app.find('.show_breaking').val() === 'true';
+        const logoColor = $app.find('.logo_color').val();
+        saveDesignLanguagePreference($app);
 
         if (logoColor === 'blackLogo') {
-            $('#template-app .logo-image').attr('src', 'images/LogoB.png');
-            currentLogoColor = "blackLogo";
+            $app.find('.logo-image').attr('src', 'images/LogoB.png');
         } else {
-            $('#template-app .logo-image').attr('src', 'images/LogoW.png');
-            currentLogoColor = "whiteLogo";
+            $app.find('.logo-image').attr('src', 'images/LogoW.png');
         }
 
-        $('.breaking_news_image').toggle(showBreaking);
-
-        const postSize = $('.post-size').val();
-        if (postSize === 'square') {
-            $("#imagePost, #arabicPost").css({ width: '1050px', height: '1050px' });
-            $(".logo-container").css({"top": "90px", "left": "76px"});
-            $(".logo-image").css({"width": "253.7px", "height": "64px"});
-            $(".font-size").val(56);
-            $(".post-data-preview").css("font-size", "56px");
-        } else {
-            $("#imagePost, #arabicPost").css({ width: '540px', height: '675px' });
-            $(".logo-container").css({"top": "45px", "left": "38px"});
-            $(".logo-image").css({"width": "126.85px", "height": "32px"});
-            $(".font-size").val(28);
-            $(".post-data-preview").css("font-size", "28px");
-        }
+        $app.find('.breaking_news_image').toggle(showBreaking);
+        setDesignPostSize($app, $app.find('.post-size').val());
 
         if (language === 'English') {
-            $('#english-post-template-with-img').removeClass('d-none');
-            $('#arabic-post-template-with-img').addClass('d-none');
-            $('#imagePost .post-data-preview').text($('#data').val());
+            $app.find('.design-english-post-template').removeClass('d-none');
+            $app.find('.design-arabic-post-template').addClass('d-none');
+            $app.find('.image-post .post-data-preview').text(textValue);
         } else {
-            $('#arabic-post-template-with-img').removeClass('d-none');
-            $('#english-post-template-with-img').addClass('d-none');
-            $('#arabicPost .post-data-preview').text($('#data').val());
+            $app.find('.design-arabic-post-template').removeClass('d-none');
+            $app.find('.design-english-post-template').addClass('d-none');
+            $app.find('.arabic-post .post-data-preview').text(textValue);
         }
-        $('#input-template').addClass('d-none');
+        if (isThumbnailApp($app)) {
+            $app.data('thumbnailRawText', textValue);
+            $app.data('thumbnailManualTextLayout', false);
+            getThumbnailPreviewTextElements($app).data('thumbnailText', textValue);
+            resetThumbnailLineOverrides($app, textValue, parseFloat(getThumbnailControl($app, '.font-size').val()) || 68);
+            applyThumbnailTextBox($app);
+        }
+        $app.find('.design-input-template').addClass('d-none');
+    });
+
+    $(document).ready(function() {
+        applyDesignLanguagePreference($('#template-app'));
     });
 })();
 
@@ -2406,89 +2981,705 @@ function showApp(app) {
     });
 })();
 
-// ===== GOLD TEMPLATE APP JS =====
+// ===== REEL MAKER APP JS =====
 (function() {
+    const REEL_DOWNLOAD_ENDPOINT = 'http://localhost:8001/api/reel-download';
+    const REEL_RENDER_ENDPOINT = 'http://localhost:8001/api/reel-render';
+    const REEL_RENDER_START_ENDPOINT = 'http://localhost:8001/api/reel-render-start';
+    const REEL_RENDER_PROGRESS_ENDPOINT = 'http://localhost:8001/api/reel-render-progress';
+    const REEL_RENDER_RESULT_ENDPOINT = 'http://localhost:8001/api/reel-render-result';
+    let reelClips = [];
+    let activeReelClipId = null;
+    let reelClipIdCounter = 0;
+    let reelThumbnailUrl = null;
+
+    function setReelStatus(message, isError) {
+        $('#reel-status').text(message || '').css('color', isError ? '#c00' : '');
+    }
+
+    function setReelRenderProgress(progress, message) {
+        const value = Math.max(0, Math.min(100, Math.round(progress || 0)));
+        $('#reel-render-progress').show();
+        $('#reel-render-progress-bar').css('width', value + '%');
+        if (message) setReelStatus(message + ' ' + value + '%');
+    }
+
+    function hideReelRenderProgress() {
+        $('#reel-render-progress').hide();
+        $('#reel-render-progress-bar').css('width', '0%');
+    }
+
+    function getActiveReelClip() {
+        return reelClips.find(function(clip) {
+            return clip.id === activeReelClipId;
+        }) || null;
+    }
+
+    function showReelPreview(clip) {
+        const video = document.getElementById('reel-preview-video');
+        const bgVideo = document.getElementById('reel-bg-video');
+        if (!video || !clip) return;
+
+        video.pause();
+        video.src = clip.url;
+        if (reelThumbnailUrl) {
+            video.poster = reelThumbnailUrl;
+        } else {
+            video.removeAttribute('poster');
+        }
+        video.style.display = 'block';
+        video.style.objectFit = 'contain';
+        video.style.transform = 'translate(0px, 0px) scale(1)';
+        if (clip.needsStartCover) {
+            $(video).data('start-cover', true);
+        } else {
+            $(video).removeData('start-cover');
+        }
+        if (bgVideo) {
+            bgVideo.src = clip.url;
+            bgVideo.style.display = 'block';
+            bgVideo.load();
+        }
+        $('.reel-preview-wrap').addClass('fit-contain');
+        $('#reel-preview-empty').hide();
+        $('.reel-logo').show();
+        $('#reel-transform-controls').css('display', 'flex');
+        $('#reel-download-render').show();
+        $('#reel-foreground-zoom').val(clip.zoom || 100);
+        $('#reel-foreground-x').val(clip.moveX || 0);
+        $('#reel-foreground-y').val(clip.moveY || 0);
+        $('#reel-upload-label').text(clip.name || 'Video loaded');
+        $('#reel-playback-controls').css('display', 'flex');
+        $('#reel-cut-toggle')
+            .show()
+            .toggleClass('btn-dark', !!clip.trimEnabled)
+            .toggleClass('btn-outline-dark', !clip.trimEnabled)
+            .html(`<i class="bi bi-scissors"></i> ${clip.trimEnabled ? 'Hide Cut' : 'Add Cut'}`);
+        $('#reel-trim-controls').css('display', clip.trimEnabled ? 'flex' : 'none');
+        $('#reel-seek').val(0);
+        $('#reel-volume').val(video.volume);
+        updateReelClipList();
+        updateReelTrimControls();
+        updateReelPlayButton();
+        updateReelMediaControls();
+        video.load();
+    }
+
+    function addReelClip(url, name, fromFile) {
+        const clip = {
+            id: 'clip-' + (++reelClipIdCounter),
+            url,
+            name: name || 'Video ' + (reelClips.length + 1),
+            fromFile: !!fromFile,
+            file: fromFile,
+            trimStart: 0,
+            trimEnd: null,
+            duration: 0,
+            trimEnabled: false,
+            zoom: 100,
+            moveX: 0,
+            moveY: 0,
+            needsStartCover: true
+        };
+        reelClips.push(clip);
+        activeReelClipId = clip.id;
+        showReelPreview(clip);
+        setReelStatus('Video added.');
+    }
+
+    function updateReelClipList() {
+        const $list = $('#reel-clip-list');
+        if (!reelClips.length) {
+            $list.hide().empty();
+            return;
+        }
+
+        $list.show().empty();
+        reelClips.forEach(function(clip, index) {
+            const $item = $('<div class="reel-clip-item"></div>').toggleClass('active', clip.id === activeReelClipId);
+            $('<button type="button" class="reel-clip-name"></button>')
+                .attr('aria-label', 'Select clip')
+                .text((index + 1) + '. ' + clip.name)
+                .on('click', function() {
+                    activeReelClipId = clip.id;
+                    showReelPreview(clip);
+                })
+                .appendTo($item);
+            const $actions = $('<div class="reel-clip-actions"></div>').appendTo($item);
+            $('<button type="button" class="btn btn-sm btn-outline-dark"><i class="bi bi-arrow-up"></i></button>')
+                .attr('aria-label', 'Move clip up')
+                .prop('disabled', index === 0)
+                .on('click', function() {
+                    moveReelClip(clip.id, -1);
+                })
+                .appendTo($actions);
+            $('<button type="button" class="btn btn-sm btn-outline-dark"><i class="bi bi-arrow-down"></i></button>')
+                .attr('aria-label', 'Move clip down')
+                .prop('disabled', index === reelClips.length - 1)
+                .on('click', function() {
+                    moveReelClip(clip.id, 1);
+                })
+                .appendTo($actions);
+            $('<button type="button" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>')
+                .attr('aria-label', 'Remove clip')
+                .on('click', function() {
+                    removeReelClip(clip.id);
+                })
+                .appendTo($actions);
+            $list.append($item);
+        });
+    }
+
+    function moveReelClip(clipId, direction) {
+        const index = reelClips.findIndex(function(item) {
+            return item.id === clipId;
+        });
+        const nextIndex = index + direction;
+        if (index < 0 || nextIndex < 0 || nextIndex >= reelClips.length) return;
+
+        const clip = reelClips[index];
+        reelClips.splice(index, 1);
+        reelClips.splice(nextIndex, 0, clip);
+        updateReelClipList();
+    }
+
+    function removeReelClip(clipId) {
+        const clip = reelClips.find(function(item) {
+            return item.id === clipId;
+        });
+        if (clip && clip.fromFile) {
+            URL.revokeObjectURL(clip.url);
+        }
+        reelClips = reelClips.filter(function(item) {
+            return item.id !== clipId;
+        });
+        if (activeReelClipId === clipId) {
+            activeReelClipId = reelClips.length ? reelClips[Math.max(0, reelClips.length - 1)].id : null;
+        }
+        if (activeReelClipId) {
+            showReelPreview(getActiveReelClip());
+        } else {
+            $('#reel-preview-video, #reel-bg-video').removeAttr('src').hide();
+            $('#reel-preview-video').removeAttr('poster');
+            $('#reel-preview-empty').show();
+            $('.reel-logo').hide();
+            $('#reel-transform-controls, #reel-playback-controls, #reel-trim-controls, #reel-cut-toggle').hide();
+            $('#reel-download-render').hide();
+            $('#reel-upload-label').text('Choose video');
+            setReelStatus('');
+            updateReelClipList();
+        }
+    }
+
+    function formatReelTime(seconds) {
+        if (!Number.isFinite(seconds)) return '0:00';
+        const minutes = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
+        return `${minutes}:${secs}`;
+    }
+
+    function formatReelTrimTime(seconds) {
+        if (!Number.isFinite(seconds)) return '0:00.0';
+        const minutes = Math.floor(seconds / 60);
+        const secs = (seconds % 60).toFixed(1).padStart(4, '0');
+        return `${minutes}:${secs}`;
+    }
+
+    function parseReelTrimTime(value) {
+        const text = String(value || '').trim();
+        if (!text) return NaN;
+        if (!text.includes(':')) return parseFloat(text);
+
+        const parts = text.split(':').map(function(part) {
+            return parseFloat(part);
+        });
+        if (parts.some(function(part) { return !Number.isFinite(part); })) return NaN;
+
+        return parts.reduce(function(total, part) {
+            return total * 60 + part;
+        }, 0);
+    }
+
+    function updateReelPlayButton() {
+        const video = document.getElementById('reel-preview-video');
+        const iconClass = video && !video.paused ? 'bi-pause-fill' : 'bi-play-fill';
+        const label = video && !video.paused ? 'Pause' : 'Play';
+        $('#reel-play-toggle').attr('aria-label', label).html(`<i class="bi ${iconClass}"></i>`);
+    }
+
+    function updateReelMediaControls() {
+        const video = document.getElementById('reel-preview-video');
+        const clip = getActiveReelClip();
+        if (!video) return;
+
+        const duration = Number.isFinite(video.duration) ? video.duration : 0;
+        const trimStart = clip && clip.trimEnabled ? clip.trimStart : 0;
+        const trimEnd = clip && clip.trimEnabled && clip.trimEnd !== null ? clip.trimEnd : duration;
+        const playableDuration = Math.max(0, trimEnd - trimStart);
+        const progress = playableDuration ? ((video.currentTime - trimStart) / playableDuration) * 100 : 0;
+        $('#reel-seek').val(progress);
+        $('#reel-time').text(`${formatReelTime(Math.max(0, video.currentTime - trimStart))} / ${formatReelTime(playableDuration || duration)}`);
+        $('#reel-mute-toggle')
+            .attr('aria-label', video.muted || video.volume === 0 ? 'Unmute' : 'Mute')
+            .html(`<i class="bi ${video.muted || video.volume === 0 ? 'bi-volume-mute-fill' : 'bi-volume-up-fill'}"></i>`);
+    }
+
+    function updateReelTrimControls() {
+        const video = document.getElementById('reel-preview-video');
+        const clip = getActiveReelClip();
+        const duration = video && Number.isFinite(video.duration) ? video.duration : (clip && clip.duration) || 0;
+        if (!clip || !duration) return;
+
+        clip.duration = duration;
+        if (clip.trimEnd === null || clip.trimEnd > duration) clip.trimEnd = duration;
+        clip.trimStart = Math.max(0, Math.min(clip.trimStart, Math.max(0, clip.trimEnd - 0.1)));
+        clip.trimEnd = Math.max(clip.trimStart + 0.1, Math.min(duration, clip.trimEnd));
+
+        $('#reel-trim-start').val(formatReelTrimTime(clip.trimStart));
+        $('#reel-trim-end').val(formatReelTrimTime(clip.trimEnd));
+        $('#reel-trim-start-range').attr({ max: Math.max(0, clip.trimEnd - 0.1) }).val(clip.trimStart.toFixed(1));
+        $('#reel-trim-end-range').attr({ max: duration, min: Math.min(duration, clip.trimStart + 0.1) }).val(clip.trimEnd.toFixed(1));
+    }
+
+    function setReelTrim(which, value) {
+        const video = document.getElementById('reel-preview-video');
+        const clip = getActiveReelClip();
+        if (!video || !clip) return;
+
+        const duration = Number.isFinite(video.duration) ? video.duration : clip.duration || 0;
+        if (!duration) return;
+
+        const nextValue = parseReelTrimTime(value);
+        if (!Number.isFinite(nextValue)) return;
+
+        if (which === 'start') {
+            clip.trimStart = Math.max(0, Math.min(nextValue, Math.max(0, (clip.trimEnd || duration) - 0.1)));
+            if (video.currentTime < clip.trimStart) video.currentTime = clip.trimStart;
+        } else {
+            clip.trimEnd = Math.max(clip.trimStart + 0.1, Math.min(duration, nextValue));
+            if (video.currentTime > clip.trimEnd) video.currentTime = clip.trimStart;
+        }
+        updateReelTrimControls();
+        updateReelMediaControls();
+        syncReelBackgroundVideo();
+    }
+
+    function enforceReelTrim() {
+        const video = document.getElementById('reel-preview-video');
+        const clip = getActiveReelClip();
+        if (!video || !clip || !clip.duration || !clip.trimEnabled) return;
+
+        const trimEnd = clip.trimEnd === null ? clip.duration : clip.trimEnd;
+        if (video.currentTime < clip.trimStart) {
+            video.currentTime = clip.trimStart;
+        }
+        if (video.currentTime >= trimEnd) {
+            video.pause();
+            video.currentTime = clip.trimStart;
+        }
+    }
+
+    function syncReelBackgroundVideo() {
+        const video = document.getElementById('reel-preview-video');
+        const bgVideo = document.getElementById('reel-bg-video');
+        if (!video || !bgVideo) return;
+
+        bgVideo.currentTime = video.currentTime || 0;
+        if (video.paused) {
+            bgVideo.pause();
+        } else {
+            bgVideo.play().catch(function() {});
+        }
+    }
+
+    function applyReelForegroundTransform() {
+        const video = document.getElementById('reel-preview-video');
+        const frame = document.querySelector('.reel-preview-wrap');
+        if (!video || !frame) return;
+
+        const frameW = frame.clientWidth;
+        const frameH = frame.clientHeight;
+        const videoRatio = video.videoWidth && video.videoHeight ? video.videoWidth / video.videoHeight : frameW / frameH;
+        const frameRatio = frameW / frameH;
+
+        let containedW = frameW;
+        let containedH = frameH;
+        if (videoRatio > frameRatio) {
+            containedH = frameW / videoRatio;
+        } else {
+            containedW = frameH * videoRatio;
+        }
+
+        const coverZoom = Math.ceil(Math.max(frameW / containedW, frameH / containedH) * 100);
+        const maxZoom = Math.max(500, coverZoom);
+        $('#reel-foreground-zoom').attr({ min: 100, max: maxZoom });
+
+        let zoom = parseFloat($('#reel-foreground-zoom').val()) || 100;
+        if ($(video).data('start-cover')) {
+            zoom = coverZoom;
+            $(video).removeData('start-cover');
+            const clip = getActiveReelClip();
+            if (clip) {
+                clip.zoom = zoom;
+                clip.needsStartCover = false;
+            }
+        }
+        zoom = Math.max(100, Math.min(maxZoom, zoom));
+        $('#reel-foreground-zoom').val(Math.round(zoom));
+        const scale = zoom / 100;
+        let moveX = parseFloat($('#reel-foreground-x').val()) || 0;
+        let moveY = parseFloat($('#reel-foreground-y').val()) || 0;
+
+        const maxX = Math.max(0, ((containedW * scale) - frameW) / 2);
+        const maxY = Math.max(0, ((containedH * scale) - frameH) / 2);
+        $('#reel-foreground-x').attr({ min: -Math.round(maxX), max: Math.round(maxX) });
+        $('#reel-foreground-y').attr({ min: -Math.round(maxY), max: Math.round(maxY) });
+        moveX = Math.max(-maxX, Math.min(maxX, moveX));
+        moveY = Math.max(-maxY, Math.min(maxY, moveY));
+
+        $('#reel-foreground-x').val(Math.round(moveX));
+        $('#reel-foreground-y').val(Math.round(moveY));
+        $('#reel-preview-video').css('transform', `translate(${moveX}px, ${moveY}px) scale(${scale})`);
+
+        const clip = getActiveReelClip();
+        if (clip) {
+            clip.zoom = Math.round(zoom);
+            clip.moveX = Math.round(moveX);
+            clip.moveY = Math.round(moveY);
+        }
+    }
+
+    function handleReelFile(file) {
+        if (!file || !file.type.startsWith('video/')) {
+            setReelStatus('Please choose a video file.', true);
+            return;
+        }
+
+        addReelClip(URL.createObjectURL(file), file.name, file);
+    }
+
+    function handleReelFiles(files) {
+        const videoFiles = Array.from(files || []).filter(function(file) {
+            return file.type.startsWith('video/');
+        });
+        if (!videoFiles.length) {
+            setReelStatus('Please choose a video file.', true);
+            return;
+        }
+        videoFiles.forEach(handleReelFile);
+    }
+
+    function detectReelPlatform(url) {
+        let host = '';
+        try {
+            host = new URL(url).hostname.replace(/^www\./, '').toLowerCase();
+        } catch (e) {
+            return null;
+        }
+
+        if (host.includes('youtube.com') || host.includes('youtu.be')) return 'YouTube';
+        if (host.includes('facebook.com') || host.includes('fb.watch')) return 'Facebook';
+        if (host.includes('instagram.com')) return 'Instagram';
+        if (host === 'x.com' || host.includes('twitter.com')) return 'X';
+        return null;
+    }
+
+    async function importReelFromLink(url) {
+        const platform = detectReelPlatform(url);
+        if (!platform) {
+            setReelStatus('Supported links: Facebook, YouTube, Instagram, X.', true);
+            return;
+        }
+
+        if (!REEL_DOWNLOAD_ENDPOINT) {
+            setReelStatus(platform + ' link detected. Link downloading needs a configured downloader endpoint.', true);
+            return;
+        }
+
+        setReelStatus('Importing from ' + platform + '...');
+        try {
+            const response = await fetch(REEL_DOWNLOAD_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url, platform })
+            });
+            if (!response.ok) {
+                let message = 'Download failed';
+                try {
+                    const errorData = await response.json();
+                    if (errorData.error) message = errorData.error;
+                } catch (e) {}
+                throw new Error(message);
+            }
+
+            const blob = await response.blob();
+            addReelClip(URL.createObjectURL(blob), platform + ' video', blob);
+            $('#reel-link-input').val('');
+        } catch (e) {
+            setReelStatus(e.message || 'Could not import this link. Please try uploading the video file.', true);
+        }
+    }
+
     $(document).ready(function() {
-        // Upload background
-        $('#gold-upload-area').on('click', function() { $('#gold-bg-input').click(); });
-        $('#gold-bg-input').on('change', function() {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#gold-bg-div').css('background-image', 'url(' + e.target.result + ')');
-                    $('#gold-upload-area').addClass('has-image').html('<i class="bi bi-check-lg" style="font-size:18px; display:block; margin-bottom:4px;"></i>Image uploaded');
-                };
-                reader.readAsDataURL(this.files[0]);
+        $('#reel-dropzone').on('click', function() {
+            $('#reel-video-input').click();
+        });
+
+        $('#reel-video-input').on('change', function() {
+            handleReelFiles(this.files);
+            this.value = '';
+        });
+
+        $('#reel-dropzone').on('dragover', function(e) {
+            e.preventDefault();
+            $(this).addClass('dragover');
+        });
+
+        $('#reel-dropzone').on('dragleave drop', function(e) {
+            e.preventDefault();
+            $(this).removeClass('dragover');
+        });
+
+        $('#reel-dropzone').on('drop', function(e) {
+            handleReelFiles(e.originalEvent.dataTransfer.files);
+        });
+
+        $('#reel-link-import').on('click', function() {
+            importReelFromLink($('#reel-link-input').val().trim());
+        });
+
+        $('#reel-preview-video').on('loadedmetadata play pause ended seeked timeupdate', function() {
+            const clip = getActiveReelClip();
+            if (clip && Number.isFinite(this.duration)) {
+                clip.duration = this.duration;
+                if (clip.trimEnd === null) clip.trimEnd = this.duration;
+            }
+            updateReelTrimControls();
+            enforceReelTrim();
+            applyReelForegroundTransform();
+            syncReelBackgroundVideo();
+            updateReelPlayButton();
+            updateReelMediaControls();
+        });
+
+        $('#reel-preview-video').on('click', function() {
+            if (!this.src) return;
+            if (this.paused) {
+                this.play().catch(function() {});
+            } else {
+                this.pause();
             }
         });
 
-        // Left side — live text updates
-        $('#gold-title-input').on('input', function() {
-            $('#gold-title-display').text($(this).val());
-        });
-        $('#gold-subtitle-input').on('input', function() {
-            $('#gold-subtitle-display').text($(this).val());
-        });
-        $('#gold-caption-input').on('input', function() {
-            $('#gold-caption-display').text($(this).val());
-        });
-        $('#gold-logo-select').on('change', function() {
-            var src = $(this).val() === 'black' ? 'images/LogoB.png' : 'images/LogoW.png';
-            $('#gold-logo-img').attr('src', src);
-        });
-
-        // Right side — style controls
-        $('#gold-bottom-margin').on('input change', function() {
-            $('#gold-text-block').css('bottom', $(this).val() + 'px');
-        });
-        $('#gold-image-vertical').on('input change', function() {
-            $('#gold-bg-div').css('transform', 'translateY(-' + $(this).val() + 'px)');
-        });
-        $('#gold-shadow-height').on('input change', function() {
-            $('#gold-canvas .gold-bottom-gradient').css('height', $(this).val() + 'px');
-        });
-        $('#gold-shadow-opacity').on('input change', function() {
-            var v = Math.max(0, Math.min(100, parseInt($(this).val()) || 0));
-            var o = v / 100;
-            $('#gold-canvas .gold-bottom-gradient').css('background', 'linear-gradient(to top, rgba(0,0,0,' + o + ') 0%, rgba(0,0,0,' + (o*0.57) + ') 40%, rgba(0,0,0,0) 100%)')
-
-        });
-        $('#gold-title-size').on('input change', function() {
-            $('#gold-title-display').css('font-size', $(this).val() + 'px');
-        });
-        $('#gold-pos-x').on('input change', function() {
-            $('#gold-bg-div').css('background-position', $(this).val() + '% 0%');
-        });
-        $('#gold-zoom').on('input change', function() {
-            $('#gold-bg-div').css('background-size', $(this).val() + '%');
-        });
-        $('#gold-title-pos').on('input change', function() {
-            $('#gold-title-display').css('margin-bottom', $(this).val() + 'px');
-        });
-        $('#gold-subtitle-size').on('input change', function() {
-            $('#gold-subtitle-display').css('font-size', $(this).val() + 'px');
-        });
-        $('#gold-subtitle-pos').on('input change', function() {
-            $('#gold-subtitle-display').css('margin-top', $(this).val() + 'px');
-        });
-        $('#gold-caption-size').on('input change', function() {
-            $('#gold-caption-display').css('font-size', $(this).val() + 'px');
-        });
-        $('#gold-caption-pos').on('input change', function() {
-            $('#gold-caption-display').css('bottom', $(this).val() + 'px');
+        $('#reel-play-toggle').on('click', function() {
+            const video = document.getElementById('reel-preview-video');
+            if (!video || !video.src) return;
+            const clip = getActiveReelClip();
+            const trimStart = clip && clip.trimEnabled ? clip.trimStart : 0;
+            const trimEnd = clip && clip.trimEnabled && clip.trimEnd !== null ? clip.trimEnd : video.duration;
+            if (clip && (video.currentTime < trimStart || video.currentTime >= trimEnd)) {
+                video.currentTime = trimStart;
+            }
+            if (video.paused) {
+                video.play().catch(function() {});
+            } else {
+                video.pause();
+            }
         });
 
-        // Download
-        $('#gold-download').on('click', function() {
-            var btn = $(this);
-            btn.prop('disabled', true).html('<i class="bi bi-hourglass-split" style="margin-right:8px;"></i>Generating...');
-            var el = document.getElementById('gold-canvas');
-            html2canvas(el, { scale: 2, useCORS: true, allowTaint: true, logging: false, backgroundColor: '#000', width: 540, height: 675 }).then(function(canvas) {
-                canvas.toBlob(function(blob) {
-                    saveAs(blob, 'gold-template-' + new Date().toISOString().slice(0,10) + '.png');
-                    btn.prop('disabled', false).html('<i class="bi bi-download" style="margin-right:8px;"></i>Download Image');
+        $('#reel-seek').on('input change', function() {
+            const video = document.getElementById('reel-preview-video');
+            const clip = getActiveReelClip();
+            if (!video || !video.src || !clip || !Number.isFinite(video.duration)) return;
+            const trimStart = clip.trimEnabled ? clip.trimStart : 0;
+            const trimEnd = clip.trimEnabled && clip.trimEnd !== null ? clip.trimEnd : video.duration;
+            video.currentTime = trimStart + (parseFloat(this.value) / 100) * Math.max(0, trimEnd - trimStart);
+            syncReelBackgroundVideo();
+            updateReelMediaControls();
+        });
+
+        $('#reel-mute-toggle').on('click', function() {
+            const video = document.getElementById('reel-preview-video');
+            if (!video || !video.src) return;
+            video.muted = !video.muted;
+            updateReelMediaControls();
+        });
+
+        $('#reel-volume').on('input change', function() {
+            const video = document.getElementById('reel-preview-video');
+            if (!video || !video.src) return;
+            video.volume = parseFloat(this.value);
+            video.muted = video.volume === 0;
+            updateReelMediaControls();
+        });
+
+        $('#reel-fullscreen').on('click', function() {
+            const frame = document.querySelector('.reel-preview-wrap');
+            if (!frame) return;
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else if (frame.requestFullscreen) {
+                frame.requestFullscreen();
+            }
+        });
+
+        $('#reel-cut-toggle').on('click', function() {
+            const clip = getActiveReelClip();
+            if (!clip) return;
+            clip.trimEnabled = !clip.trimEnabled;
+            updateReelTrimControls();
+            $('#reel-cut-toggle')
+                .toggleClass('btn-dark', !!clip.trimEnabled)
+                .toggleClass('btn-outline-dark', !clip.trimEnabled)
+                .html(`<i class="bi bi-scissors"></i> ${clip.trimEnabled ? 'Hide Cut' : 'Add Cut'}`);
+            $('#reel-trim-controls').css('display', clip.trimEnabled ? 'flex' : 'none');
+            enforceReelTrim();
+            updateReelMediaControls();
+        });
+
+        $('#reel-thumbnail-toggle').on('click', function() {
+            $('#reel-thumbnail-input').click();
+        });
+
+        $('#reel-thumbnail-input').on('change', function() {
+            const file = this.files && this.files[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/')) {
+                setReelStatus('Please choose an image file.', true);
+                this.value = '';
+                return;
+            }
+            if (reelThumbnailUrl) {
+                URL.revokeObjectURL(reelThumbnailUrl);
+            }
+            reelThumbnailUrl = URL.createObjectURL(file);
+            document.getElementById('reel-preview-video').poster = reelThumbnailUrl;
+            setReelStatus('Thumbnail added.');
+            this.value = '';
+        });
+
+        $('#reel-download-render').on('click', async function() {
+            if (!reelClips.length) {
+                setReelStatus('Add at least one video first.', true);
+                return;
+            }
+
+            const button = this;
+            button.disabled = true;
+            try {
+                setReelStatus('Preparing video...');
+                const frame = document.querySelector('.reel-preview-wrap');
+                const outputScale = frame && frame.clientWidth ? 914 / frame.clientWidth : 1;
+                const manifest = {
+                    width: 914,
+                    height: 1600,
+                    clips: reelClips.map(function(clip, index) {
+                        return {
+                            field: 'clip' + index,
+                            name: clip.name,
+                            trimEnabled: !!clip.trimEnabled,
+                            trimStart: clip.trimStart || 0,
+                            trimEnd: clip.trimEnd,
+                            zoom: clip.zoom || 100,
+                            moveX: Math.round((clip.moveX || 0) * outputScale),
+                            moveY: Math.round((clip.moveY || 0) * outputScale)
+                        };
+                    })
+                };
+
+                const formData = new FormData();
+                formData.append('manifest', JSON.stringify(manifest));
+                for (const [index, clip] of reelClips.entries()) {
+                    let clipFile = clip.file;
+                    if (!(clipFile instanceof Blob) && clip.url) {
+                        const clipResponse = await fetch(clip.url);
+                        clipFile = await clipResponse.blob();
+                    }
+                    if (!(clipFile instanceof Blob)) {
+                        throw new Error('Add the video again before downloading.');
+                    }
+                    formData.append('clip' + index, clipFile, clip.name || ('clip-' + (index + 1) + '.mp4'));
+                }
+
+                setReelRenderProgress(1, 'Starting render...');
+                const response = await fetch(REEL_RENDER_START_ENDPOINT, {
+                    method: 'POST',
+                    body: formData
                 });
-            });
+                if (!response.ok) {
+                    let message = 'Render failed';
+                    try {
+                        const errorData = await response.json();
+                        if (errorData.error) message = errorData.error;
+                    } catch (e) {}
+                    throw new Error(message);
+                }
+
+                const startData = await response.json();
+                if (!startData.jobId) throw new Error('Render job did not start.');
+
+                let done = false;
+                while (!done) {
+                    await new Promise(function(resolve) {
+                        setTimeout(resolve, 1000);
+                    });
+                    const progressResponse = await fetch(REEL_RENDER_PROGRESS_ENDPOINT + '?job=' + encodeURIComponent(startData.jobId));
+                    const progressData = await progressResponse.json();
+                    if (!progressResponse.ok || progressData.status === 'error') {
+                        throw new Error(progressData.error || 'Render failed.');
+                    }
+                    setReelRenderProgress(progressData.progress, progressData.message || 'Rendering video...');
+                    done = progressData.status === 'done';
+                }
+
+                const resultResponse = await fetch(REEL_RENDER_RESULT_ENDPOINT + '?job=' + encodeURIComponent(startData.jobId));
+                if (!resultResponse.ok) {
+                    let message = 'Could not download rendered video.';
+                    try {
+                        const errorData = await resultResponse.json();
+                        if (errorData.error) message = errorData.error;
+                    } catch (e) {}
+                    throw new Error(message);
+                }
+
+                const blob = await resultResponse.blob();
+                if (!blob.size) {
+                    throw new Error('Render finished but the downloaded video was empty.');
+                }
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'forbes-reel.mp4';
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                $('#reel-status')
+                    .empty()
+                    .append('Video ready. ')
+                    .append($('<a></a>').attr({ href: url, download: 'forbes-reel.mp4' }).text('Click here if it did not download.'));
+                setReelRenderProgress(100, 'Done');
+                setTimeout(function() {
+                    URL.revokeObjectURL(url);
+                    hideReelRenderProgress();
+                }, 60000);
+            } catch (e) {
+                hideReelRenderProgress();
+                setReelStatus(e.message || 'Could not render the video.', true);
+            } finally {
+                button.disabled = false;
+            }
+        });
+
+        $('#reel-foreground-zoom, #reel-foreground-x, #reel-foreground-y').on('input change', function() {
+            applyReelForegroundTransform();
+        });
+
+        $('#reel-trim-start, #reel-trim-start-range').on('input change', function() {
+            setReelTrim('start', this.value);
+        });
+
+        $('#reel-trim-end, #reel-trim-end-range').on('input change', function() {
+            setReelTrim('end', this.value);
         });
     });
 })();
